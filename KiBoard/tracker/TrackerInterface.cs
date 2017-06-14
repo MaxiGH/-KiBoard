@@ -8,6 +8,6 @@ namespace KiBoard.tracker
 {
     interface Tracker
     {
-        float getCoordinates();
+        float[] Coordinates { get; }
     }
 }
