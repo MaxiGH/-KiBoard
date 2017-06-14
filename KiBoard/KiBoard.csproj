@@ -48,6 +48,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
+    <Compile Include="tracker\Tracker3D.cs" />
+    <Compile Include="tracker\TrackerInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
