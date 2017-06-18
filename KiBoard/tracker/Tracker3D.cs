@@ -10,13 +10,15 @@ namespace KiBoard.tracker
     class Tracker3D : Tracker
     {
         private KinectSensor sensor;
-        private MultiSourceFrameReader multiReader;        private Body[] bodyData;
+        private MultiSourceFrameReader multiReader;
+        private Body[] bodyData;
         private float[] coordinates = new float[3];
 
         public Tracker3D(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
             this.sensor = sensor;
             this.multiReader = multiReader;
+            Console.WriteLine("Tracker created!");
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
