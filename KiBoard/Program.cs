@@ -7,7 +7,4 @@ namespace KiBoard
         static void Main(string[] args)
         {
             Console.WriteLine("hello World");
-            Console.ReadKey();
-        }
-    }
-}
+            Console.ReadKey(true);

@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,8 +44,6 @@
   <ItemGroup>
     <Compile Include="calibration\Calibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
-    <Compile Include="data\Vec3D.cs" />
-    <Compile Include="pointBuffer\PointBuffer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
