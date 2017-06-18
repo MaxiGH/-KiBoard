@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
-using System.Windows.Media.Media3D;
+using System.Numerics;
 
 namespace KiBoard.tracker
 {
@@ -13,7 +13,7 @@ namespace KiBoard.tracker
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
-        private Vector3D vec3;
+        private Vector3 vec3;
 
         public Tracker3D(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
@@ -23,7 +23,7 @@ namespace KiBoard.tracker
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
-        public Vector3D Coordinates
+        public Vector3 Coordinates
         {
             get
             {
@@ -68,7 +68,7 @@ namespace KiBoard.tracker
                         float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
                         float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
                         Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
-                        vec3 = new Vector3D(xPos, yPos, zPos);
+                        vec3 = new Vector3(xPos, yPos, zPos);
                     }
                 }
                 return vec3;
