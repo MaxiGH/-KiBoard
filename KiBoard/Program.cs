@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.Kinect;
+using System.Numerics;
 
 namespace KiBoard
 {
@@ -14,7 +15,7 @@ namespace KiBoard
             bool isRunning = true;
             tracker.Tracker3D tracker = new tracker.Tracker3D(sensor, multiReader);
             while (isRunning) {
-                float[] trackedData = tracker.Coordinates;
+                Vector3 trackedData = tracker.Coordinates;
                 Thread.Sleep(200);
             }
         }
