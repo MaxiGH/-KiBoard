@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Windows.Media.Media3D;
+using System.Numerics;
 
 namespace KiBoard
 {
     public class CalibrationPoint
     {
-        public Vector3D kinectVec;
-        public Vector3D wallVec;
+        public Vector3 kinectVec;
+        public Vector3 wallVec;
 
-        public CalibrationPoint(Vector3D kinectVec_arg, Vector3D wallVec_arg)
+        public CalibrationPoint(Vector3 kinectVec_arg, Vector3 wallVec_arg)
         {
             kinectVec = kinectVec_arg;
             wallVec = wallVec_arg;

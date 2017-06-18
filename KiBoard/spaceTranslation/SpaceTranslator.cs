@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Media.Media3D;
+using System.Numerics;
 
 namespace KiBoard
 {
     public interface SpaceTranslator
     {
         // translates a KinectSpace Koordinate into a WallSpace Koordinate
-        Vector3D translate(Vector3D kinectVec);
+        Vector3 translate(Vector3 kinectVec);
         // find out, how to translate KinectSpace into WallSpace
         void processCalibrationPoints(List<CalibrationPoint> points);
     }
