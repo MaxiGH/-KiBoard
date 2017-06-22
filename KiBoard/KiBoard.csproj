@@ -60,7 +60,7 @@
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
-    <Compile Include="ui\window.cs" />
+    <None Include="ui\window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

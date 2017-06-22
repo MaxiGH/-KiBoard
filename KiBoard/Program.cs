@@ -13,14 +13,15 @@ namespace KiBoard
         static void Main(string[] args)
         {
             bool isRunning = true;
-            tracker.Tracker3D tracker = new tracker.Tracker3D(sensor, multiReader);
+            setupKinect();
+            Tracker3D tracker = new Tracker3D(sensor, multiReader);
             while (isRunning) {
                 Vector3 trackedData = tracker.Coordinates;
                 Thread.Sleep(200);
             }
         }
 
-        private void setupKinect()
+        private static void setupKinect()
         {
             sensor = KinectSensor.GetDefault();
             multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body);

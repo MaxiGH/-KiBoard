@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 
-namespace KiBoard.tracker
+namespace KiBoard
 {
     interface Tracker
     {
