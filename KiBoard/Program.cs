@@ -16,6 +16,8 @@ namespace KiBoard
         private static SpaceTranslator spaceTranslator;
         //private static InputManager inputManager;
 
+        public static int FRAME_INTERVAL = 100;
+
         static void Main(string[] args)
         {
             setupKinect();
@@ -27,10 +29,12 @@ namespace KiBoard
             bool isRunning = true;
             while (isRunning) {
                 tick();
-                Thread.Sleep(34);
+                Thread.Sleep(FRAME_INTERVAL);
                 if (System.Console.KeyAvailable)
                     isRunning = false;
             }
+            Console.ReadKey();
+            Console.ReadKey();
         }
 
         private static void setupKinect()
@@ -61,7 +65,35 @@ namespace KiBoard
             if (CURRENT_STATE == STATE.RUNNING_STATE)
             {
                 //inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
-                System.Console.WriteLine(spaceTranslator.translate(tracker.Coordinates));
+                Vector3 vec = tracker.Coordinates;
+                Vector3 translatedVec = spaceTranslator.translate(vec);
+                System.Console.WriteLine("kinectSpace=" + vec.ToString() + "\twallSpace=" + translatedVec.ToString());
+
+                // move into InputManager
+                const int WIDTH = 20;
+                const int HEIGHT = 10;
+                int x = (int)(WIDTH * translatedVec.X);
+                int y = 10 - (int)(HEIGHT * translatedVec.Y);
+
+                for (int iy = 0; iy < HEIGHT; iy++)
+                {
+                    for (int ix = 0; ix < WIDTH; ix++)
+                    {
+                        if ((ix == x) && (iy == y))
+                        {
+                            if (translatedVec.Z > 0.06f)
+                                System.Console.Write("O");
+                            else
+                                System.Console.Write("X");
+                        }
+                        else
+                        {
+                            System.Console.Write("_");
+                        }
+                    }
+                    System.Console.WriteLine("");
+                }
+                System.Console.WriteLine("\n");
             }
         }
     }
