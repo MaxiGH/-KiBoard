@@ -10,6 +10,8 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
+        private const STATE CURRENT_STATE = STATE.CALIBRATION_STATE;
+
         static void Main(string[] args)
         {
             bool isRunning = true;
@@ -31,6 +33,23 @@ namespace KiBoard
                 {
                     sensor.Open();
                 }
+            }
+        }
+
+        private void tick()
+        {
+            if (CURRENT_STATE == STATE.CALIBRATION_STATE)
+            {
+                calibrator.tick();
+                if (calibrator.hasCalibrationPoints())
+                {
+                    spaceTranslator.processCalibrationPoints(calibrator.getCalibrationPoints());
+                    CURRENT_STATE = STATE.RUNNING_STATE;
+                }
+            }
+            if (CURRENT_STATE == STATE.RUNNING_STATE)
+            {
+                inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
             }
         }
     }
