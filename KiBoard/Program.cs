@@ -15,6 +15,7 @@ namespace KiBoard
 
         static void Main(string[] args)
         {
+
             calibrator = new InitialCalibrator();
 
             bool isRunning = true;
@@ -22,10 +23,10 @@ namespace KiBoard
             while (isRunning) {
                 Vector3 trackedData = tracker.Coordinates;
                 Thread.Sleep(200);
-            }
+            }*/
         }
 
-        private void setupKinect()
+        private static void setupKinect()
         {
             sensor = KinectSensor.GetDefault();
             multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body);

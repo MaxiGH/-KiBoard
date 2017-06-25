@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 using System.Numerics;
 
-namespace KiBoard.tracker
+namespace KiBoard
 {
     class Tracker3D : Tracker
     {
