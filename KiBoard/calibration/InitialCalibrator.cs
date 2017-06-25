@@ -51,7 +51,6 @@ namespace KiBoard
         //used later to get synchronized joint data per frame
         public void tick()
         {
-            throw new NotImplementedException();
         }
     }
 }

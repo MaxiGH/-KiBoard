@@ -12,18 +12,25 @@ namespace KiBoard
 
         private static STATE CURRENT_STATE = STATE.CALIBRATION_STATE;
         private static Calibrator calibrator;
+        private static Tracker3D tracker;
+        private static SpaceTranslator spaceTranslator;
+        //private static InputManager inputManager;
 
         static void Main(string[] args)
         {
-
+            setupKinect();
             calibrator = new InitialCalibrator();
+            tracker = new Tracker3D(sensor, multiReader);
+            spaceTranslator = new SpaceTranslator();
+            //inputManager = new InputManager();
 
             bool isRunning = true;
-            tracker.Tracker3D tracker = new tracker.Tracker3D(sensor, multiReader);
             while (isRunning) {
-                Vector3 trackedData = tracker.Coordinates;
-                Thread.Sleep(200);
-            }*/
+                tick();
+                Thread.Sleep(34);
+                if (System.Console.KeyAvailable)
+                    isRunning = false;
+            }
         }
 
         private static void setupKinect()
@@ -40,7 +47,7 @@ namespace KiBoard
             }
         }
 
-        private void tick()
+        private static void tick()
         {
             if (CURRENT_STATE == STATE.CALIBRATION_STATE)
             {
@@ -53,7 +60,8 @@ namespace KiBoard
             }
             if (CURRENT_STATE == STATE.RUNNING_STATE)
             {
-                inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
+                //inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
+                System.Console.WriteLine(spaceTranslator.translate(tracker.Coordinates));
             }
         }
     }
