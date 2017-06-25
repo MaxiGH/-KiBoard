@@ -10,10 +10,13 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
-        private const STATE CURRENT_STATE = STATE.CALIBRATION_STATE;
+        private static STATE CURRENT_STATE = STATE.CALIBRATION_STATE;
+        private static Calibrator calibrator;
 
         static void Main(string[] args)
         {
+            calibrator = new InitialCalibrator();
+
             bool isRunning = true;
             tracker.Tracker3D tracker = new tracker.Tracker3D(sensor, multiReader);
             while (isRunning) {
