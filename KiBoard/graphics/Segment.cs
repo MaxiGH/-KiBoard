@@ -24,9 +24,17 @@ namespace KiBoard
             this.to = to;
         }
 
+        public void nextPoint(Vector2 point)
+        {
+            if (from == null)
+                from = point;
+            else
+                to = point;
+        }
+
         public void draw()
         {
-            
+
         }
     }
 }

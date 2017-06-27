@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="calibration\Calibrator.cs" />
+    <Compile Include="calibration\InitialCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="spaceTranslation\TestMatrix3x3.cs" />
     <Compile Include="spaceTranslation\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
+    <Compile Include="STATE.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
     <Compile Include="ui\Form1.cs">

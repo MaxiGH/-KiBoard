@@ -53,9 +53,9 @@ namespace KiBoard
             }
             translationMatrix = Matrix3x3.multiply(W, Kinverted);
             initialised = true;
-            System.Console.WriteLine("translationMatrix:");
-            System.Console.WriteLine(translationMatrix.toString());
-            System.Console.WriteLine("k0=" + k0.ToString());
+            //System.Console.WriteLine("translationMatrix:");
+            //System.Console.WriteLine(translationMatrix.toString());
+            //System.Console.WriteLine("k0=" + k0.ToString());
         }
     }
 }
