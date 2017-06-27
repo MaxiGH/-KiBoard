@@ -5,6 +5,11 @@ namespace KiBoard
 {
     public class Graphics
     {
+        Graphics()
+        {
+            items = new List<Drawable>();
+        }
+
         private List<Drawable> items;
 
         public int Count
