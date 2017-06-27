@@ -25,6 +25,7 @@ namespace KiBoard
             list.Add(calPoint4);
         }
 
+
         public List<CalibrationPoint> getCalibrationPoints()
         {
             return list;

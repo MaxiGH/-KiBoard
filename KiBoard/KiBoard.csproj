@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="calibration\Calibrator.cs" />
     <Compile Include="calibration\InitialCalibrator.cs" />
+    <Compile Include="calibration\KeyCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
