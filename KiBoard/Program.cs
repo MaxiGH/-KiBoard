@@ -2,6 +2,9 @@
 using System.Threading;
 using Microsoft.Kinect;
 using System.Numerics;
+using System.Windows.Forms;
+using KiBoard.ui;
+using System.Threading;
 
 namespace KiBoard
 {
@@ -20,6 +23,16 @@ namespace KiBoard
 
         static void Main(string[] args)
         {
+            Thread applicationThread = new Thread(runApplication);
+            applicationThread.Start();
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
+
+        private static void runApplication()
+        {
             setupKinect();
             calibrator = new InitialCalibrator();
             tracker = new Tracker3D(sensor, multiReader);
@@ -27,7 +40,8 @@ namespace KiBoard
             //inputManager = new InputManager();
 
             bool isRunning = true;
-            while (isRunning) {
+            while (isRunning)
+            {
                 tick();
                 Thread.Sleep(FRAME_INTERVAL);
                 if (System.Console.KeyAvailable)
