@@ -20,9 +20,6 @@ namespace KiBoard.calibration
 
         public KeyCalibrator(Tracker tracker) 
         {
-            this.calPoint1 = new CalibrationPoint(new Vector3(1, 0, 1), new Vector3(1, 0, 0));
-            this.calPoint2 = new CalibrationPoint(new Vector3(1, 1, 1), new Vector3(1, 1, 0));
-            this.calPoint3 = new CalibrationPoint(new Vector3(0, 1, 1), new Vector3(0, 1, 0));
             this.list = new List<CalibrationPoint>();
             this.tracker = tracker;
             this.state = 0;
