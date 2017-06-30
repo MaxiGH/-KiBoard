@@ -14,15 +14,13 @@ namespace KiBoard
 
         public InitialCalibrator()
         {
-            CalibrationPoint calPoint1 = new CalibrationPoint(new Vector3(1, 0, 1), new Vector3(1, 0, 0));
-            CalibrationPoint calPoint2 = new CalibrationPoint(new Vector3(1, 1, 1), new Vector3(1, 1, 0));
-            CalibrationPoint calPoint3 = new CalibrationPoint(new Vector3(0, 1, 1), new Vector3(0, 1, 0));
-            CalibrationPoint calPoint4 = new CalibrationPoint(new Vector3(0, 0, 1), new Vector3(0, 0, 0));
+            CalibrationPoint calPoint1 = new CalibrationPoint(new Vector3(0.16f, 0, 0.74f), new Vector3(0, 0, 0));
+            CalibrationPoint calPoint2 = new CalibrationPoint(new Vector3(0.22f, 0.72f, 1.13f), new Vector3(0, 1, 0));
+            CalibrationPoint calPoint3 = new CalibrationPoint(new Vector3(0.15f, -0.35f, 1.6f), new Vector3(1, 0, 0));
             list = new List<CalibrationPoint>();
             list.Add(calPoint1);
             list.Add(calPoint2);
             list.Add(calPoint3);
-            list.Add(calPoint4);
         }
 
 
@@ -39,7 +37,7 @@ namespace KiBoard
                 counter++;
             }
 
-            if (counter == 4)
+            if (counter == 3)
             {
                 return true;
             }
@@ -52,7 +50,6 @@ namespace KiBoard
         //used later to get synchronized joint data per frame
         public void tick()
         {
-            throw new NotImplementedException();
         }
     }
 }

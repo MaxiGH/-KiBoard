@@ -67,8 +67,12 @@ namespace KiBoard
                         float xPos = bodyData[index].Joints[JointType.HandRight].Position.X;
                         float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
                         float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
-                        Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
+                        //Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
                         vec3 = new Vector3(xPos, yPos, zPos);
+                    }
+                    else
+                    {
+                        System.Console.WriteLine("no body found");
                     }
                 }
                 return vec3;

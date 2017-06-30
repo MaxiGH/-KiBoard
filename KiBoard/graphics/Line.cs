@@ -15,10 +15,15 @@ namespace KiBoard
             this.smooth = false;
         }
 
-        public Line(List<Vector2> points, bool smooth)
+        public Line(bool smooth)
         {
-            this.points = points;
+            this.points = new List<Vector2>();
             this.smooth = smooth;
+        }
+
+        public void nextPoint(Vector2 point)
+        {
+            points.Add(point);
         }
 
         public void draw()
