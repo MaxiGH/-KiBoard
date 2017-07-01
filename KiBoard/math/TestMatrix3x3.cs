@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using static KiBoard.spaceTranslation.Matrix3x3;
+using static KiBoard.math.Matrix3x3;
 
-namespace KiBoard.spaceTranslation
+namespace KiBoard.math
 {
     public class TestMatrix3x3
     {

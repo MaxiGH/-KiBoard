@@ -10,7 +10,7 @@ namespace KiBoard.calibration
         private List<Vector3> wallPoints;
         private Tracker tracker;
 
-        public KeyCalibrator(Tracker t) 
+        public KeyCalibrator(Tracker t)
         {
             points = new List<CalibrationPoint>();
             wallPoints = new List<Vector3>();

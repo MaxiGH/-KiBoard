@@ -1,4 +1,4 @@
-﻿using KiBoard.spaceTranslation;
+﻿using KiBoard.math;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
