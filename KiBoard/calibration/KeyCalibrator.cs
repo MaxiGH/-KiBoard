@@ -66,3 +66,4 @@ namespace KiBoard.calibration
             return (points.Count == getNumberOfPoints());
         }
     }
+}
