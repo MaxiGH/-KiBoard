@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace KiBoard.inputManager
 {
@@ -9,9 +10,9 @@ namespace KiBoard.inputManager
         private List<Vector3> inputs;
         private InputManager inputManager;
 
-        public TestInputManager(System.Drawing.Graphics g)
+        public TestInputManager(Form form)
         {
-            inputManager = new InputManager(g);
+            inputManager = new InputManager(form);
             inputs = new List<Vector3>();
             initInputs();
         }
@@ -31,7 +32,7 @@ namespace KiBoard.inputManager
 
         public void test()
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             foreach (Vector3 vec in inputs)
             {
                 inputManager.processInput(vec);

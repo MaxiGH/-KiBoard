@@ -24,8 +24,6 @@ namespace KiBoard.graphics
             pixels = new System.Drawing.Bitmap((int)size.X, (int)size.Y);
 
             Size = size;
-
-            push(new Segment(new Vector2(0, 0), new Vector2(1, 1), 10.0f));
         }
 
         public int Count

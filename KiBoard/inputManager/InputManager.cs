@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using KiBoard.graphics;
+using System.Windows.Forms;
 
 namespace KiBoard.inputManager
 {
@@ -19,10 +20,11 @@ namespace KiBoard.inputManager
 
         private Drawable currentDrawable;
 
-        public InputManager(System.Drawing.Graphics gfx)
+        public InputManager(Form form)
         {
             state = InputState.AWAIT_LINE;
-            graphics = new Graphics(gfx);
+            graphics = new Graphics(form.CreateGraphics());
+            graphics.Size = new Vector2(form.Size.Width, form.Size.Height);
         }
 
         public bool inputTouchesWall(Vector3 input)
@@ -32,7 +34,6 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
-            System.Console.WriteLine("Processinput");
             if (inputTouchesWall(input))
             {
                 processTouchingInput(new Vector2(input.X, input.Y));

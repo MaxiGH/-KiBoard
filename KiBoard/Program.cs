@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.Kinect;
 using System.Numerics;
 using System.Windows.Forms;
 using KiBoard.ui;
-using KiBoard.graphics;
 using KiBoard.inputManager;
+using KiBoard.calibration;
 
 namespace KiBoard
 {
@@ -14,12 +13,12 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
-        private static STATE CURRENT_STATE = STATE.CALIBRATION_STATE;
+        private static STATE CURRENT_STATE;
         private static Calibrator calibrator;
         private static Tracker3D tracker;
         private static SpaceTranslator spaceTranslator;
         private static bool isRunning = true;
-        //private static InputManager inputManager;
+        private static InputManager inputManager;
 
         private static Form form;
 
@@ -29,6 +28,7 @@ namespace KiBoard
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            CURRENT_STATE = STATE.CALIBRATION_STATE;
             form = new Form1();
 
             Thread applicationThread = new Thread(runApplication);
@@ -41,26 +41,23 @@ namespace KiBoard
 
         private static void runApplication()
         {
-            /*
             setupKinect();
-            calibrator = new InitialCalibrator();
             tracker = new Tracker3D(sensor, multiReader);
+            calibrator = new KeyCalibrator(tracker);
             spaceTranslator = new SpaceTranslator();
-            //inputManager = new InputManager();
 
-            //Graphics g = new Graphics(form.CreateGraphics());
-            /*
+            while (!form.IsHandleCreated)
+            {
+                Thread.Sleep(10);
+            }
 
             while (isRunning)
             {
                 tick();
-                g.render();
                 Thread.Sleep(FRAME_INTERVAL);
-                if (System.Console.KeyAvailable)
-                    isRunning = false;
-            }*/
-            TestInputManager test = new TestInputManager(form.CreateGraphics());
-            test.test();
+            }
+
+            System.Console.ReadKey();
         }
 
         private static void setupKinect()
@@ -85,41 +82,16 @@ namespace KiBoard
                 if (calibrator.hasCalibrationPoints())
                 {
                     spaceTranslator.processCalibrationPoints(calibrator.getCalibrationPoints());
+                    inputManager = new InputManager(form);
                     CURRENT_STATE = STATE.RUNNING_STATE;
                 }
             }
-            if (CURRENT_STATE == STATE.RUNNING_STATE)
+            else if (CURRENT_STATE == STATE.RUNNING_STATE)
             {
-                //inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
+                inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
                 Vector3 vec = tracker.Coordinates;
                 Vector3 translatedVec = spaceTranslator.translate(vec);
-                System.Console.WriteLine("kinectSpace=" + vec.ToString() + "\twallSpace=" + translatedVec.ToString());
-
-                // move into InputManager
-                const int WIDTH = 20;
-                const int HEIGHT = 10;
-                int x = (int)(WIDTH * translatedVec.X);
-                int y = 10 - (int)(HEIGHT * translatedVec.Y);
-
-                for (int iy = 0; iy < HEIGHT; iy++)
-                {
-                    for (int ix = 0; ix < WIDTH; ix++)
-                    {
-                        if ((ix == x) && (iy == y))
-                        {
-                            if (translatedVec.Z > 0.06f)
-                                System.Console.Write("O");
-                            else
-                                System.Console.Write("X");
-                        }
-                        else
-                        {
-                            System.Console.Write("_");
-                        }
-                    }
-                    System.Console.WriteLine("");
-                }
-                System.Console.WriteLine("\n");
+                inputManager.processInput(translatedVec);
             }
         }
     }
