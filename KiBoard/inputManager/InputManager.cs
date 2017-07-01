@@ -18,10 +18,10 @@ namespace KiBoard.inputManager
 
         private Drawable currentDrawable;
 
-        public InputManager()
+        public InputManager(System.Drawing.Graphics g)
         {
             state = InputState.AWAIT_LINE;
-            graphics = new Graphics();
+            graphics = new Graphics(g);
         }
 
         public bool inputTouchesWall(Vector3 input)
