@@ -65,7 +65,7 @@
     <Compile Include="math\TestMatrix3x3.cs" />
     <Compile Include="math\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
-    <Compile Include="STATE.cs" />
+    <Compile Include="ProgramState.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
     <Compile Include="ui\Form1.cs">
@@ -74,7 +74,6 @@
     <Compile Include="ui\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <None Include="ui\window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

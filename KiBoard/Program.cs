@@ -13,7 +13,7 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
-        private static STATE CURRENT_STATE;
+        private static ProgramState currentState;
         private static Calibrator calibrator;
         private static Tracker3D tracker;
         private static SpaceTranslator spaceTranslator;
@@ -28,7 +28,7 @@ namespace KiBoard
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            CURRENT_STATE = STATE.CALIBRATION_STATE;
+            currentState = ProgramState.CALIBRATION_STATE;
             form = new Form1();
 
             Thread applicationThread = new Thread(runApplication);
@@ -76,17 +76,17 @@ namespace KiBoard
 
         private static void tick()
         {
-            if (CURRENT_STATE == STATE.CALIBRATION_STATE)
+            if (currentState == ProgramState.CALIBRATION_STATE)
             {
                 calibrator.tick();
                 if (calibrator.hasCalibrationPoints())
                 {
                     spaceTranslator.processCalibrationPoints(calibrator.getCalibrationPoints());
                     inputManager = new InputManager(form);
-                    CURRENT_STATE = STATE.RUNNING_STATE;
+                    currentState = ProgramState.RUNNING_STATE;
                 }
             }
-            else if (CURRENT_STATE == STATE.RUNNING_STATE)
+            else if (currentState == ProgramState.RUNNING_STATE)
             {
                 inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
                 Vector3 vec = tracker.Coordinates;
