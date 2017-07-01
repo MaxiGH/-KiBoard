@@ -23,6 +23,7 @@ namespace KiBoard
             list.Add(calPoint3);
         }
 
+
         public List<CalibrationPoint> getCalibrationPoints()
         {
             return list;
