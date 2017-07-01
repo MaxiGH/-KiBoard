@@ -1,16 +1,50 @@
 ﻿using System.Numerics;
 
-namespace KiBoard.spaceTranslation
+namespace KiBoard.math
 {
     public class Matrix3x3
     {
-        private Vector3[] data;
+        private Vector3[] cols;
+
+        private Matrix3x3()
+        {
+            cols = new Vector3[3];
+            for (int i = 0; i < 3; i++)
+            {
+                cols[i] = new Vector3();
+            }
+        }
+
+        public static Matrix3x3 identity()
+        {
+            Matrix3x3 mat = new Matrix3x3();
+            for (int i = 0; i < 3; i++)
+            {
+                mat.cols[i] = new Vector3(i == 0 ? 1 : 0, i == 1 ? 1 : 0, i == 2 ? 1 : 0);
+            }
+            return mat;
+        }
+
+        public Matrix3x3 scale(Vector2 vec)
+        {
+            cols[0].X *= vec.X;
+            cols[1].Y *= vec.Y;
+            return this;
+        }
+
+        public Matrix3x3 scale(Vector3 vec)
+        {
+            cols[0].X *= vec.X;
+            cols[1].Y *= vec.Y;
+            cols[2].Z *= vec.Z;
+            return this;
+        }
 
         public void setColoumn(int index, Vector3 col)
         {
             if ((index < 0) || (index >= 3))
                 return;
-            data[index] = col;
+            cols[index] = col;
         }
 
         public void setRow(int index, Vector3 row)
@@ -18,19 +52,19 @@ namespace KiBoard.spaceTranslation
             switch (index)
             {
                 case 0:
-                    data[0].X = row.X;
-                    data[1].X = row.Y;
-                    data[2].X = row.Z;
+                    cols[0].X = row.X;
+                    cols[1].X = row.Y;
+                    cols[2].X = row.Z;
                     break;
                 case 1:
-                    data[0].Y = row.X;
-                    data[1].Y = row.Y;
-                    data[2].Y = row.Z;
+                    cols[0].Y = row.X;
+                    cols[1].Y = row.Y;
+                    cols[2].Y = row.Z;
                     break;
                 case 2:
-                    data[0].Z = row.X;
-                    data[1].Z = row.Y;
-                    data[2].Z = row.Z;
+                    cols[0].Z = row.X;
+                    cols[1].Z = row.Y;
+                    cols[2].Z = row.Z;
                     break;
             }
         }
@@ -39,7 +73,7 @@ namespace KiBoard.spaceTranslation
         {
             if ((index < 0) || (index >= 3))
                 throw new System.Exception("index = " + index);
-            return new Vector3(data[index].X, data[index].Y, data[index].Z);
+            return new Vector3(cols[index].X, cols[index].Y, cols[index].Z);
         }
 
         public Vector3 getRow(int index)
@@ -47,11 +81,11 @@ namespace KiBoard.spaceTranslation
             switch (index)
             {
                 case 0:
-                    return new Vector3(data[0].X, data[1].X, data[2].X);
+                    return new Vector3(cols[0].X, cols[1].X, cols[2].X);
                 case 1:
-                    return new Vector3(data[0].Y, data[1].Y, data[2].Y);
+                    return new Vector3(cols[0].Y, cols[1].Y, cols[2].Y);
                 case 2:
-                    return new Vector3(data[0].Z, data[1].Z, data[2].Z);
+                    return new Vector3(cols[0].Z, cols[1].Z, cols[2].Z);
                 default:
                     throw new System.Exception("index = " + index);
             }
@@ -71,21 +105,11 @@ namespace KiBoard.spaceTranslation
             return matrix;
         }
 
-        // adds coloumns
-        private Matrix3x3()
-        {
-            data = new Vector3[3];
-            for (int i = 0; i < 3; i++)
-            {
-                data[i] = new Vector3();
-            }
-        }
-
         private void setColoumns(Vector3 col0, Vector3 col1, Vector3 col2)
         {
-            data[0] = col0;
-            data[1] = col1;
-            data[2] = col2;
+            cols[0] = col0;
+            cols[1] = col1;
+            cols[2] = col2;
         }
 
         private void setRows(Vector3 row0, Vector3 row1, Vector3 row2)
@@ -97,12 +121,12 @@ namespace KiBoard.spaceTranslation
 
         public float getDeterminant()
         {
-            return (data[0].X * data[1].Y * data[2].Z
-                + data[1].X * data[2].Y * data[0].Z
-                + data[2].X * data[0].Y * data[1].Z
-                - data[0].Z * data[1].Y * data[2].X
-                - data[1].Z * data[2].Y * data[0].X
-                - data[2].Z * data[0].Y * data[1].X
+            return (cols[0].X * cols[1].Y * cols[2].Z
+                + cols[1].X * cols[2].Y * cols[0].Z
+                + cols[2].X * cols[0].Y * cols[1].Z
+                - cols[0].Z * cols[1].Y * cols[2].X
+                - cols[1].Z * cols[2].Y * cols[0].X
+                - cols[2].Z * cols[0].Y * cols[1].X
                 );
         }
 
@@ -179,6 +203,24 @@ namespace KiBoard.spaceTranslation
                 );
         }
 
+        public Matrix3x3 translate(Vector2 vec)
+        {
+            cols[2].X = vec.X;
+            cols[2].Y = vec.Y;
+            return this;
+        }
+
+        public Vector2 transform(Vector2 vec)
+        {
+            Vector3 result = multiply(this, new Vector3(vec.X, vec.Y, 1));
+            return new Vector2(result.X, result.Y);
+        }
+
+        public Vector3 transform(Vector3 vec)
+        {
+            return multiply(this, vec);
+        }
+
         public static Matrix3x3 getCheckerboard()
         {
             return Matrix3x3.createMatrixByRows(
@@ -223,15 +265,15 @@ namespace KiBoard.spaceTranslation
             Vector3 colVec1;
             if (col == 0)
             {
-                colVec0 = data[1];
-                colVec1 = data[2];
+                colVec0 = cols[1];
+                colVec1 = cols[2];
             } else if (col == 1)
             {
-                colVec0 = data[0];
-                colVec1 = data[2];
+                colVec0 = cols[0];
+                colVec1 = cols[2];
             } else {  // col == 2           
-                colVec0 = data[0];
-                colVec1 = data[1];
+                colVec0 = cols[0];
+                colVec1 = cols[1];
             }
             Matrix2x2 matrix;
             if (row == 0)
@@ -252,9 +294,9 @@ namespace KiBoard.spaceTranslation
 
         public string toString()
         {
-            return "/" + data[0].X + " " + data[1].X + " " + data[2].X + "\\\n"
-                 + "|" + data[0].Y + " " + data[1].Y + " " + data[2].Y + "|\n"
-                 + "\\" + data[0].Z + " " + data[1].Z + " " + data[2].Z + "/";
+            return "/" + cols[0].X + " " + cols[1].X + " " + cols[2].X + "\\\n"
+                 + "|" + cols[0].Y + " " + cols[1].Y + " " + cols[2].Y + "|\n"
+                 + "\\" + cols[0].Z + " " + cols[1].Z + " " + cols[2].Z + "/";
         }
     }
 }

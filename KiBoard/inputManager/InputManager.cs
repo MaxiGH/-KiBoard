@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using KiBoard.graphics;
 
 namespace KiBoard.inputManager
 {
@@ -18,10 +19,10 @@ namespace KiBoard.inputManager
 
         private Drawable currentDrawable;
 
-        public InputManager()
+        public InputManager(System.Drawing.Graphics gfx)
         {
             state = InputState.AWAIT_LINE;
-            graphics = new Graphics();
+            graphics = new Graphics(gfx);
         }
 
         public bool inputTouchesWall(Vector3 input)

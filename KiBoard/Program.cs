@@ -4,7 +4,7 @@ using Microsoft.Kinect;
 using System.Numerics;
 using System.Windows.Forms;
 using KiBoard.ui;
-using System.Threading;
+using KiBoard.graphics;
 
 namespace KiBoard
 {
@@ -17,18 +17,25 @@ namespace KiBoard
         private static Calibrator calibrator;
         private static Tracker3D tracker;
         private static SpaceTranslator spaceTranslator;
+        private static bool isRunning = true;
         //private static InputManager inputManager;
+
+        private static Form form;
 
         public static int FRAME_INTERVAL = 100;
 
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            form = new Form1();
+
             Thread applicationThread = new Thread(runApplication);
             applicationThread.Start();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(form);
+
+            isRunning = false;
         }
 
         private static void runApplication()
@@ -39,7 +46,14 @@ namespace KiBoard
             spaceTranslator = new SpaceTranslator();
             //inputManager = new InputManager();
 
-            bool isRunning = true;
+            while (!form.IsHandleCreated)
+                System.Console.WriteLine("#");
+
+            Graphics g = new Graphics(form.CreateGraphics());
+            g.Size = new Vector2(200, 200);
+            g.render();
+
+            return;
             while (isRunning)
             {
                 tick();
@@ -47,8 +61,6 @@ namespace KiBoard
                 if (System.Console.KeyAvailable)
                     isRunning = false;
             }
-            Console.ReadKey();
-            Console.ReadKey();
         }
 
         private static void setupKinect()

@@ -19,5 +19,10 @@ namespace KiBoard.ui
             this.Text = "KiBoard";
             this.Size = new Size(1000, 800);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
