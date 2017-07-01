@@ -32,6 +32,7 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
+            System.Console.WriteLine("Processinput");
             if (inputTouchesWall(input))
             {
                 processTouchingInput(new Vector2(input.X, input.Y));

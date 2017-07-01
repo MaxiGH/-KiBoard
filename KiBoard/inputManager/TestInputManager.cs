@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using System.Threading;
 
 namespace KiBoard.inputManager
 {
@@ -30,6 +31,7 @@ namespace KiBoard.inputManager
 
         public void test()
         {
+            Thread.Sleep(3000);
             foreach (Vector3 vec in inputs)
             {
                 inputManager.processInput(vec);

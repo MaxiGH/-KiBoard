@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Windows.Forms;
 using KiBoard.ui;
 using KiBoard.graphics;
+using KiBoard.inputManager;
 
 namespace KiBoard
 {
@@ -40,13 +41,15 @@ namespace KiBoard
 
         private static void runApplication()
         {
+            /*
             setupKinect();
             calibrator = new InitialCalibrator();
             tracker = new Tracker3D(sensor, multiReader);
             spaceTranslator = new SpaceTranslator();
             //inputManager = new InputManager();
 
-            Graphics g = new Graphics(form.CreateGraphics());
+            //Graphics g = new Graphics(form.CreateGraphics());
+            /*
 
             while (isRunning)
             {
@@ -55,7 +58,9 @@ namespace KiBoard
                 Thread.Sleep(FRAME_INTERVAL);
                 if (System.Console.KeyAvailable)
                     isRunning = false;
-            }
+            }*/
+            TestInputManager test = new TestInputManager(form.CreateGraphics());
+            test.test();
         }
 
         private static void setupKinect()
