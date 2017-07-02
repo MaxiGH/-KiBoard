@@ -52,7 +52,8 @@ namespace KiBoard
             bool isRunning = true;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
-            while (isRunning && !form.shouldClose()) {
+            while (isRunning && !form.shouldClose())
+            {
                 stopwatch.Start();
 
                 tick();
@@ -68,15 +69,12 @@ namespace KiBoard
                     waitTime = 34 - elapsedMilliseconds;
                     Thread.Sleep((int)waitTime);
                 }
+
                 //System.Console.WriteLine("waitTime berechnet: " + waitTime);
 
                 //double cpuAusl = (double)elapsedMilliseconds / 0.34;
                 //System.Console.WriteLine("CPU Auslastung: " + cpuAusl + " %");
-
-                if (System.Console.KeyAvailable)
-                    isRunning = false;
             }
-
             System.Console.ReadKey();
         }
 
