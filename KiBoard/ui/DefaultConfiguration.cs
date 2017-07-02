@@ -10,13 +10,10 @@ namespace KiBoard.ui
         public List<UIElement> createConfiguration()
         {
             List<UIElement> list = new List<UIElement>();
-            try {
-                list.Add(new Button(new Vector2(0.15f, 0.15f), new Vector2(0.1f, 0.1f), Bitmap.FromFile("resources/Pen.png")));
-            }
-            catch (System.IO.FileNotFoundException e)
-            {
-                Console.WriteLine("couldnt load \"resources/Pen.png\"");
-            }
+
+            list.Add(new Button(new Vector2(0.85f, 0.1f),
+                     new Vector2(0.05f, 0.05f),
+                     ResourceLoader.loadBitmap("pen.png")));
             return list;
         }
     }
