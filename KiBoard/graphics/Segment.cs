@@ -10,12 +10,14 @@ namespace KiBoard.graphics
         public float width;
         public Vector2 from;
         public Vector2 to;
+        public Color color;
 
-        public Segment()
+        public Segment(Color color)
         {
             width = 1.0f;
             from = new Vector2(0, 0);
             to = new Vector2(0, 0);
+            color = Color.White;
         }
 
         public Segment(Vector2 from, Vector2 to, float width = 1.0f)
@@ -23,6 +25,7 @@ namespace KiBoard.graphics
             this.width = width;
             this.from = from;
             this.to = to;
+            this.color = Color.White;
         }
 
         public void nextPoint(Vector2 point)
@@ -39,7 +42,7 @@ namespace KiBoard.graphics
             Vector2 v1 = mat.transform(to);
 
             g.DrawLine(
-                new Pen(Brushes.Black, width),
+                new Pen(new SolidBrush(color), width),
                 new PointF(v0.X, v0.Y),
                 new PointF(v1.X, v1.Y));
         }

@@ -11,11 +11,21 @@ namespace KiBoard.graphics
         public List<Vector2> points;
         public bool smooth;
         public float width;
+        public Color color;
+
+        public Line()
+        {
+            width = 1.0f;
+            smooth = true;
+            color = Color.White;
+            this.points = new List<Vector2>();
+        }
 
         public Line(float width = 1.0f, bool smooth = true)
         {
             this.width = width;
             this.smooth = smooth;
+            this.color = Color.White;
             this.points = new List<Vector2>();
         }
 
@@ -34,11 +44,13 @@ namespace KiBoard.graphics
                 path.AddLine(new PointF(from.X, from.Y), new PointF(to.X, to.Y));
             }
 
-            Pen pen = new Pen(Brushes.Black);
+            Pen pen = new Pen(new SolidBrush(color));
+            pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
             pen.Width = width;
             if (smooth)
-                pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
-            g.DrawPath(pen, path);
+                g.DrawCurve(pen, path.PathPoints);
+            else
+                g.DrawPath(pen, path);
         }
     }
 }
