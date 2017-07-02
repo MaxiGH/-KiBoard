@@ -63,6 +63,7 @@
     <Compile Include="spaceTranslation\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
     <Compile Include="STATE.cs" />
+    <Compile Include="tracker\FingerTracker.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
     <None Include="ui\window.cs" />
@@ -70,6 +71,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="libs\LightBuzz.Vitruvius.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
