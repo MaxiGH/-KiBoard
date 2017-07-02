@@ -70,7 +70,7 @@
     <Compile Include="tracker\TrackerInterface.cs" />
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
-    <Compile Include="ui\Form1.cs">
+    <Compile Include="ui\KiForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ui\KiForm.Designer.cs">
