@@ -68,12 +68,17 @@
     <Compile Include="ProgramState.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
+    <Compile Include="ui\Button.cs" />
+    <Compile Include="ui\DefaultConfiguration.cs" />
     <Compile Include="ui\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ui\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\UIConfiguration.cs" />
+    <Compile Include="ui\UIElement.cs" />
+    <Compile Include="ui\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
