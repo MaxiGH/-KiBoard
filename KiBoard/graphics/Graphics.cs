@@ -13,6 +13,7 @@ namespace KiBoard.graphics
         private System.Drawing.Bitmap pixels;
         private System.Drawing.Graphics gfx;
         private Matrix3x3 transform;
+        private int renderPos;
 
         public Graphics(System.Drawing.Graphics gfx)
         {
@@ -42,7 +43,6 @@ namespace KiBoard.graphics
             get { return size; }
             set {
                 size = value;
-                //pixels.SetResolution((int)size.X, (int)size.Y);
                 pixels = new System.Drawing.Bitmap((int)Size.X, (int)Size.Y);
 
                 System.Drawing.Drawing2D.Matrix transform = new System.Drawing.Drawing2D.Matrix();
@@ -50,7 +50,12 @@ namespace KiBoard.graphics
             }
         }
 
-        public void clear()
+        System.Drawing.Bitmap getBitmap()
+        {
+            return pixels;
+        }
+
+        public void clearDrawables()
         {
             items.Clear();
         }
@@ -80,17 +85,38 @@ namespace KiBoard.graphics
                 items.RemoveAt(index);
         }
 
+        public void clear()
+        {
+            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
+            g.Clear(Color.Black);
+        }
+
         public void render()
         {
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
-            g.Clear(Color.White);
+            g.Clear(Color.Black);
 
-            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(new Vector2(size.X, size.Y)), transform);
+            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(size), transform);
             foreach (Drawable i in items)
             {
                 i.draw(g, mat);
             }
 
+            g.Dispose();
+            gfx.DrawImage(pixels, 0, 0);
+        }
+
+        public void render234()
+        {
+            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
+
+            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(size), transform);
+            for (int i = renderPos; i < items.Count; i++)
+            {
+                items[i].draw(g, mat);
+            }
+
+            renderPos = items.Count;
             g.Dispose();
             gfx.DrawImage(pixels, 0, 0);
         }

@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using KiBoard.graphics;
 using System.Windows.Forms;
+using KiBoard.ui;
 
 namespace KiBoard.inputManager
 {
@@ -15,6 +16,7 @@ namespace KiBoard.inputManager
 
         private InputState state;
         private Graphics graphics;
+        private UIManager uiManager;
 
         public const float TOUCH_THRESHOLD = 0.01f;
 
@@ -23,8 +25,12 @@ namespace KiBoard.inputManager
         public InputManager(Form form)
         {
             state = InputState.AWAIT_LINE;
-            graphics = new Graphics(form.CreateGraphics());
+            System.Drawing.Graphics g = form.CreateGraphics();
+            graphics = new Graphics(g);
             graphics.Size = new Vector2(form.Size.Width, form.Size.Height);
+            uiManager = new UIManager(new DefaultConfiguration(),
+                new System.Drawing.Size(form.Size.Width, form.Size.Height),
+                g);
         }
 
         public bool inputTouchesWall(Vector3 input)
@@ -34,6 +40,7 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
+            uiManager.showAllElements();
             if (inputTouchesWall(input))
             {
                 processTouchingInput(new Vector2(input.X, input.Y));
@@ -43,6 +50,7 @@ namespace KiBoard.inputManager
                 processDetachedInput(input);
             }
             graphics.render();
+            uiManager.render();
         }
 
         private void processTouchingInput(Vector2 input)
@@ -51,6 +59,7 @@ namespace KiBoard.inputManager
             {
                 case InputState.WRITE:
                     currentDrawable.nextPoint(input);
+                    uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_LINE:
                     currentDrawable = new Line();
