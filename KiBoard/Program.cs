@@ -25,9 +25,29 @@ namespace KiBoard
             //inputManager = new InputManager();
 
             bool isRunning = true;
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+
             while (isRunning) {
+                stopwatch.Start();
+
                 tick();
-                Thread.Sleep(34);
+
+                //Thread.Sleep(40);
+                long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+                //System.Console.WriteLine("elapsed Milliseconds nach tick: " + elapsedMilliseconds);
+                stopwatch.Reset();
+
+                long waitTime = 0;
+                if (elapsedMilliseconds < 34)
+                {
+                    waitTime = 34 - elapsedMilliseconds;
+                    Thread.Sleep((int)waitTime);
+                }
+                //System.Console.WriteLine("waitTime berechnet: " + waitTime);
+
+                //double cpuAusl = (double)elapsedMilliseconds / 0.34;
+                //System.Console.WriteLine("CPU Auslastung: " + cpuAusl + " %");
+
                 if (System.Console.KeyAvailable)
                     isRunning = false;
             }
