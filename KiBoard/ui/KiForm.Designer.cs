@@ -1,6 +1,6 @@
 ﻿namespace KiBoard.ui
 {
-    partial class Form1
+    partial class KiForm
     {
         /// <summary>
         /// Required designer variable.

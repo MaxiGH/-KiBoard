@@ -20,7 +20,7 @@ namespace KiBoard
         private static bool isRunning = true;
         //private static InputManager inputManager;
 
-        private static Form form;
+        private static KiForm form;
 
         public static int FRAME_INTERVAL = 100;
 
@@ -28,7 +28,7 @@ namespace KiBoard
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            form = new Form1();
+            form = new KiForm();
 
             Thread applicationThread = new Thread(runApplication);
             applicationThread.Start();
@@ -48,7 +48,7 @@ namespace KiBoard
 
             Graphics g = new Graphics(form.CreateGraphics());
 
-            while (isRunning)
+            while (isRunning && !form.shouldClose())
             {
                 tick();
                 g.render();
