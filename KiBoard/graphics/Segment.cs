@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Numerics;
 using System.Drawing;
+using KiBoard.math;
 
-namespace KiBoard
+namespace KiBoard.graphics
 {
     public class Segment : Drawable
     {
@@ -24,9 +25,23 @@ namespace KiBoard
             this.to = to;
         }
 
-        public void draw()
+        public void nextPoint(Vector2 point)
         {
-            
+            if (from == null)
+                from = point;
+            else
+                to = point;
+        }
+
+        public void draw(System.Drawing.Graphics g, Matrix3x3 mat)
+        {
+            Vector2 v0 = mat.transform(from);
+            Vector2 v1 = mat.transform(to);
+
+            g.DrawLine(
+                new Pen(Brushes.Black, width),
+                new PointF(v0.X, v0.Y),
+                new PointF(v1.X, v1.Y));
         }
     }
 }

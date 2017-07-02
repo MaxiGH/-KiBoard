@@ -51,25 +51,43 @@
   <ItemGroup>
     <Compile Include="calibration\Calibrator.cs" />
     <Compile Include="calibration\InitialCalibrator.cs" />
+    <Compile Include="calibration\KeyCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
     <Compile Include="graphics\Graphics.cs" />
     <Compile Include="graphics\Segment.cs" />
+    <Compile Include="inputManager\InputManager.cs" />
+    <Compile Include="inputManager\TestInputManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="spaceTranslation\Matrix2x2.cs" />
-    <Compile Include="spaceTranslation\TestMatrix3x3.cs" />
-    <Compile Include="spaceTranslation\Matrix3x3.cs" />
+    <Compile Include="math\Matrix2x2.cs" />
+    <Compile Include="math\TestMatrix3x3.cs" />
+    <Compile Include="math\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
-    <Compile Include="STATE.cs" />
+    <Compile Include="ProgramState.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
-    <None Include="ui\window.cs" />
+    <Compile Include="ui\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ui\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\pen.png" />
+    <Content Include="resources\pen_chosed.png" />
+    <Content Include="resources\rubber.png" />
+    <Content Include="resources\rubber_chosed.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
