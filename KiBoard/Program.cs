@@ -22,8 +22,6 @@ namespace KiBoard
 
         private static KiForm form;
 
-        public static int FRAME_INTERVAL = 100;
-
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
@@ -54,7 +52,7 @@ namespace KiBoard
             bool isRunning = true;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
-            while (isRunning) {
+            while (isRunning && !form.shouldClose()) {
                 stopwatch.Start();
 
                 tick();
