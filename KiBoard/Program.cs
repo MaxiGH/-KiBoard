@@ -2,6 +2,7 @@
 using System.Threading;
 using Microsoft.Kinect;
 using System.Numerics;
+using System.Linq;
 
 namespace KiBoard
 {
@@ -65,7 +66,7 @@ namespace KiBoard
             if (CURRENT_STATE == STATE.RUNNING_STATE)
             {
                 //inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
-                Vector3 vec = tracker.Coordinates;
+                Vector3 vec = tracker.Coordinates.First();
                 Vector3 translatedVec = spaceTranslator.translate(vec);
                 System.Console.WriteLine("kinectSpace=" + vec.ToString() + "\twallSpace=" + translatedVec.ToString());
 

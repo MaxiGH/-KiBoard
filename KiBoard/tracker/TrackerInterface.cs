@@ -9,6 +9,6 @@ namespace KiBoard
 {
     interface Tracker
     {
-        Vector3 Coordinates { get; }
+        List <Vector3> Coordinates { get; }
     }
 }
