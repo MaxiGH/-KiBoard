@@ -42,7 +42,6 @@ namespace KiBoard
             Vector3 k1s = points[1].kinectVec - k0;
             Vector3 k2s = points[2].kinectVec - k0;
             Vector3 kss = Vector3.Normalize(Vector3.Cross(k1s, k2s));
-            Console.WriteLine("kss=" + kss.ToString());
             Matrix3x3 K = Matrix3x3.createMatrixByColoumns(k1s, k2s, kss);
             Vector3 wss = Vector3.Normalize(Vector3.Cross((points[1].wallVec - points[0].wallVec), (points[2].wallVec - points[0].wallVec)));
             Matrix3x3 W = Matrix3x3.createMatrixByColoumns(points[1].wallVec, points[2].wallVec, wss);

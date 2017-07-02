@@ -25,14 +25,6 @@ namespace KiBoard.graphics
             pixels = new System.Drawing.Bitmap((int)size.X, (int)size.Y);
 
             Size = size;
-
-            Line l = new Line(3);
-            l.nextPoint(new Vector2(0, 0));
-            l.nextPoint(new Vector2(0.7f, 0.1f));
-            l.nextPoint(new Vector2(0.5f, 0.5f));
-            l.nextPoint(new Vector2(0.2f, 0.3f));
-            l.nextPoint(new Vector2(0.6f, 0.8f));
-            push(l);
         }
 
         public int Count

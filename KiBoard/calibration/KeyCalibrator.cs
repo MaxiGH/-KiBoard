@@ -15,6 +15,7 @@ namespace KiBoard.calibration
             points = new List<CalibrationPoint>();
             wallPoints = new List<Vector3>();
             tracker = t;
+            initiateWallPoints();
         }
 
         private void initiateWallPoints()
@@ -51,6 +52,7 @@ namespace KiBoard.calibration
         private void addPoint()
         {
             points.Add(new CalibrationPoint(tracker.Coordinates, wallPoints[points.Count]));
+            System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
         }
 
         public void tick()

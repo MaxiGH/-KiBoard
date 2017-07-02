@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KiBoard
 {
-    enum STATE
+    enum ProgramState
     {
         CALIBRATION_STATE,
         RUNNING_STATE
