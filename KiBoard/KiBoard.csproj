@@ -83,5 +83,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\pen.png" />
+    <Content Include="resources\pen_chosed.png" />
+    <Content Include="resources\rubber.png" />
+    <Content Include="resources\rubber_chosed.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
