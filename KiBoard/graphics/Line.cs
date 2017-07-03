@@ -39,8 +39,8 @@ namespace KiBoard.graphics
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             for (int i = 0; i < points.Count - 1; i++)
             {
-                Vector2 from = mat.transform(points[i]);
-                Vector2 to = mat.transform(points[i + 1]);
+                Vector2 from = mat.transform(new Vector2(points[i].X, 1.0f - points[i].Y));
+                Vector2 to = mat.transform(new Vector2(points[i + 1].X, 1.0f - points[i + 1].Y));
                 path.AddLine(new PointF(from.X, from.Y), new PointF(to.X, to.Y));
             }
 
