@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using KiBoard.ui;
 using KiBoard.inputManager;
 using KiBoard.calibration;
+using System.Drawing;
 
 namespace KiBoard
 {
@@ -19,6 +20,7 @@ namespace KiBoard
         private static SpaceTranslator spaceTranslator;
         private static bool isRunning = true;
         private static InputManager inputManager;
+        private static Size formSize;
 
         private static KiForm form;
 
@@ -28,7 +30,6 @@ namespace KiBoard
             Application.SetCompatibleTextRenderingDefault(false);
             currentState = ProgramState.CALIBRATION_STATE;
             form = new KiForm();
-
             Thread applicationThread = new Thread(runApplication);
             applicationThread.Start();
 
@@ -44,10 +45,13 @@ namespace KiBoard
             calibrator = new KeyCalibrator(tracker);
             spaceTranslator = new SpaceTranslator();
 
+            // wait for window-creation
             while (!form.IsHandleCreated)
             {
                 Thread.Sleep(10);
             }
+
+            formSize = form.Size;
 
             bool isRunning = true;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
@@ -58,7 +62,6 @@ namespace KiBoard
 
                 tick();
 
-                //Thread.Sleep(40);
                 long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
                 //System.Console.WriteLine("elapsed Milliseconds nach tick: " + elapsedMilliseconds);
                 stopwatch.Reset();
@@ -106,6 +109,11 @@ namespace KiBoard
             }
             else if (currentState == ProgramState.RUNNING_STATE)
             {
+                if (!form.Size.Equals(formSize))
+                {
+                    formSize = form.Size;
+                    inputManager.updateFormSize(formSize);
+                }
                 inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
                 Vector3 vec = tracker.Coordinates;
                 Vector3 translatedVec = spaceTranslator.translate(vec);

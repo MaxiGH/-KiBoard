@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 
@@ -51,6 +52,11 @@ namespace KiBoard.ui
             {
                 element.setVisible(true);
             }
+        }
+
+        public void updateFormSize(Size s)
+        {
+            windowSize = s;
         }
     }
 }

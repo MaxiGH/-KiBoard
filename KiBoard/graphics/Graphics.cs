@@ -9,22 +9,21 @@ namespace KiBoard.graphics
     public class Graphics
     {
         private List<Drawable> items;
-        private Vector2 size;
+        private Size size;
         private System.Drawing.Bitmap pixels;
         private System.Drawing.Graphics gfx;
         private Matrix3x3 transform;
         private int renderPos;
 
-        public Graphics(System.Drawing.Graphics gfx)
+        public Graphics(System.Drawing.Graphics gfx, Size s)
         {
             this.gfx = gfx;
 
             items = new List<Drawable>();
-            size = new Vector2(100, 100);
             transform = Matrix3x3.identity();
-            pixels = new System.Drawing.Bitmap((int)size.X, (int)size.Y);
+            pixels = new Bitmap(size.Width, size.Height);
 
-            Size = size;
+            Size = s;
         }
 
         public int Count
@@ -38,12 +37,12 @@ namespace KiBoard.graphics
             set { transform = value; }
         }
 
-        public Vector2 Size
+        public Size Size
         {
             get { return size; }
             set {
                 size = value;
-                pixels = new System.Drawing.Bitmap((int)Size.X, (int)Size.Y);
+                pixels = new Bitmap(Size.Width, Size.Height);
 
                 System.Drawing.Drawing2D.Matrix transform = new System.Drawing.Drawing2D.Matrix();
                 gfx.Transform = transform;
@@ -96,7 +95,7 @@ namespace KiBoard.graphics
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
             g.Clear(Color.Black);
 
-            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(size), transform);
+            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(new Vector2(size.Width, size.Height)), transform);
             foreach (Drawable i in items)
             {
                 i.draw(g, mat);
@@ -106,11 +105,16 @@ namespace KiBoard.graphics
             gfx.DrawImage(pixels, 0, 0);
         }
 
+        public void updateFormSize(Size s)
+        {
+            Size = s;
+        }
+
         public void render234()
         {
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
 
-            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(size), transform);
+            Matrix3x3 mat = Matrix3x3.multiply(Matrix3x3.identity().scale(new Vector2(size.Width, size.Height)), transform);
             for (int i = renderPos; i < items.Count; i++)
             {
                 items[i].draw(g, mat);

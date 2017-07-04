@@ -26,8 +26,7 @@ namespace KiBoard.inputManager
         {
             state = InputState.AWAIT_LINE;
             System.Drawing.Graphics g = form.CreateGraphics();
-            graphics = new Graphics(g);
-            graphics.Size = new Vector2(form.Size.Width, form.Size.Height);
+            graphics = new Graphics(g, new System.Drawing.Size(form.Size.Width, form.Size.Height));
             uiManager = new UIManager(new DefaultConfiguration(),
                 new System.Drawing.Size(form.Size.Width, form.Size.Height),
                 g);
@@ -80,6 +79,12 @@ namespace KiBoard.inputManager
                 default:
                     break;
             }
+        }
+
+        public void updateFormSize(System.Drawing.Size s)
+        {
+            graphics.updateFormSize(s);
+            uiManager.updateFormSize(s);
         }
     }
 }
