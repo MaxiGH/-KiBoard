@@ -8,14 +8,23 @@ namespace KiBoard.ui
     {
         private Vector2 position;
         private Vector2 size;
-        private Image bitmap;
+        private Image bitmapUnclicked;
+        private Image bitmapClicked;
         private bool visible;
+        private bool isClicked;
 
-        public Button(Vector2 pos, Vector2 s, Image btm)
+        public bool IsClicked {
+            get { return isClicked; }
+            set { isClicked = value; }
+        }
+
+        public Button(Vector2 pos, Vector2 s, Image btmUc, Image btmC)
         {
             position = pos;
             size = s;
-            bitmap = btm;
+            bitmapUnclicked = btmUc;
+            bitmapClicked = btmC;
+            isClicked = false;
         }
 
         public void render(Graphics gfx, Size windowSize)
@@ -26,7 +35,10 @@ namespace KiBoard.ui
                         new Point((int)(windowSize.Width * position.X), (int)(windowSize.Height - (windowSize.Height * position.Y))),
                         new Size((int)(windowSize.Width * size.X), (int)(windowSize.Height * size.Y))
                         );
-                gfx.DrawImage(bitmap, renderRect);
+                if (!isClicked)
+                    gfx.DrawImage(bitmapUnclicked, renderRect);
+                else
+                    gfx.DrawImage(bitmapClicked, renderRect);
             }
         }
 

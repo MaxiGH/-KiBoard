@@ -28,14 +28,19 @@ namespace KiBoard.ui
 
         public bool isTouchingElement(Vector2 vec)
         {
+            return getTouchingElement(vec) != null;
+        }
+
+        public UIElement getTouchingElement(Vector2 vec)
+        {
             foreach (UIElement element in elements)
             {
                 if (element.touches(vec))
                 {
-                    return true;
+                    return element;
                 }
             }
-            return false;
+            return null;
         }
 
         public void hideHoveredElements(Vector2 vec)

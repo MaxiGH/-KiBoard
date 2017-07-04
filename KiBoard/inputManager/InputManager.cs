@@ -61,11 +61,23 @@ namespace KiBoard.inputManager
                     uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_LINE:
-                    currentDrawable = new Line();
-                    currentDrawable.nextPoint(input);
-                    graphics.push(currentDrawable);
-                    state = InputState.WRITE;
-                    break;
+                    if (uiManager.isTouchingElement(input))
+                    {
+                        var uiElement = uiManager.getTouchingElement(input);
+                        if (uiElement is ui.Button)
+                        {
+                            ((ui.Button)uiElement).IsClicked = true;
+                        }
+                        break;
+                    } else
+                    {
+                        currentDrawable = new Line();
+                        currentDrawable.nextPoint(input);
+                        graphics.push(currentDrawable);
+                        state = InputState.WRITE;
+                        break;
+                    }
+                    
             }
         }
 

@@ -11,9 +11,14 @@ namespace KiBoard.ui
         {
             List<UIElement> list = new List<UIElement>();
 
+            list.Add(new Button(new Vector2(0.75f, 0.1f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("pen.png"),
+                     ResourceLoader.loadBitmap("pen_chosed.png")));
             list.Add(new Button(new Vector2(0.85f, 0.1f),
-                     new Vector2(0.05f, 0.05f),
-                     ResourceLoader.loadBitmap("pen.png")));
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("rubber.png"),
+                     ResourceLoader.loadBitmap("rubber_chosed.png")));
             return list;
         }
     }
