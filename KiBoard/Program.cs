@@ -16,11 +16,12 @@ namespace KiBoard
 
         private static ProgramState currentState;
         private static Calibrator calibrator;
-        private static Tracker3D tracker;
+        private static Tracker tracker;
         private static SpaceTranslator spaceTranslator;
         private static bool isRunning = true;
         private static InputManager inputManager;
         private static Size formSize;
+        private const int FRAME_INTERVAL = 50;
 
         private static KiForm form;
 
@@ -53,7 +54,7 @@ namespace KiBoard
 
             formSize = form.Size;
 
-            bool isRunning = true;
+            isRunning = true;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
             while (isRunning && !form.shouldClose())
@@ -67,15 +68,15 @@ namespace KiBoard
                 stopwatch.Reset();
 
                 long waitTime = 0;
-                if (elapsedMilliseconds < 34)
+                if (elapsedMilliseconds < FRAME_INTERVAL)
                 {
-                    waitTime = 34 - elapsedMilliseconds;
+                    waitTime = FRAME_INTERVAL - elapsedMilliseconds;
                     Thread.Sleep((int)waitTime);
                 }
 
                 //System.Console.WriteLine("waitTime berechnet: " + waitTime);
 
-                //double cpuAusl = (double)elapsedMilliseconds / 0.34;
+                //double cpuAusl = (double)(elapsedMilliseconds / FRAME_INTERVAL) * 100;
                 //System.Console.WriteLine("CPU Auslastung: " + cpuAusl + " %");
             }
             System.Console.ReadKey();
@@ -115,9 +116,6 @@ namespace KiBoard
                     inputManager.updateFormSize(formSize);
                 }
                 inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
-                Vector3 vec = tracker.Coordinates;
-                Vector3 translatedVec = spaceTranslator.translate(vec);
-                inputManager.processInput(translatedVec);
             }
         }
     }

@@ -110,7 +110,7 @@ namespace KiBoard.graphics
             Size = s;
         }
 
-        public void render234()
+        public void renderLast()
         {
             System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(pixels);
 

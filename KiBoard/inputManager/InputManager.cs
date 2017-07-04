@@ -48,7 +48,7 @@ namespace KiBoard.inputManager
             {
                 processDetachedInput(input);
             }
-            graphics.render();
+            graphics.renderLast();
             uiManager.render();
         }
 
