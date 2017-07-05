@@ -13,6 +13,7 @@ namespace KiBoard.ui
     public partial class KiForm : Form
     {
         private bool closing;
+        private bool keyPressed;
 
         public KiForm()
         {
@@ -21,6 +22,7 @@ namespace KiBoard.ui
             this.Text = "KiBoard";
             this.Size = new Size(800, 600);
             closing = false;
+            keyPressed = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,6 +44,18 @@ namespace KiBoard.ui
         public bool shouldClose()
         {
             return closing;
+        }
+
+        private void KiForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            keyPressed = true;
+        }
+
+        public bool isKeyPressed()
+        {
+            bool result = keyPressed;
+            keyPressed = false;
+            return result;
         }
     }
 }

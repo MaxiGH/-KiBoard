@@ -49,9 +49,13 @@ namespace KiBoard.ui
 
         public bool touches(Vector2 vec)
         {
-            if ((position.X < vec.X) && (position.Y < vec.Y))
+            if ((position.X < vec.X) && (position.Y > vec.Y))
             {
-                return ((position.X + size.X > vec.X) && (position.Y + size.Y > vec.Y));
+                if ((position.X + size.X > vec.X) && (position.Y - size.Y > vec.Y))
+                {
+                    System.Console.WriteLine("clicked");
+                    return true;
+                }
             }
             return false;
         }

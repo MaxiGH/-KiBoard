@@ -12,5 +12,7 @@ namespace KiBoard
         // returns the determined calibration points
         // returns null, if calibration points are not determined yet
         List<CalibrationPoint> getCalibrationPoints();
+
+        void keyPressed();
     }
 }

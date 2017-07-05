@@ -19,6 +19,7 @@ namespace KiBoard.inputManager
         private InputState state;
         private Graphics graphics;
         private UIManager uiManager;
+        private System.Drawing.Graphics gr;
 
         public const float TOUCH_THRESHOLD = 0.01f;
 
@@ -30,6 +31,7 @@ namespace KiBoard.inputManager
         {
             state = InputState.AWAIT_LINE;
             System.Drawing.Graphics g = form.CreateGraphics();
+            gr = g;
             graphics = new Graphics(g, new System.Drawing.Size(form.Size.Width, form.Size.Height));
             uiManager = new UIManager(new DefaultConfiguration(),
                 new System.Drawing.Size(form.Size.Width, form.Size.Height),
@@ -43,6 +45,7 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
+            //System.Console.WriteLine("state=" + state.ToString());
             uiManager.showAllElements();
             if (inputTouchesWall(input))
             {
@@ -52,12 +55,14 @@ namespace KiBoard.inputManager
             {
                 processDetachedInput(input);
             }
-            graphics.renderLast();
+            graphics.render();
             uiManager.render();
         }
 
         private void processTouchingInput(Vector2 input)
         {
+            gr.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White)),
+                new System.Drawing.Rectangle(10, 10, 20, 20));
             switch (state)
             {
                 case InputState.WRITE:
