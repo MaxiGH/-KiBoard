@@ -13,7 +13,7 @@ namespace KiBoard
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
-        private List <Vector3> vec3;
+        private Vector3 vec3;
 
         public Tracker3D(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
@@ -23,7 +23,7 @@ namespace KiBoard
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
-        public List <Vector3> Coordinates
+        public Vector3 Coordinates
         {
             get
             {
@@ -68,7 +68,7 @@ namespace KiBoard
                         float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
                         float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
                         //Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
-                        vec3.Add(new Vector3(xPos, yPos, zPos));
+                        vec3 = new Vector3(xPos, yPos, zPos);
                     }
                     else
                     {

@@ -8,7 +8,7 @@ using Microsoft.Kinect;
 
 namespace KiBoard.tracker
 {
-    class FingerTracker : Tracker
+    class FingerTracker : MultiTracker
     {
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
@@ -81,7 +81,7 @@ namespace KiBoard.tracker
             }
         }
 
-        private Vector3 getFingerTipPoint(Vector3 handjoint, MultiSourceFrame frame)
+        private HandCollection getFingerTipPoint(Vector3 leftjoint, Vector3, MultiSourceFrame frame)
         {
 
             return handjoint;

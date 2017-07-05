@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Numerics;
 
-namespace KiBoard
+namespace KiBoard.tracker
 {
-    interface Tracker
+    interface MultiTracker
     {
-        Vector3 Coordinates { get; }
+        HandCollection Coordinates { get; }
     }
 }

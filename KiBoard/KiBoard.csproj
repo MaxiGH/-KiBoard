@@ -64,6 +64,9 @@
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
     <Compile Include="STATE.cs" />
     <Compile Include="tracker\FingerTracker.cs" />
+    <Compile Include="tracker\Hand.cs" />
+    <Compile Include="tracker\HandCollection.cs" />
+    <Compile Include="tracker\MultiTrackerInterface.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
     <None Include="ui\window.cs" />
