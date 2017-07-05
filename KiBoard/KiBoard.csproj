@@ -55,31 +55,57 @@
   <ItemGroup>
     <Compile Include="calibration\Calibrator.cs" />
     <Compile Include="calibration\InitialCalibrator.cs" />
+    <Compile Include="calibration\KeyCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
     <Compile Include="graphics\Graphics.cs" />
     <Compile Include="graphics\Segment.cs" />
+    <Compile Include="inputManager\InputManager.cs" />
+    <Compile Include="inputManager\TestInputManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="spaceTranslation\Matrix2x2.cs" />
-    <Compile Include="spaceTranslation\TestMatrix3x3.cs" />
-    <Compile Include="spaceTranslation\Matrix3x3.cs" />
+    <Compile Include="math\Matrix2x2.cs" />
+    <Compile Include="math\TestMatrix3x3.cs" />
+    <Compile Include="math\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
     <Compile Include="STATE.cs" />
     <Compile Include="tracker\FingerTracker.cs" />
     <Compile Include="tracker\Hand.cs" />
     <Compile Include="tracker\HandCollection.cs" />
     <Compile Include="tracker\MultiTrackerInterface.cs" />
+    <Compile Include="ProgramState.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
     <Compile Include="tracker\TrackerInterface.cs" />
-    <None Include="ui\window.cs" />
+    <Compile Include="ui\Button.cs" />
+    <Compile Include="ui\DefaultConfiguration.cs" />
+    <Compile Include="ui\KiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\KiForm.Designer.cs">
+      <DependentUpon>KiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\ResourceLoader.cs" />
+    <Compile Include="ui\UIConfiguration.cs" />
+    <Compile Include="ui\UIElement.cs" />
+    <Compile Include="ui\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\LightBuzz.Vitruvius.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ui\KiForm.resx">
+      <DependentUpon>KiForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\pen.png" />
+    <Content Include="resources\pen_chosed.png" />
+    <Content Include="resources\rubber.png" />
+    <Content Include="resources\rubber_chosed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

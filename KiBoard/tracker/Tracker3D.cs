@@ -19,7 +19,7 @@ namespace KiBoard
         {
             this.sensor = sensor;
             this.multiReader = multiReader;
-            Console.WriteLine("Tracker created!");
+            Console.WriteLine("tracker created");
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
