@@ -41,10 +41,10 @@ namespace KiBoard
         private static void setupKinect()
         {
             sensor = KinectSensor.GetDefault();
-            multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body);
+            multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Depth);
             if (sensor != null)
             {
-                multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body);
+                multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Depth);
                 if (!sensor.IsOpen)
                 {
                     sensor.Open();
@@ -66,7 +66,7 @@ namespace KiBoard
             if (CURRENT_STATE == STATE.RUNNING_STATE)
             {
                 //inputManager.processPoint(spaceTranslator.translate(tracker.Coordinates));
-                Vector3 vec = tracker.Coordinates.First();
+                Vector3 vec = tracker.Coordinates;
                 Vector3 translatedVec = spaceTranslator.translate(vec);
                 System.Console.WriteLine("kinectSpace=" + vec.ToString() + "\twallSpace=" + translatedVec.ToString());
 

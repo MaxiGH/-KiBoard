@@ -5,26 +5,28 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
+using LightBuzz.Vitruvius;
 
-namespace KiBoard.tracker
+namespace KiBoard
 {
-    class FingerTracker : MultiTracker
+    class FingerTracker : Tracker
     {
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
-        private DepthFrameReader depthReader;
         private Body[] bodyData;
-        private Vector3 vec3;
+        private CameraSpacePoint joint;
+        private ushort[] depthData;
+        private const int SEARCH_FIELD = 10;
+        private System.Numerics.Vector3 vec3;
 
         public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader, DepthFrameReader depthReader)
         {
             this.sensor = sensor;
             this.multiReader = multiReader;
-            this.depthReader = depthReader;
             Console.WriteLine("FingerTracker created!");
         }
 
-        public Vector3 Coordinates
+        public System.Numerics.Vector3 Coordinates
         {
             get
             {
@@ -37,6 +39,7 @@ namespace KiBoard.tracker
                     {
                         // Getting the latest bodyFrame
                         var bodyFrame = frame.BodyFrameReference.AcquireFrame();
+                        var depthFrame = frame.DepthFrameReference.AcquireFrame();
                         if (bodyFrame != null)
                         {
                             if (bodyData == null)
@@ -48,6 +51,15 @@ namespace KiBoard.tracker
                             bodyFrame.GetAndRefreshBodyData(bodyData);
                             bodyFrame.Dispose();
                             bodyFrame = null;
+                        }
+                        if (depthFrame != null)
+                        {
+                            int width = depthFrame.FrameDescription.Width;
+                            int height = depthFrame.FrameDescription.Height;
+
+                            depthData = new ushort[width * height];
+
+                            depthFrame.CopyFrameDataToArray(depthData);
                         }
                     }
                     frame = null;
@@ -66,25 +78,29 @@ namespace KiBoard.tracker
                     if (index > -1)
                     {
                         // We use the right Hand
-                        float xPos = bodyData[index].Joints[JointType.HandRight].Position.X;
-                        float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
-                        float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
-                        //Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
-                        vec3 = new Vector3(xPos, yPos, zPos);
+                        CameraSpacePoint joint = new CameraSpacePoint();
+                        joint.X = bodyData[index].Joints[JointType.HandRight].Position.X;
+                        joint.Y = bodyData[index].Joints[JointType.HandRight].Position.Y;
+                        joint.Z = bodyData[index].Joints[JointType.HandRight].Position.Z;
+                        vec3 = new System.Numerics.Vector3(joint.X, joint.Y, joint.Z);
                     }
                     else
                     {
                         System.Console.WriteLine("no body found");
                     }
                 }
-                return getFingerTipPoint(vec3, frame);
+                getFingerTipPoint(joint);
+                return vec3;
             }
         }
 
-        private HandCollection getFingerTipPoint(Vector3 leftjoint, Vector3, MultiSourceFrame frame)
+        private System.Numerics.Vector3 getFingerTipPoint(CameraSpacePoint joint)
         {
+            DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
 
-            return handjoint;
+            Console.WriteLine(depthData[(int)depthPoint.Y * 512 + (int)depthPoint.X]);
+            
+            return new System.Numerics.Vector3();
         } 
     }
 }
