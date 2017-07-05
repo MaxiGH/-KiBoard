@@ -11,7 +11,9 @@ namespace KiBoard.inputManager
         private enum InputState
         {
             WRITE, // currentDrawable is set and input is forwarded to this drawable
-            AWAIT_LINE // currentDrawable is NOT set and if input touches wall again, a new line will be created
+            AWAIT_LINE, // currentDrawable is NOT set and if input touches wall again, a new line will be created
+            CLICKING, // UIElement is clicked
+            CLICK_UNHOVERED // UIElement was clicked, Finger is still touching wall, but not Element
         }
 
         private InputState state;
@@ -21,6 +23,8 @@ namespace KiBoard.inputManager
         public const float TOUCH_THRESHOLD = 0.01f;
 
         private Drawable currentDrawable;
+
+        private UIElement clickedElement;
 
         public InputManager(Form form)
         {
@@ -63,21 +67,24 @@ namespace KiBoard.inputManager
                 case InputState.AWAIT_LINE:
                     if (uiManager.isTouchingElement(input))
                     {
-                        var uiElement = uiManager.getTouchingElement(input);
-                        if (uiElement is ui.Button)
-                        {
-                            ((ui.Button)uiElement).IsClicked = true;
-                        }
-                        break;
+                        clickedElement = uiManager.getTouchingElement(input);
+                        clickedElement.onClick();
+                        state = InputState.CLICKING;
                     } else
                     {
                         currentDrawable = new Line();
                         currentDrawable.nextPoint(input);
                         graphics.push(currentDrawable);
                         state = InputState.WRITE;
-                        break;
                     }
-                    
+                    break;
+                case InputState.CLICKING:
+                    if (!clickedElement.touches(input))
+                    {
+                        clickedElement.onClickReleased();
+                        state = InputState.CLICK_UNHOVERED;
+                    }
+                    break;
             }
         }
 
@@ -85,6 +92,7 @@ namespace KiBoard.inputManager
         {
             switch (state)
             {
+                case InputState.CLICK_UNHOVERED:
                 case InputState.WRITE:
                     state = InputState.AWAIT_LINE;
                     break;

@@ -11,7 +11,7 @@ namespace KiBoard.ui
         private Image bitmapUnclicked;
         private Image bitmapClicked;
         private bool visible;
-        private bool isClicked;
+        protected bool isClicked;
 
         public bool IsClicked {
             get { return isClicked; }
@@ -54,6 +54,18 @@ namespace KiBoard.ui
                 return ((position.X + size.X > vec.X) && (position.Y + size.Y > vec.Y));
             }
             return false;
+        }
+
+        public void onClick()
+        {
+            isClicked = true;
+            System.Console.WriteLine("Button is clicked.");
+        }
+
+        public void onClickReleased()
+        {
+            isClicked = false;
+            System.Console.WriteLine("Button is released.");
         }
     }
 }

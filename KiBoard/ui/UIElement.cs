@@ -8,5 +8,7 @@ namespace KiBoard.ui
         void render(Graphics gfx, Size WindowSize);
         bool touches(Vector2 vec);
         void setVisible(bool visible);
+        void onClick();
+        void onClickReleased();
     }
 }
