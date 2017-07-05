@@ -100,6 +100,10 @@ namespace KiBoard
         {
             if (currentState == ProgramState.CALIBRATION_STATE)
             {
+                if (form.isKeyPressed())
+                {
+                    calibrator.keyPressed();
+                }
                 calibrator.tick();
                 if (calibrator.hasCalibrationPoints())
                 {
