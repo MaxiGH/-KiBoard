@@ -68,6 +68,7 @@ namespace KiBoard
                 stopwatch.Start();
 
                 tick();
+                graphics.MessageBox.tick();
 
                 long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
                 //System.Console.WriteLine("elapsed Milliseconds nach tick: " + elapsedMilliseconds);

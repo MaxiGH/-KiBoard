@@ -55,6 +55,7 @@
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
+    <Compile Include="graphics\MessageBox.cs" />
     <Compile Include="graphics\RenderStack.cs" />
     <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Segment.cs" />
