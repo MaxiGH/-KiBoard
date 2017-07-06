@@ -15,6 +15,7 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
+        private static System.Drawing.Bitmap drawer;
         private static ProgramState currentState;
         private static Calibrator calibrator;
         private static Tracker tracker;
@@ -23,6 +24,7 @@ namespace KiBoard
         private static InputManager inputManager;
         private static Size formSize;
         private const int FRAME_INTERVAL = 50;
+        private static System.Drawing.Graphics gfx;
 
         private static KiForm form;
 
@@ -43,7 +45,8 @@ namespace KiBoard
         private static void runApplication()
         {
             setupKinect();
-            tracker = new Tracker3D(sensor, multiReader);
+            drawer = new System.Drawing.Bitmap(512, 424);
+            tracker = new FingerTracker(sensor, multiReader, form);
             calibrator = new KeyCalibrator(tracker);
             spaceTranslator = new SpaceTranslator();
 
@@ -52,6 +55,8 @@ namespace KiBoard
             {
                 Thread.Sleep(10);
             }
+
+            gfx = form.CreateGraphics();
 
             formSize = form.Size;
 
@@ -86,20 +91,23 @@ namespace KiBoard
         private static void setupKinect()
         {
             sensor = KinectSensor.GetDefault();
-            multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Depth);
             if (sensor != null)
             {
-                multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.Depth);
+                multiReader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Depth | FrameSourceTypes.Body);
                 if (!sensor.IsOpen)
                 {
                     sensor.Open();
                 }
             }
+            else
+            {
+                throw new System.Exception("sensor == null");
+            }
         }
 
         private static void tick()
         {
-            if (currentState == ProgramState.CALIBRATION_STATE)
+            /*if (currentState == ProgramState.CALIBRATION_STATE)
             {
                 calibrator.tick();
                 if (calibrator.hasCalibrationPoints())
@@ -118,6 +126,9 @@ namespace KiBoard
                 }
                 inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
             }
+        */
+            System.Numerics.Vector3 vec= tracker.Coordinates;
+            gfx.DrawImage(drawer, 0, 0);
         }
     }
 }

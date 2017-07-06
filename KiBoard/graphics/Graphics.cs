@@ -21,7 +21,7 @@ namespace KiBoard.graphics
 
             items = new List<Drawable>();
             transform = Matrix3x3.identity();
-            pixels = new Bitmap(size.Width, size.Height);
+            pixels = new Bitmap(s.Width, s.Height);
 
             Size = s;
         }
