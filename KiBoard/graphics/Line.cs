@@ -36,6 +36,8 @@ namespace KiBoard.graphics
 
         public void draw(System.Drawing.Graphics g, Matrix3x3 mat)
         {
+            if (points.Count < 2)
+                return;
             PointF[] path = new PointF[points.Count];
             for (int i = 0; i < points.Count; i++)
             {

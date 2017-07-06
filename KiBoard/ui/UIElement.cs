@@ -9,8 +9,17 @@ namespace KiBoard.ui
         private Vector2 size;
         private bool visible;
 
-        public UIElement(Vector2 pos, Vector2 si)
+        private string name;
+
+        public string Name
         {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public UIElement(string n, Vector2 pos, Vector2 si)
+        {
+            name = n;
             position = pos;
             size = si;
             visible = false;

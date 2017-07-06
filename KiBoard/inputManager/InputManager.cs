@@ -7,7 +7,7 @@ using System.Drawing;
 namespace KiBoard.inputManager
 {
 
-    class InputManager
+    public class InputManager
     {
         private enum InputState
         {
@@ -29,6 +29,8 @@ namespace KiBoard.inputManager
 
         private UIElement clickedElement;
 
+        private UIController controller;
+
         public InputManager(Form form)
         {
             state = InputState.AWAIT_LINE;
@@ -36,8 +38,9 @@ namespace KiBoard.inputManager
             Vector2 size = new Vector2(form.Size.Width, form.Size.Height);
             frame = new FrameBuffer(size);
             renderer = new Renderer(frame);
-            uiManager = new UIManager(new DefaultConfiguration(), frame);
-
+            UIConfiguration configuration = new DefaultConfiguration();
+            uiManager = new UIManager(configuration, frame);
+            controller = configuration.createController(this);
             gfx = form.CreateGraphics();
         }
 
@@ -60,7 +63,7 @@ namespace KiBoard.inputManager
             }
 
             renderer.clear();
-            renderer.renderNew();
+            renderer.render();
             uiManager.render();
 
             gfx.DrawImage(frame.Bitmap, 0, 0);
@@ -83,6 +86,7 @@ namespace KiBoard.inputManager
                     {
                         clickedElement = uiManager.getTouchingElement(input);
                         clickedElement.onClick();
+                        controller.onClick(clickedElement.Name);
                         state = InputState.CLICKING;
                     } else
                     {
@@ -124,6 +128,12 @@ namespace KiBoard.inputManager
         public void updateFormSize(System.Drawing.Size s)
         {
             frame.Size = new Vector2(s.Width, s.Height);
+        }
+
+        public void createTestDrawable()
+        {
+            gfx.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.Red)),
+                new System.Drawing.Rectangle(20, 20, 20, 20));
         }
     }
 }

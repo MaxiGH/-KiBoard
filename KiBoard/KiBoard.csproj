@@ -72,6 +72,7 @@
     <Compile Include="tracker\TrackerInterface.cs" />
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
+    <Compile Include="ui\DefaultController.cs" />
     <Compile Include="ui\KiForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +82,7 @@
     <Compile Include="ui\ResourceLoader.cs" />
     <Compile Include="ui\ToggleButton.cs" />
     <Compile Include="ui\UIConfiguration.cs" />
+    <Compile Include="ui\UIController.cs" />
     <Compile Include="ui\UIElement.cs" />
     <Compile Include="ui\UIManager.cs" />
   </ItemGroup>

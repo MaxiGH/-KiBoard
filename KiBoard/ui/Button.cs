@@ -14,7 +14,7 @@ namespace KiBoard.ui
             get { return isClicked; }
         }
 
-        public Button(Vector2 pos, Vector2 size, Image btmUc, Image btmC) : base(pos, size)
+        public Button(string name, Vector2 pos, Vector2 size, Image btmUc, Image btmC) : base(name, pos, size)
         {
             bitmapUnclicked = btmUc;
             bitmapClicked = btmC;
