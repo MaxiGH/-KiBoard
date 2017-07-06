@@ -85,8 +85,6 @@ namespace KiBoard
                 //double cpuAusl = (double)(elapsedMilliseconds / FRAME_INTERVAL) * 100;
                 //System.Console.WriteLine("CPU Auslastung: " + cpuAusl + " %");
             }
-
-            form.Close();
         }
 
         private static void setupKinect()

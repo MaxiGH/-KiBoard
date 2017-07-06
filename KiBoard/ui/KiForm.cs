@@ -49,6 +49,14 @@ namespace KiBoard.ui
 
         private void KiForm_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (ShouldClose)
+            {
+                Close();
+            }
+            if (e.KeyChar == 'q')
+            {
+                ShouldClose = true;
+            }
             keyPressed = true;
         }
 
