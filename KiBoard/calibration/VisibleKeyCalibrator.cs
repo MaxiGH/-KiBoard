@@ -7,7 +7,6 @@ namespace KiBoard.calibration
     class VisibleKeyCalibrator : KeyCalibrator
     {
         private KiForm form;
-        private Bitmap bitmap;
         private Graphics g;
         private Color color;
         private Brush brush;
@@ -16,9 +15,8 @@ namespace KiBoard.calibration
         public VisibleKeyCalibrator(Tracker t, KiForm f) : base(t)
         {
             form = f;
-            bitmap = new Bitmap(form.Size.Width, form.Size.Height);
-            g = Graphics.FromImage(bitmap);
-            color = Color.FromArgb(255, 255, 255);
+            g = f.CreateGraphics();
+            color = Color.White;
             brush = new SolidBrush(color);
             pen = new Pen(brush);
         }
@@ -33,7 +31,6 @@ namespace KiBoard.calibration
         private void drawCalibrationPoint()
         {
             g.Clear(Color.Black);
-
             if (points.Count == 0)
             {
                 // First point - vertical Line

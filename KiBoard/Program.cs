@@ -42,15 +42,16 @@ namespace KiBoard
         private static void runApplication()
         {
             setupKinect();
-            tracker = new Tracker3D(sensor, multiReader);
-            calibrator = new KeyCalibrator(tracker);
-            spaceTranslator = new SpaceTranslator();
-
             // wait for window-creation
             while (!form.IsHandleCreated)
             {
                 Thread.Sleep(10);
             }
+            tracker = new Tracker3D(sensor, multiReader);
+            calibrator = new VisibleKeyCalibrator(tracker, form);
+            spaceTranslator = new SpaceTranslator();
+
+
 
             formSize = form.Size;
 
