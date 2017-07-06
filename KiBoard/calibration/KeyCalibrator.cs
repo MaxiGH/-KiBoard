@@ -6,9 +6,9 @@ namespace KiBoard.calibration
 {
     class KeyCalibrator : Calibrator
     {
-        private List<CalibrationPoint> points;
-        private List<Vector3> wallPoints;
-        private Tracker tracker;
+        protected List<CalibrationPoint> points;
+        protected List<Vector3> wallPoints;
+        protected Tracker tracker;
 
         public KeyCalibrator(Tracker t)
         {
@@ -18,7 +18,7 @@ namespace KiBoard.calibration
             initiateWallPoints();
         }
 
-        private void initiateWallPoints()
+        protected virtual void initiateWallPoints()
         {
             wallPoints.Add(new Vector3(0, 0, 0));
             wallPoints.Add(new Vector3(0, 1, 0));
@@ -55,7 +55,7 @@ namespace KiBoard.calibration
             System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
         }
 
-        public void tick()
+        public virtual void tick()
         {
             if (!hasCalibrationPoints() && keyPressed())
             {
