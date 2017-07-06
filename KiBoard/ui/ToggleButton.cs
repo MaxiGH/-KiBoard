@@ -10,18 +10,15 @@ namespace KiBoard.ui
 {
     class ToggleButton : Button
     {
-        public ToggleButton(Vector2 pos, Vector2 s, Image btmUc, Image btmC) : base(pos, s, btmUc, btmC)
-        {
-        }
+        public ToggleButton(Vector2 pos, Vector2 s, Image btmUc, Image btmC)
+            : base(pos, s, btmUc, btmC)
+        { }
 
-        new public void onClick()
+        public override void onClick()
         {
             isClicked = !isClicked;
         }
 
-        new public void onClickReleased()
-        {
-
-        }
+        public override void onClickReleased() {}
     }
 }

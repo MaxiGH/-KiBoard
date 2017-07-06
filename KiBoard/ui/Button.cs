@@ -6,68 +6,36 @@ namespace KiBoard.ui
 {
     class Button : UIElement
     {
-        private Vector2 position;
-        private Vector2 size;
         private Image bitmapUnclicked;
         private Image bitmapClicked;
-        private bool visible;
         protected bool isClicked;
 
         public bool IsClicked {
             get { return isClicked; }
-            set { isClicked = value; }
         }
 
-        public Button(Vector2 pos, Vector2 s, Image btmUc, Image btmC)
+        public Button(Vector2 pos, Vector2 size, Image btmUc, Image btmC) : base(pos, size)
         {
-            position = pos;
-            size = s;
             bitmapUnclicked = btmUc;
             bitmapClicked = btmC;
             isClicked = false;
         }
 
-        public void render(Graphics gfx, Size windowSize)
+        public override void render(Graphics gfx, Size windowSize)
         {
-            if (visible)
-            {
-                    Rectangle renderRect = new Rectangle(
-                        new Point((int)(windowSize.Width * position.X), (int)(windowSize.Height - (windowSize.Height * position.Y))),
-                        new Size((int)(windowSize.Width * size.X), (int)(windowSize.Height * size.Y))
-                        );
-
-                if (!isClicked)
-                    ;// gfx.DrawImage(bitmapUnclicked, renderRect);
-                else
-                    ;// gfx.DrawImage(bitmapClicked, renderRect);
-            }
+            if (isClicked)
+                draw(gfx, bitmapClicked, windowSize);
+            else
+                draw(gfx, bitmapUnclicked, windowSize);
         }
 
-        public void setVisible(bool v)
-        {
-            visible = v;
-        }
-
-        public bool touches(Vector2 vec)
-        {
-            if ((position.X < vec.X) && (position.Y > vec.Y))
-            {
-                if ((position.X + size.X > vec.X) && (position.Y - size.Y > vec.Y))
-                {
-                    System.Console.WriteLine("clicked");
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void onClick()
+        public override void onClick()
         {
             isClicked = true;
             System.Console.WriteLine("Button is clicked.");
         }
 
-        public void onClickReleased()
+        public override void onClickReleased()
         {
             isClicked = false;
             System.Console.WriteLine("Button is released.");
