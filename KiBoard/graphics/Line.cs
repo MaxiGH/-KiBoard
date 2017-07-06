@@ -39,8 +39,8 @@ namespace KiBoard.graphics
             PointF[] path = new PointF[points.Count];
             for (int i = 0; i < points.Count; i++)
             {
-                Vector2 from = mat.transform(new Vector2(points[i].X, 1.0f - points[i].Y));
-                path[i] = new PointF(from.X, from.Y);
+                Vector2 point = mat.transform(new Vector2(points[i].X, points[i].Y));
+                path[i] = new PointF(point.X, point.Y);
             }
 
             Pen pen = new Pen(new SolidBrush(color));

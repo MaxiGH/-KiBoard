@@ -2,6 +2,7 @@
 using KiBoard.graphics;
 using System.Windows.Forms;
 using KiBoard.ui;
+using System.Drawing;
 
 namespace KiBoard.inputManager
 {
@@ -17,9 +18,10 @@ namespace KiBoard.inputManager
         }
 
         private InputState state;
-        private Graphics graphics;
+        private Renderer renderer;
         private UIManager uiManager;
-        private System.Drawing.Graphics gr;
+        private FrameBuffer frame;
+        private Graphics gfx;
 
         public const float TOUCH_THRESHOLD = 0.01f;
 
@@ -30,12 +32,13 @@ namespace KiBoard.inputManager
         public InputManager(Form form)
         {
             state = InputState.AWAIT_LINE;
-            System.Drawing.Graphics g = form.CreateGraphics();
-            gr = g;
-            graphics = new Graphics(g, new System.Drawing.Size(form.Size.Width, form.Size.Height));
-            uiManager = new UIManager(new DefaultConfiguration(),
-                new System.Drawing.Size(form.Size.Width, form.Size.Height),
-                g);
+
+            Vector2 size = new Vector2(form.Size.Width, form.Size.Height);
+            frame = new FrameBuffer(size);
+            renderer = new Renderer(frame);
+            uiManager = new UIManager(new DefaultConfiguration(), frame);
+
+            gfx = form.CreateGraphics();
         }
 
         public bool inputTouchesWall(Vector3 input)
@@ -55,13 +58,18 @@ namespace KiBoard.inputManager
             {
                 processDetachedInput(input);
             }
-            graphics.render();
+
+            renderer.clear();
+            renderer.renderNew();
             uiManager.render();
+
+            gfx.DrawImage(frame.Bitmap, 0, 0);
+            System.Console.WriteLine("xyz");
         }
 
         private void processTouchingInput(Vector2 input)
         {
-            gr.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White)),
+            gfx.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White)),
                 new System.Drawing.Rectangle(10, 10, 20, 20));
             switch (state)
             {
@@ -70,6 +78,7 @@ namespace KiBoard.inputManager
                     uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_LINE:
+
                     if (uiManager.isTouchingElement(input))
                     {
                         clickedElement = uiManager.getTouchingElement(input);
@@ -79,7 +88,7 @@ namespace KiBoard.inputManager
                     {
                         currentDrawable = new Line();
                         currentDrawable.nextPoint(input);
-                        graphics.push(currentDrawable);
+                        renderer.Stack.push(currentDrawable);
                         state = InputState.WRITE;
                     }
                     break;
@@ -89,6 +98,12 @@ namespace KiBoard.inputManager
                         clickedElement.onClickReleased();
                         state = InputState.CLICK_UNHOVERED;
                     }
+
+                    currentDrawable = new Line();
+                    currentDrawable.nextPoint(input);
+                    renderer.Stack.push(currentDrawable);
+                    state = InputState.WRITE;
+
                     break;
             }
         }
@@ -108,8 +123,7 @@ namespace KiBoard.inputManager
 
         public void updateFormSize(System.Drawing.Size s)
         {
-            graphics.updateFormSize(s);
-            uiManager.updateFormSize(s);
+            frame.Size = new Vector2(s.Width, s.Height);
         }
     }
 }

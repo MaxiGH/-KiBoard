@@ -35,10 +35,11 @@ namespace KiBoard.ui
                         new Point((int)(windowSize.Width * position.X), (int)(windowSize.Height - (windowSize.Height * position.Y))),
                         new Size((int)(windowSize.Width * size.X), (int)(windowSize.Height * size.Y))
                         );
+
                 if (!isClicked)
-                    gfx.DrawImage(bitmapUnclicked, renderRect);
+                    ;// gfx.DrawImage(bitmapUnclicked, renderRect);
                 else
-                    gfx.DrawImage(bitmapClicked, renderRect);
+                    ;// gfx.DrawImage(bitmapClicked, renderRect);
             }
         }
 

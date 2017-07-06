@@ -55,8 +55,10 @@
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
-    <Compile Include="graphics\Graphics.cs" />
+    <Compile Include="graphics\RenderStack.cs" />
+    <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Segment.cs" />
+    <Compile Include="graphics\FrameBuffer.cs" />
     <Compile Include="inputManager\InputManager.cs" />
     <Compile Include="inputManager\TestInputManager.cs" />
     <Compile Include="Program.cs" />

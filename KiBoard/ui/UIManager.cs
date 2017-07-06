@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using KiBoard.graphics;
 
 namespace KiBoard.ui
 {
     class UIManager
     {
         private List<UIElement> elements;
-        private Size windowSize;
-        private Graphics gfx;
+        private FrameBuffer frame;
 
-        public UIManager(UIConfiguration conf, Size winSize, Graphics g)
+        public UIManager(UIConfiguration conf, FrameBuffer frame)
         {
             elements = conf.createConfiguration();
-            windowSize = winSize;
-            gfx = g;
+            this.frame = frame;
         }
 
         public void render()
         {
             foreach (UIElement element in elements)
             {
-                element.render(gfx, windowSize);
+                System.Console.WriteLine("{0} {1}", frame.Size.X, frame.Size.Y);
+                element.render(frame.graphics(), new Size((int)frame.Size.X, (int)frame.Size.Y));
             }
         }
 
@@ -57,11 +57,6 @@ namespace KiBoard.ui
             {
                 element.setVisible(true);
             }
-        }
-
-        public void updateFormSize(Size s)
-        {
-            windowSize = s;
         }
     }
 }

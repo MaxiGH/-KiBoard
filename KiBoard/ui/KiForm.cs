@@ -41,9 +41,10 @@ namespace KiBoard.ui
 
         }
 
-        public bool shouldClose()
+        public bool ShouldClose
         {
-            return closing;
+            get { return closing; }
+            set { closing = true; }
         }
 
         private void KiForm_KeyPress(object sender, KeyPressEventArgs e)
