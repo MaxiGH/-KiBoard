@@ -55,6 +55,7 @@
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
+    <Compile Include="graphics\MessageBox.cs" />
     <Compile Include="graphics\RenderStack.cs" />
     <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Segment.cs" />
@@ -95,10 +96,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\pen.jpg" />
     <Content Include="resources\pen.png" />
+    <Content Include="resources\pen_chosen.jpg" />
     <Content Include="resources\pen_selected.png" />
+    <Content Include="resources\redo.jpg" />
+    <Content Include="resources\rubber.jpg" />
     <Content Include="resources\rubber.png" />
+    <Content Include="resources\rubber_chosen.jpg" />
     <Content Include="resources\rubber_selected.png" />
+    <Content Include="resources\save.jpg" />
+    <Content Include="resources\undo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

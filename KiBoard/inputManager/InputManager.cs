@@ -62,18 +62,20 @@ namespace KiBoard.inputManager
                 processDetachedInput(input);
             }
 
+            render();
+        }
+
+        private void render()
+        {
             renderer.clear();
             renderer.render();
             uiManager.render();
-
+            graphics.MessageBox.draw(frame);
             gfx.DrawImage(frame.Bitmap, 0, 0);
-            System.Console.WriteLine("xyz");
         }
 
         private void processTouchingInput(Vector2 input)
         {
-            gfx.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White)),
-                new System.Drawing.Rectangle(10, 10, 20, 20));
             switch (state)
             {
                 case InputState.WRITE:
