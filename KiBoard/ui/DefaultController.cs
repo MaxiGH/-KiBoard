@@ -18,9 +18,15 @@ namespace KiBoard.ui
             switch (elementName)
             {
                 case "Pen":
-                    manager.createTestDrawable();
+                    manager.createTestMessagebox();
                     break;
                 case "Rubber":
+                    break;
+                case "Undo":
+                    break;
+                case "Redo":
+                    break;
+                case "Save":
                     break;
             }
         }

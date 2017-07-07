@@ -132,10 +132,9 @@ namespace KiBoard.inputManager
             frame.Size = new Vector2(s.Width, s.Height);
         }
 
-        public void createTestDrawable()
+        public void createTestMessagebox()
         {
-            gfx.DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.Red)),
-                new System.Drawing.Rectangle(20, 20, 20, 20));
+            graphics.MessageBox.print("Der Button wurde geklickt", 10);
         }
     }
 }
