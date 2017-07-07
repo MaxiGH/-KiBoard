@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 
-namespace KiBoard
+namespace KiBoard.tracker
 {
     interface Tracker
     {
-        Vector3 Coordinates { get; }
+        HandCollection getHandCollection();
     }
 }

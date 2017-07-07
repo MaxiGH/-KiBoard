@@ -8,8 +8,8 @@ namespace KiBoard.tracker
 {
     class HandCollection
     {
-        private Hand left;
-        private Hand right;
+        public Hand left;
+        public Hand right;
 
         public HandCollection(Hand left, Hand right)
         {

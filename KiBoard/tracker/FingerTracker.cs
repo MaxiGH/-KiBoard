@@ -7,55 +7,93 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 using LightBuzz.Vitruvius;
 
-namespace KiBoard
+namespace KiBoard.tracker
 {
     class FingerTracker : Tracker
     {
+        private class Edge
+        {
+            public List<System.Drawing.Point> points;
+            public void draw(System.Drawing.Bitmap bitmap)
+            {
+                foreach (System.Drawing.Point p in points)
+                    bitmap.SetPixel(p.X, p.Y, System.Drawing.Color.Blue);
+            }
+        }
+
+        private class DepthBuffer
+        {
+            private ushort[] buffer;
+            private int width;
+            private int height;
+
+            public DepthBuffer(int w, int h)
+            {
+                width = w;
+                height = h;
+                buffer = new ushort[w * h];
+            }
+
+            public ushort getPoint(int x, int y)
+            {
+                return buffer[y * height + x];
+            }
+
+            public ushort getPoint(CameraSpacePoint joint)
+            {
+                return buffer[(int)joint.Y * height + (int)joint.X];
+            }
+
+            public ushort[] getBuffer()
+            {
+                return buffer;
+            }
+
+            public ushort get(int index)
+            {
+                return buffer[index];
+            }
+
+            public int getWidth()
+            {
+                return width;
+            }
+
+            public int getHeight()
+            {
+                return height;
+            }
+        }
+
         private System.Drawing.Graphics drawer;
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
         private CameraSpacePoint joint = new CameraSpacePoint();
-        private ushort[] depthData;
-        private const int SEARCH_FIELD = 10;
-        private System.Numerics.Vector3 vec3;
-        private System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(512, 424);
-        private System.Drawing.Pen defaultPen = new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White));
+        public const int SCAN_EDGE_RANGE = 20;
+        public const int MIN_EDGE_DIF = 10;
 
+        private HandCollection hands;
+        private DirectBitmap bitmap = new DirectBitmap(512, 424);
+        private System.Drawing.Pen defaultPen = new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White));
 
         public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader, KiBoard.ui.KiForm f)
         {
             this.drawer = f.CreateGraphics();
             this.sensor = sensor;
             this.multiReader = multiReader;
+            // zuvor in getHandCollection
+            if (multiReader != null)
+            {
+                multiReader.MultiSourceFrameArrived += OnMultiSourceFrameArrived;
+            }
+            hands = new HandCollection(new Hand(), new Hand());
             Console.WriteLine("FingerTracker created!");
         }
 
-        public System.Numerics.Vector3 Coordinates
+        public HandCollection getHandCollection()
         {
-            get
-            {
-                if (multiReader != null)
-                {
-                    multiReader.MultiSourceFrameArrived += OnMultiSourceFrameArrived;
-                    // Getting the latest Frameset
-                }   
-                //getFingerTipPoint(joint);
-                return vec3;
-            }
-        }
-
-        private System.Numerics.Vector3 getFingerTipPoint(CameraSpacePoint joint)
-        {
-            DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
-
-            /*Console.WriteLine("count = " + depthData.Count());
-            Console.WriteLine("access = " + (ushort)depthPoint.Y * 512 + (ushort)depthPoint.X);
-            Console.WriteLine("accessX = " + depthPoint.X);
-            Console.WriteLine("accessY = " + depthPoint.Y);
-            */
-            Console.WriteLine(depthData[1]);
-            return new System.Numerics.Vector3();
+            return hands;
         }
 
         private void OnMultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
@@ -66,6 +104,9 @@ namespace KiBoard
                 Console.WriteLine("MultiRef is null!");
                 return;
             }
+
+            DepthBuffer buffer = null;
+
             var frame = multiRef.AcquireFrame();
             if (frame != null)
             {
@@ -100,12 +141,9 @@ namespace KiBoard
                     Console.WriteLine("DepthFrame is null!");
                     return;
                 }
-                int width = depthFrame.FrameDescription.Width;
-                int height = depthFrame.FrameDescription.Height;
+                buffer = new DepthBuffer(depthFrame.FrameDescription.Width, depthFrame.FrameDescription.Height);
 
-                depthData = new ushort[width * height];
-
-                depthFrame.CopyFrameDataToArray(depthData);
+                depthFrame.CopyFrameDataToArray(buffer.getBuffer());
 
                 depthFrame.Dispose();
                 depthFrame = null;
@@ -121,16 +159,21 @@ namespace KiBoard
                 if (bodyData[i].IsTracked)
                 {
                     index = i;
+                    break;
                 }
             }
-            if (index > -1)
+
+            if ((index > -1) && (buffer != null))
             {
                 // We use the right Hand
 
                 joint.X = bodyData[index].Joints[JointType.HandRight].Position.X;
                 joint.Y = bodyData[index].Joints[JointType.HandRight].Position.Y;
                 joint.Z = bodyData[index].Joints[JointType.HandRight].Position.Z;
-                drawFrame(depthData, joint);
+
+                // hands = scanForHands(buffer, joint);
+
+                drawFrame(buffer, joint);
             }
             else
             {
@@ -139,11 +182,21 @@ namespace KiBoard
         
         }
 
+        private HandCollection scanForHands(DepthBuffer depthData, CameraSpacePoint joint)
+        {
+            List<Edge> handEdges = scanHandEdges(depthData, joint);
+            throw new NotImplementedException();
+        }
+
+        private List<Edge> scanHandEdges(DepthBuffer buffer, CameraSpacePoint joint)
+        {
+            throw new NotImplementedException();
+        }
+
         private int counter = 0;
 
-        private void drawFrame(ushort[] dephData, CameraSpacePoint joint)
+        private void drawFrame(DepthBuffer dephData, CameraSpacePoint joint)
         {
-            const int MAX_DISTANCE = 2000;
             const float MAX_DISTANCE_COLOR = 255.0f / 2400.0f;
             int count = 0;
 
@@ -159,9 +212,10 @@ namespace KiBoard
                 {
                     for (int j = 0; j < 512; j++)
                     {
-                        int colorIdenticator = dephData[count];
+                        int colorIdenticator = dephData.get(count);
                         int color = (int)(colorIdenticator * MAX_DISTANCE_COLOR);
-                        if (color > 255) color = 255;
+                        if (color > 255)
+                            color = 255;
                         defaultPen.Color = System.Drawing.Color.FromArgb(255, color, color, color);
                         //drawer.DrawLine(defaultPen, new System.Drawing.Point(j, i), new System.Drawing.Point(j + 1, i));
                         bitmap.SetPixel(j, i, System.Drawing.Color.FromArgb(255, color, color, color));
@@ -170,17 +224,20 @@ namespace KiBoard
                 }
                 if (depthPoint != null)
                 {
-                    bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y, System.Drawing.Color.Red);
-                    bitmap.SetPixel((int)depthPoint.X+1, (int)depthPoint.Y, System.Drawing.Color.Red);
-                    bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y+1, System.Drawing.Color.Red);
-                    bitmap.SetPixel((int)depthPoint.X+1, (int)depthPoint.Y+1, System.Drawing.Color.Red);
-                    bitmap.SetPixel((int)depthPoint.X+2, (int)depthPoint.Y, System.Drawing.Color.Red);
-                    bitmap.SetPixel((int)depthPoint.X+2, (int)depthPoint.Y+1, System.Drawing.Color.Red);
-
+                    drawPoint(depthPoint, System.Drawing.Color.Red);
                 }
 
-                drawer.DrawImage(bitmap, 0, 0);
+                drawer.DrawImage(bitmap.Bitmap, 0, 0);
             }
+        }
+
+        private void drawPoint(DepthSpacePoint depthPoint, System.Drawing.Color color)
+        {
+            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y, color);
+            bitmap.SetPixel((int)depthPoint.X + 1, (int)depthPoint.Y, color);
+            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y + 1, color);
+            bitmap.SetPixel((int)depthPoint.X - 1, (int)depthPoint.Y, color);
+            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y - 1, color);
         }
     }
 }

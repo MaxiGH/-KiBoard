@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 using System.Numerics;
 
-namespace KiBoard
+namespace KiBoard.tracker
 {
     class Tracker3D : Tracker
     {
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
-        private Vector3 vec3;
 
         public Tracker3D(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
@@ -23,60 +22,61 @@ namespace KiBoard
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
-        public Vector3 Coordinates
+        public HandCollection getHandCollection()
         {
-            get
+            Hand l = new Hand();
+            Hand r = new Hand();
+            if (multiReader != null)
             {
-                if (multiReader != null)
+                // Getting the latest Frameset
+                var frame = multiReader.AcquireLatestFrame();
+                if (frame != null)
                 {
-                    // Getting the latest Frameset
-                    var frame = multiReader.AcquireLatestFrame();
-                    if (frame != null)
+                    // Getting the latest bodyFrame
+                    var bodyFrame = frame.BodyFrameReference.AcquireFrame();
+                    if (bodyFrame != null)
                     {
-                        // Getting the latest bodyFrame
-                        var bodyFrame = frame.BodyFrameReference.AcquireFrame();
-                        if (bodyFrame != null)
+                        if (bodyData == null)
                         {
-                            if (bodyData == null)
-                            {
-                                // Creates the the array with the number of tracked Bodyies
-                                bodyData = new Body[bodyFrame.BodyFrameSource.BodyCount];
-                            }
-                            // Save the Body-Jointpositions to bodyData
-                            bodyFrame.GetAndRefreshBodyData(bodyData);
-                            bodyFrame.Dispose();
-                            bodyFrame = null;
+                            // Creates the the array with the number of tracked Bodyies
+                            bodyData = new Body[bodyFrame.BodyFrameSource.BodyCount];
                         }
-                    }
-                    frame = null;
-                    int index = -1;
-                    for (int i = 0; i < sensor.BodyFrameSource.BodyCount; i++)
-                    {
-                        if (bodyData == null || bodyData[i] == null)
-                        {
-                            continue;
-                        }
-                        if (bodyData[i].IsTracked)
-                        {
-                            index = i;
-                        }
-                    }
-                    if (index > -1)
-                    {
-                        // We use the right Hand
-                        float xPos = bodyData[index].Joints[JointType.HandRight].Position.X;
-                        float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
-                        float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
-                        //Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
-                        vec3 = new Vector3(xPos, yPos, zPos);
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("no body found");
+                        // Save the Body-Jointpositions to bodyData
+                        bodyFrame.GetAndRefreshBodyData(bodyData);
+                        bodyFrame.Dispose();
+                        bodyFrame = null;
                     }
                 }
-                return vec3;
+                frame = null;
+                int index = -1;
+                for (int i = 0; i < sensor.BodyFrameSource.BodyCount; i++)
+                {
+                    if (bodyData == null || bodyData[i] == null)
+                    {
+                        continue;
+                    }
+                    if (bodyData[i].IsTracked)
+                    {
+                        index = i;
+                    }
+                }
+                if (index > -1)
+                {
+                    // We use the right Hand
+                    float xPos = bodyData[index].Joints[JointType.HandRight].Position.X;
+                    float yPos = bodyData[index].Joints[JointType.HandRight].Position.Y;
+                    float zPos = bodyData[index].Joints[JointType.HandRight].Position.Z;
+                    //Console.WriteLine("Rechte Hand {0}, {1}, {2}", xPos, yPos, zPos);
+
+                    r.jointCoordinate = new Vector3(xPos, yPos, zPos);
+                }
+                else
+                {
+                    System.Console.WriteLine("no body found");
+                }
             }
+
+            return new HandCollection(l, r);
         }
     }
 }

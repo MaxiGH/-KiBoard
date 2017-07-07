@@ -8,9 +8,9 @@ namespace KiBoard.calibration
     {
         private List<CalibrationPoint> points;
         private List<Vector3> wallPoints;
-        private Tracker tracker;
+        private tracker.Tracker tracker;
 
-        public KeyCalibrator(Tracker t)
+        public KeyCalibrator(tracker.Tracker t)
         {
             points = new List<CalibrationPoint>();
             wallPoints = new List<Vector3>();
@@ -51,7 +51,7 @@ namespace KiBoard.calibration
 
         private void addPoint()
         {
-            points.Add(new CalibrationPoint(tracker.Coordinates, wallPoints[points.Count]));
+            points.Add(new CalibrationPoint(tracker.getHandCollection().right.jointCoordinate, wallPoints[points.Count]));
             System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
         }
 

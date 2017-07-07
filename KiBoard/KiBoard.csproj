@@ -69,13 +69,14 @@
     <Compile Include="math\TestMatrix3x3.cs" />
     <Compile Include="math\Matrix3x3.cs" />
     <Compile Include="spaceTranslation\SpaceTranslator.cs" />
+    <Compile Include="tracker\DirectBitmap.cs" />
     <Compile Include="tracker\FingerTracker.cs" />
     <Compile Include="tracker\Hand.cs" />
     <Compile Include="tracker\HandCollection.cs" />
     <Compile Include="tracker\MultiTrackerInterface.cs" />
     <Compile Include="ProgramState.cs" />
     <Compile Include="tracker\Tracker3D.cs" />
-    <Compile Include="tracker\TrackerInterface.cs" />
+    <Compile Include="tracker\Tracker.cs" />
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
     <Compile Include="ui\KiForm.cs">

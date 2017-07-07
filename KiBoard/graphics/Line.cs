@@ -48,7 +48,7 @@ namespace KiBoard.graphics
             pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
             pen.Width = width;
             if (smooth)
-                try { g.DrawCurve(pen, path.PathPoints); }catch(Exception e) { }
+                try { g.DrawCurve(pen, path.PathPoints); }catch(Exception) { }
             else
                 g.DrawPath(pen, path);
         }
