@@ -38,6 +38,11 @@ namespace KiBoard
             {
                 throw new System.Exception("points.Count=" + points.Count);
             }
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine("point" + i + ": " + points[i]);
+            }
+
             k0 = points[0].kinectVec;
             Vector3 k1s = points[1].kinectVec - k0;
             Vector3 k2s = points[2].kinectVec - k0;

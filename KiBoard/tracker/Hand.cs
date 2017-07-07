@@ -13,10 +13,10 @@ namespace KiBoard
         public bool touchWall=false;
         public bool isDefined;
         
-        public Hand(Vector3 vec3, bool defined)
+        public Hand(Vector3 vec3)
         {
             jointCoordinate = vec3;
-            isDefined = defined;
+            isDefined = true;
         }
 
         public Hand()

@@ -23,7 +23,7 @@ namespace KiBoard
         private static bool isRunning = true;
         private static InputManager inputManager;
         private static Size formSize;
-        private const int FRAME_INTERVAL = 50;
+        private const int FRAME_INTERVAL = 35;
         private static System.Drawing.Graphics gfx;
 
         private static KiForm form;
@@ -46,7 +46,7 @@ namespace KiBoard
         {
             setupKinect();
             drawer = new System.Drawing.Bitmap(512, 424);
-            tracker = new tracker.FingerTracker(sensor, multiReader, form);
+            tracker = new tracker.FingerTracker(sensor, multiReader);
             calibrator = new KeyCalibrator(tracker);
             spaceTranslator = new SpaceTranslator();
 
@@ -107,7 +107,7 @@ namespace KiBoard
 
         private static void tick()
         {
-            /*if (currentState == ProgramState.CALIBRATION_STATE)
+            if (currentState == ProgramState.CALIBRATION_STATE)
             {
                 calibrator.tick();
                 if (calibrator.hasCalibrationPoints())
@@ -124,10 +124,13 @@ namespace KiBoard
                     formSize = form.Size;
                     inputManager.updateFormSize(formSize);
                 }
-                inputManager.processInput(spaceTranslator.translate(tracker.Coordinates));
+                Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
+                Vector3 translatedVec = spaceTranslator.translate(vec);
+                inputManager.processInput(translatedVec);
+                System.Console.WriteLine("vec=" + vec.ToString() + "     translatedVec=" + translatedVec.ToString());
             }
-        */
-            System.Numerics.Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
+
+            //System.Numerics.Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
             gfx.DrawImage(drawer, 0, 0);
         }
     }

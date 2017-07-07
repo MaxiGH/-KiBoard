@@ -13,5 +13,10 @@ namespace KiBoard
             kinectVec = kinectVec_arg;
             wallVec = wallVec_arg;
         }
+
+        public override string ToString()
+        {
+            return "kinectVec=" + kinectVec.ToString();
+        }
     }
 }

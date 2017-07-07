@@ -49,6 +49,10 @@ namespace KiBoard.tracker
 
             public ushort getPoint(DepthSpacePoint joint)
             {
+                if ((int)joint.Y * width + (int)joint.X < 0)
+                    throw new Exception("y=" + joint.Y + " x=" + joint.X);
+                if ((int)joint.Y * width + (int)joint.X >= 512*424)
+                    throw new Exception("y=" + joint.Y + " x=" + joint.X);
                 return buffer[(int)joint.Y * width + (int)joint.X];
             }
 
@@ -73,7 +77,6 @@ namespace KiBoard.tracker
             }
         }
 
-        private System.Drawing.Graphics drawer;
         private KinectSensor sensor;
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
@@ -85,12 +88,9 @@ namespace KiBoard.tracker
         private int counter = 0;
 
         private HandCollection hands;
-        private DirectBitmap bitmap = new DirectBitmap(512, 424);
-        private System.Drawing.Pen defaultPen = new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.White));
 
-        public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader, KiBoard.ui.KiForm f)
+        public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
-            this.drawer = f.CreateGraphics();
             this.sensor = sensor;
             this.multiReader = multiReader;
             // zuvor in getHandCollection
@@ -184,12 +184,7 @@ namespace KiBoard.tracker
 
                 DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
                 counter++;
-                if (counter % 10 == 0)
-                {
-                    drawFrame(buffer, joint);
-                    hands = scanForHands(buffer, depthPoint);
-                    drawer.DrawImage(bitmap.Bitmap, 0, 0);
-                }
+                hands = scanForHands(buffer, depthPoint);
             }
             else
             {
@@ -211,8 +206,8 @@ namespace KiBoard.tracker
                 return new HandCollection(new Hand(), new Hand());
             }
             DepthSpacePoint tip = searchFingerTip(buffer, (int)(depthPoint.X), jointEdgeY);
-            drawPoint((int)tip.X, (int)tip.Y, System.Drawing.Color.GreenYellow);
-            return new HandCollection(new Hand(), new Hand());
+            CameraSpacePoint p = sensor.CoordinateMapper.MapDepthPointToCameraSpace(tip, buffer.getPoint(tip));
+            return new HandCollection(new Hand(), new Hand(new System.Numerics.Vector3(p.X, p.Y, p.Z)));
         }
 
         private DepthSpacePoint searchFingerTip(DepthBuffer buffer, int x, int y)
@@ -269,58 +264,7 @@ namespace KiBoard.tracker
                     depth = buffer.getPoint(x, y - i);
                 }
             }
-            if (result > -1)
-               drawPoint(x, result, System.Drawing.Color.Aqua);
             return result;
-        }
-
-        private void drawFrame(DepthBuffer dephData, CameraSpacePoint joint)
-        {
-            const float MAX_DISTANCE_COLOR = 255.0f / 2400.0f;
-            int count = 0;
-
-            DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
-
-            for (int i = 0; i < 424; i++)
-            {
-                for (int j = 0; j < 512; j++)
-                {
-                    int colorIdenticator = dephData.get(count);
-                    int color = (int)(colorIdenticator * MAX_DISTANCE_COLOR);
-                    if (color > 255)
-                        color = 255;
-                    defaultPen.Color = System.Drawing.Color.FromArgb(255, color, color, color);
-                    //drawer.DrawLine(defaultPen, new System.Drawing.Point(j, i), new System.Drawing.Point(j + 1, i));
-                    bitmap.SetPixel(j, i, System.Drawing.Color.FromArgb(255, color, color, color));
-                    count++;
-                }
-            }
-            if (depthPoint != null)
-            {
-                drawPoint(depthPoint, System.Drawing.Color.Red);
-            }
-        }
-
-        private void drawPoint(DepthSpacePoint depthPoint, System.Drawing.Color color)
-        {
-            drawPoint((int)depthPoint.X, (int)depthPoint.Y, color);
-        }
-
-        private void drawPoint(int x, int y, System.Drawing.Color color)
-        {
-            if (x < 1)
-                x = 1;
-            if (x >= bitmap.Width - 1)
-                x = bitmap.Width - 2;
-            if (y < 1)
-                y = 1;
-            if (y >= bitmap.Height - 1)
-                y = bitmap.Height - 2;
-            bitmap.SetPixel(x, y, color);
-            bitmap.SetPixel(x + 1, y, color);
-            bitmap.SetPixel(x, y + 1, color);
-            bitmap.SetPixel(x - 1, y, color);
-            bitmap.SetPixel(x, y - 1, color);
         }
     }
 }
