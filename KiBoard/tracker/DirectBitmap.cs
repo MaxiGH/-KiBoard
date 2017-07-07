@@ -36,6 +36,11 @@ public class DirectBitmap : IDisposable
 
     public void SetPixel(int x, int y, System.Drawing.Color color)
     {
-        Bits[y * Height + x] = color.ToArgb();
+        if ((y * Width + x) > (512 * 424))
+            throw new Exception("=" + y*Width+x);
+        if ((y * Width + x) < 0)
+            throw new Exception("y=" + y + "w=" + Width + "x=" + x);
+
+        Bits[y * Width + x] = color.ToArgb();
     }
 }

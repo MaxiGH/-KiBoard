@@ -36,12 +36,20 @@ namespace KiBoard.tracker
 
             public ushort getPoint(int x, int y)
             {
-                return buffer[y * height + x];
+                if (width * y + x >= 512 * 424)
+                {
+                    throw new Exception("x=" + x + " y=" + y + " w=" + width);
+                }
+                if (width * y + x < 0)
+                {
+                    throw new Exception("x=" + x + " y=" + y + " w=" + width);
+                }
+                return buffer[y * width + x];
             }
 
-            public ushort getPoint(CameraSpacePoint joint)
+            public ushort getPoint(DepthSpacePoint joint)
             {
-                return buffer[(int)joint.Y * height + (int)joint.X];
+                return buffer[(int)joint.Y * width + (int)joint.X];
             }
 
             public ushort[] getBuffer()
@@ -70,8 +78,11 @@ namespace KiBoard.tracker
         private MultiSourceFrameReader multiReader;
         private Body[] bodyData;
         private CameraSpacePoint joint = new CameraSpacePoint();
-        public const int SCAN_EDGE_RANGE = 20;
-        public const int MIN_EDGE_DIF = 10;
+        public const int MAX_TOP_RANGE = 100;
+        public const int MIN_EDGE_DIF = 30;
+        public const int PIXEL_RANGE = 5;
+        public const int DIRECTION = -1;    // negative for Kinect on the left | positive for Kinect on the right
+        private int counter = 0;
 
         private HandCollection hands;
         private DirectBitmap bitmap = new DirectBitmap(512, 424);
@@ -99,7 +110,7 @@ namespace KiBoard.tracker
         private void OnMultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {
             MultiSourceFrameReference multiRef = e.FrameReference;
-            if(multiRef == null)
+            if (multiRef == null)
             {
                 Console.WriteLine("MultiRef is null!");
                 return;
@@ -171,29 +182,97 @@ namespace KiBoard.tracker
                 joint.Y = bodyData[index].Joints[JointType.HandRight].Position.Y;
                 joint.Z = bodyData[index].Joints[JointType.HandRight].Position.Z;
 
-                // hands = scanForHands(buffer, joint);
-
-                drawFrame(buffer, joint);
+                DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
+                counter++;
+                if (counter % 10 == 0)
+                {
+                    drawFrame(buffer, joint);
+                    hands = scanForHands(buffer, depthPoint);
+                    drawer.DrawImage(bitmap.Bitmap, 0, 0);
+                }
             }
             else
             {
+                hands = new HandCollection(new Hand(), new Hand());
                 System.Console.WriteLine("no body found");
             }
-        
         }
 
-        private HandCollection scanForHands(DepthBuffer depthData, CameraSpacePoint joint)
+        private HandCollection scanForHands(DepthBuffer buffer, DepthSpacePoint depthPoint)
         {
-            List<Edge> handEdges = scanHandEdges(depthData, joint);
-            throw new NotImplementedException();
+            if (depthPoint.Y < 0.0f)
+            {
+                return new HandCollection(new Hand(), new Hand());
+            }
+
+            int jointEdgeY = getJointEdge(buffer, (int)depthPoint.X, (int)depthPoint.Y);
+            if (jointEdgeY == -1)
+            {
+                return new HandCollection(new Hand(), new Hand());
+            }
+            DepthSpacePoint tip = searchFingerTip(buffer, (int)(depthPoint.X), jointEdgeY);
+            drawPoint((int)tip.X, (int)tip.Y, System.Drawing.Color.GreenYellow);
+            return new HandCollection(new Hand(), new Hand());
         }
 
-        private List<Edge> scanHandEdges(DepthBuffer buffer, CameraSpacePoint joint)
+        private DepthSpacePoint searchFingerTip(DepthBuffer buffer, int x, int y)
         {
-            throw new NotImplementedException();
+            DepthSpacePoint point = new DepthSpacePoint();
+            DepthSpacePoint sparePoint = new DepthSpacePoint();
+            point.X = x;
+            point.Y = y;
+            int count = 0;
+            while (count<120) {
+                sparePoint = nextLeftPoint(buffer, point);
+                if (sparePoint.X == -1.0f)
+                {
+                    break;
+                }
+                point = sparePoint;
+                count++;
+            }
+            return point;
         }
 
-        private int counter = 0;
+        private DepthSpacePoint nextLeftPoint(DepthBuffer buffer, DepthSpacePoint point)
+        {
+            int y = Math.Max((int)point.Y - PIXEL_RANGE, 0);
+            int x = Math.Min(Math.Max((int)point.X - DIRECTION, 0), buffer.getWidth());
+            ushort depth = buffer.getPoint(x,y);
+            for(int i = 1; i < PIXEL_RANGE * 2; i++)
+            {
+                if (Math.Abs(buffer.getPoint(x, y + i) - depth) > 20)
+                {
+                    point.X = x;
+                    point.Y = y+i;
+                    return point;
+                }
+            }
+            point.X = -1.0f;
+            return point; 
+        }
+
+        private int getJointEdge(DepthBuffer buffer, int x, int y)
+        {
+            ushort depth = buffer.getPoint(x, y);
+
+            int result = -1;
+            for (int i = 10; i < MAX_TOP_RANGE; i++)
+            {
+                if (y - i >= 0)
+                {
+                    if (Math.Abs(buffer.getPoint(x, y - i) - depth) > MIN_EDGE_DIF) // Kante gefunden
+                    {
+                        result = y - i;
+                        break;
+                    }
+                    depth = buffer.getPoint(x, y - i);
+                }
+            }
+            if (result > -1)
+               drawPoint(x, result, System.Drawing.Color.Aqua);
+            return result;
+        }
 
         private void drawFrame(DepthBuffer dephData, CameraSpacePoint joint)
         {
@@ -202,42 +281,46 @@ namespace KiBoard.tracker
 
             DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
 
-            counter++;
-
-            if (counter % 1000 == 0)
+            for (int i = 0; i < 424; i++)
             {
-                System.Console.WriteLine(counter);
-                
-                for (int i = 0; i < 424; i++)
+                for (int j = 0; j < 512; j++)
                 {
-                    for (int j = 0; j < 512; j++)
-                    {
-                        int colorIdenticator = dephData.get(count);
-                        int color = (int)(colorIdenticator * MAX_DISTANCE_COLOR);
-                        if (color > 255)
-                            color = 255;
-                        defaultPen.Color = System.Drawing.Color.FromArgb(255, color, color, color);
-                        //drawer.DrawLine(defaultPen, new System.Drawing.Point(j, i), new System.Drawing.Point(j + 1, i));
-                        bitmap.SetPixel(j, i, System.Drawing.Color.FromArgb(255, color, color, color));
-                        count++;
-                    }
+                    int colorIdenticator = dephData.get(count);
+                    int color = (int)(colorIdenticator * MAX_DISTANCE_COLOR);
+                    if (color > 255)
+                        color = 255;
+                    defaultPen.Color = System.Drawing.Color.FromArgb(255, color, color, color);
+                    //drawer.DrawLine(defaultPen, new System.Drawing.Point(j, i), new System.Drawing.Point(j + 1, i));
+                    bitmap.SetPixel(j, i, System.Drawing.Color.FromArgb(255, color, color, color));
+                    count++;
                 }
-                if (depthPoint != null)
-                {
-                    drawPoint(depthPoint, System.Drawing.Color.Red);
-                }
-
-                drawer.DrawImage(bitmap.Bitmap, 0, 0);
+            }
+            if (depthPoint != null)
+            {
+                drawPoint(depthPoint, System.Drawing.Color.Red);
             }
         }
 
         private void drawPoint(DepthSpacePoint depthPoint, System.Drawing.Color color)
         {
-            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y, color);
-            bitmap.SetPixel((int)depthPoint.X + 1, (int)depthPoint.Y, color);
-            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y + 1, color);
-            bitmap.SetPixel((int)depthPoint.X - 1, (int)depthPoint.Y, color);
-            bitmap.SetPixel((int)depthPoint.X, (int)depthPoint.Y - 1, color);
+            drawPoint((int)depthPoint.X, (int)depthPoint.Y, color);
+        }
+
+        private void drawPoint(int x, int y, System.Drawing.Color color)
+        {
+            if (x < 1)
+                x = 1;
+            if (x >= bitmap.Width - 1)
+                x = bitmap.Width - 2;
+            if (y < 1)
+                y = 1;
+            if (y >= bitmap.Height - 1)
+                y = bitmap.Height - 2;
+            bitmap.SetPixel(x, y, color);
+            bitmap.SetPixel(x + 1, y, color);
+            bitmap.SetPixel(x, y + 1, color);
+            bitmap.SetPixel(x - 1, y, color);
+            bitmap.SetPixel(x, y - 1, color);
         }
     }
 }
