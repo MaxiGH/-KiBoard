@@ -82,7 +82,7 @@ namespace KiBoard.tracker
         private Body[] bodyData;
         private CameraSpacePoint joint = new CameraSpacePoint();
         public const int MAX_TOP_RANGE = 100;
-        public const int MIN_EDGE_DIF = 30;
+        public const int MIN_EDGE_DIF = 15;
         public const int PIXEL_RANGE = 5;
         public const int DIRECTION = -1;    // negative for Kinect on the left | positive for Kinect on the right
         private int counter = 0;
@@ -195,7 +195,7 @@ namespace KiBoard.tracker
 
         private HandCollection scanForHands(DepthBuffer buffer, DepthSpacePoint depthPoint)
         {
-            if (depthPoint.Y < 0.0f)
+            if ((depthPoint.Y < 0.0f) || (depthPoint.Y >= 424.0f))
             {
                 return new HandCollection(new Hand(), new Hand());
             }
@@ -226,6 +226,7 @@ namespace KiBoard.tracker
                 point = sparePoint;
                 count++;
             }
+            point.X += DIRECTION * 2.0f;
             return point;
         }
 
@@ -234,7 +235,7 @@ namespace KiBoard.tracker
             int y = Math.Max((int)point.Y - PIXEL_RANGE, 0);
             int x = Math.Min(Math.Max((int)point.X - DIRECTION, 0), buffer.getWidth());
             ushort depth = buffer.getPoint(x,y);
-            for(int i = 1; i < PIXEL_RANGE * 2; i++)
+            for(int i = 1; i < Math.Min(PIXEL_RANGE * 2, 424-y); i++)
             {
                 if (Math.Abs(buffer.getPoint(x, y + i) - depth) > 20)
                 {
