@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KiBoard.graphics;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -42,7 +43,7 @@ namespace KiBoard.calibration
         private void addPoint()
         {
             points.Add(new CalibrationPoint(tracker.getHandCollection().right.jointCoordinate, wallPoints[points.Count]));
-            System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
+            MessageBox.print("CalibrationPoint " + points.Count + " set", 30);
         }
 
         public void tick() {}

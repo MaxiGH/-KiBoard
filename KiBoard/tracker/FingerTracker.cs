@@ -11,16 +11,6 @@ namespace KiBoard.tracker
 {
     class FingerTracker : Tracker
     {
-        private class Edge
-        {
-            public List<System.Drawing.Point> points;
-            public void draw(System.Drawing.Bitmap bitmap)
-            {
-                foreach (System.Drawing.Point p in points)
-                    bitmap.SetPixel(p.X, p.Y, System.Drawing.Color.Blue);
-            }
-        }
-
         private class DepthBuffer
         {
             private ushort[] buffer;
@@ -205,7 +195,7 @@ namespace KiBoard.tracker
             }
             else
             {
-                System.Console.WriteLine("no body found");
+                graphics.MessageBox.print("no body found");
             }
         }
 

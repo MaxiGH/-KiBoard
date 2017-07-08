@@ -20,13 +20,6 @@ namespace KiBoard.graphics
             clearColor = Color.Black;
             transform = Matrix3x3.identity();
             this.frame = frame;
-
-            Line line = new Line();
-            line.nextPoint(new Vector2(0, 0));
-            line.nextPoint(new Vector2(1, 1));
-            line.color = Color.FromArgb(255, 0, 0);
-            stack.push(line);
-            stack.push(new Segment(new Vector2(0, 0), new Vector2(1, 1)));
         }
 
         public FrameBuffer Frame
