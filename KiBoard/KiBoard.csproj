@@ -59,8 +59,11 @@
     <Compile Include="data\CalibrationPoint.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Line.cs" />
-    <Compile Include="graphics\Graphics.cs" />
+    <Compile Include="graphics\MessageBox.cs" />
+    <Compile Include="graphics\RenderStack.cs" />
+    <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Segment.cs" />
+    <Compile Include="graphics\FrameBuffer.cs" />
     <Compile Include="inputManager\InputManager.cs" />
     <Compile Include="inputManager\TestInputManager.cs" />
     <Compile Include="Program.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="tracker\Tracker.cs" />
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
+    <Compile Include="ui\DefaultController.cs" />
     <Compile Include="ui\KiForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,7 +90,9 @@
       <DependentUpon>KiForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\ResourceLoader.cs" />
+    <Compile Include="ui\ToggleButton.cs" />
     <Compile Include="ui\UIConfiguration.cs" />
+    <Compile Include="ui\UIController.cs" />
     <Compile Include="ui\UIElement.cs" />
     <Compile Include="ui\UIManager.cs" />
   </ItemGroup>
@@ -102,10 +108,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\pen.jpg" />
     <Content Include="resources\pen.png" />
-    <Content Include="resources\pen_chosed.png" />
+    <Content Include="resources\pen_chosen.jpg" />
+    <Content Include="resources\pen_selected.png" />
+    <Content Include="resources\redo.jpg" />
+    <Content Include="resources\rubber.jpg" />
     <Content Include="resources\rubber.png" />
-    <Content Include="resources\rubber_chosed.png" />
+    <Content Include="resources\rubber_chosen.jpg" />
+    <Content Include="resources\rubber_selected.png" />
+    <Content Include="resources\save.jpg" />
+    <Content Include="resources\undo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

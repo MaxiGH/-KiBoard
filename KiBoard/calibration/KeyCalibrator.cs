@@ -39,25 +39,17 @@ namespace KiBoard.calibration
             return wallPoints.Count;
         }
 
-        private bool keyPressed()
-        {
-            if (Console.KeyAvailable)
-            {
-                Console.ReadKey();
-                return true;
-            }
-            return false;
-        }
-
         private void addPoint()
         {
             points.Add(new CalibrationPoint(tracker.getHandCollection().right.jointCoordinate, wallPoints[points.Count]));
             System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
         }
 
-        public void tick()
+        public void tick() {}
+
+        public void keyPressed()
         {
-            if (!hasCalibrationPoints() && keyPressed())
+            if (!hasCalibrationPoints())
             {
                 addPoint();
             }

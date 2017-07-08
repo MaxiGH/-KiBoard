@@ -15,12 +15,11 @@ namespace KiBoard
         private static KinectSensor sensor;
         private static MultiSourceFrameReader multiReader;
 
-        private static System.Drawing.Bitmap drawer;
+        private static bool shouldStop;
         private static ProgramState currentState;
         private static Calibrator calibrator;
         private static tracker.Tracker tracker;
         private static SpaceTranslator spaceTranslator;
-        private static bool isRunning = true;
         private static InputManager inputManager;
         private static Size formSize;
         private const int FRAME_INTERVAL = 35;
@@ -30,16 +29,22 @@ namespace KiBoard
 
         static void Main(string[] args)
         {
+            shouldStop = false;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             currentState = ProgramState.CALIBRATION_STATE;
+
             form = new KiForm();
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.WindowState = FormWindowState.Maximized;
+
             Thread applicationThread = new Thread(runApplication);
             applicationThread.Start();
 
             Application.Run(form);
 
-            isRunning = false;
+            shouldStop = true;
         }
 
         private static void runApplication()
@@ -53,21 +58,22 @@ namespace KiBoard
             // wait for window-creation
             while (!form.IsHandleCreated)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(50);
             }
 
             gfx = form.CreateGraphics();
 
             formSize = form.Size;
 
-            isRunning = true;
+            shouldStop = false;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
-            while (isRunning && !form.shouldClose())
+            while (!shouldStop && !form.ShouldClose)
             {
                 stopwatch.Start();
 
                 tick();
+                graphics.MessageBox.tick();
 
                 long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
                 //System.Console.WriteLine("elapsed Milliseconds nach tick: " + elapsedMilliseconds);
@@ -85,7 +91,6 @@ namespace KiBoard
                 //double cpuAusl = (double)(elapsedMilliseconds / FRAME_INTERVAL) * 100;
                 //System.Console.WriteLine("CPU Auslastung: " + cpuAusl + " %");
             }
-            System.Console.ReadKey();
         }
 
         private static void setupKinect()
@@ -109,6 +114,10 @@ namespace KiBoard
         {
             if (currentState == ProgramState.CALIBRATION_STATE)
             {
+                if (form.isKeyPressed())
+                {
+                    calibrator.keyPressed();
+                }
                 calibrator.tick();
                 if (calibrator.hasCalibrationPoints())
                 {

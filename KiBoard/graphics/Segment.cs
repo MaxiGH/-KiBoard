@@ -38,9 +38,10 @@ namespace KiBoard.graphics
 
         public void draw(System.Drawing.Graphics g, Matrix3x3 mat)
         {
-            Vector2 v0 = mat.transform(new Vector2(from.X, 1.0f - from.Y));
-            Vector2 v1 = mat.transform(new Vector2(to.X, 1.0f - to.Y));
+            Vector2 v0 = mat.transform(new Vector2(from.X, from.Y));
+            Vector2 v1 = mat.transform(new Vector2(to.X, to.Y));
 
+            System.Console.WriteLine("{0}|{1} {2}|{3}", v0.X, v0.Y, v1.X, v1.Y);
             g.DrawLine(
                 new Pen(new SolidBrush(color), width),
                 new PointF(v0.X, v0.Y),

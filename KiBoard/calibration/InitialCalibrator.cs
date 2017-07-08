@@ -51,5 +51,7 @@ namespace KiBoard
         public void tick()
         {
         }
+
+        public void keyPressed() {}
     }
 }

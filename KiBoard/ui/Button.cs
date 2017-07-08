@@ -6,42 +6,39 @@ namespace KiBoard.ui
 {
     class Button : UIElement
     {
-        private Vector2 position;
-        private Vector2 size;
-        private Image bitmap;
-        private bool visible;
+        private Image bitmapUnclicked;
+        private Image bitmapClicked;
+        protected bool isClicked;
 
-        public Button(Vector2 pos, Vector2 s, Image btm)
-        {
-            position = pos;
-            size = s;
-            bitmap = btm;
+        public bool IsClicked {
+            get { return isClicked; }
         }
 
-        public void render(Graphics gfx, Size windowSize)
+        public Button(string name, Vector2 pos, Vector2 size, Image btmUc, Image btmC) : base(name, pos, size)
         {
-            if (visible)
-            {
-                    Rectangle renderRect = new Rectangle(
-                        new Point((int)(windowSize.Width * position.X), (int)(windowSize.Height - (windowSize.Height * position.Y))),
-                        new Size((int)(windowSize.Width * size.X), (int)(windowSize.Height * size.Y))
-                        );
-                gfx.DrawImage(bitmap, renderRect);
-            }
+            bitmapUnclicked = btmUc;
+            bitmapClicked = btmC;
+            isClicked = false;
         }
 
-        public void setVisible(bool v)
+        public override void render(Graphics gfx, Size windowSize)
         {
-            visible = v;
+            if (isClicked)
+                draw(gfx, bitmapClicked, windowSize);
+            else
+                draw(gfx, bitmapUnclicked, windowSize);
         }
 
-        public bool touches(Vector2 vec)
+        public override void onClick()
         {
-            if ((position.X < vec.X) && (position.Y < vec.Y))
-            {
-                return ((position.X + size.X > vec.X) && (position.Y + size.Y > vec.Y));
-            }
-            return false;
+            isClicked = true;
+            System.Console.WriteLine("Button is clicked.");
+        }
+
+        public override void onClickReleased()
+        {
+            isClicked = false;
+            System.Console.WriteLine("Button is released.");
         }
     }
 }

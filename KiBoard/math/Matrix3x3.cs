@@ -9,9 +9,10 @@ namespace KiBoard.math
         private Matrix3x3()
         {
             cols = new Vector3[3];
+
             for (int i = 0; i < 3; i++)
             {
-                cols[i] = new Vector3();
+                cols[i] = new Vector3(i == 0 ? 1 : 0, i == 1 ? 1 : 0, i == 2 ? 1 : 0);
             }
         }
 
@@ -25,19 +26,29 @@ namespace KiBoard.math
             return mat;
         }
 
+        public Matrix3x3 translate(Vector2 vec)
+        {
+            Matrix3x3 translate = Matrix3x3.identity();
+            translate.cols[2].X = vec.X;
+            translate.cols[2].Y = vec.Y;
+            return Matrix3x3.multiply(translate, this);
+        }
+
         public Matrix3x3 scale(Vector2 vec)
         {
-            cols[0].X *= vec.X;
-            cols[1].Y *= vec.Y;
-            return this;
+            Matrix3x3 scale = new Matrix3x3();
+            scale.cols[0].X *= vec.X;
+            scale.cols[1].Y *= vec.Y;
+            return Matrix3x3.multiply(scale, this);
         }
 
         public Matrix3x3 scale(Vector3 vec)
         {
-            cols[0].X *= vec.X;
-            cols[1].Y *= vec.Y;
-            cols[2].Z *= vec.Z;
-            return this;
+            Matrix3x3 scale = new Matrix3x3();
+            scale.cols[0].X *= vec.X;
+            scale.cols[1].Y *= vec.Y;
+            scale.cols[2].Z *= vec.Z;
+            return Matrix3x3.multiply(scale, this);
         }
 
         public void setColoumn(int index, Vector3 col)
@@ -201,13 +212,6 @@ namespace KiBoard.math
                             mat0.getRow(2).Y * mat1.getRow(2).Y,
                             mat0.getRow(2).Z * mat1.getRow(2).Z)
                 );
-        }
-
-        public Matrix3x3 translate(Vector2 vec)
-        {
-            cols[2].X = vec.X;
-            cols[2].Y = vec.Y;
-            return this;
         }
 
         public Vector2 transform(Vector2 vec)

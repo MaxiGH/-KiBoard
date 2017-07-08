@@ -13,14 +13,16 @@ namespace KiBoard.ui
     public partial class KiForm : Form
     {
         private bool closing;
+        private bool keyPressed;
 
         public KiForm()
         {
             InitializeComponent();
             this.BackColor = Color.Black;
             this.Text = "KiBoard";
-            this.Size = new Size(1000, 800);
+            this.Size = new Size(800, 600);
             closing = false;
+            keyPressed = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,9 +41,30 @@ namespace KiBoard.ui
 
         }
 
-        public bool shouldClose()
+        public bool ShouldClose
         {
-            return closing;
+            get { return closing; }
+            set { closing = true; }
+        }
+
+        private void KiForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (ShouldClose)
+            {
+                Close();
+            }
+            if (e.KeyChar == 'q')
+            {
+                ShouldClose = true;
+            }
+            keyPressed = true;
+        }
+
+        public bool isKeyPressed()
+        {
+            bool result = keyPressed;
+            keyPressed = false;
+            return result;
         }
     }
 }

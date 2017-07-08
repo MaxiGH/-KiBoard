@@ -36,21 +36,22 @@ namespace KiBoard.graphics
 
         public void draw(System.Drawing.Graphics g, Matrix3x3 mat)
         {
-            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-            for (int i = 0; i < points.Count - 1; i++)
+            if (points.Count < 2)
+                return;
+            PointF[] path = new PointF[points.Count];
+            for (int i = 0; i < points.Count; i++)
             {
-                Vector2 from = mat.transform(new Vector2(points[i].X, 1.0f - points[i].Y));
-                Vector2 to = mat.transform(new Vector2(points[i + 1].X, 1.0f - points[i + 1].Y));
-                path.AddLine(new PointF(from.X, from.Y), new PointF(to.X, to.Y));
+                Vector2 point = mat.transform(new Vector2(points[i].X, points[i].Y));
+                path[i] = new PointF(point.X, point.Y);
             }
 
             Pen pen = new Pen(new SolidBrush(color));
             pen.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
             pen.Width = width;
             if (smooth)
-                try { g.DrawCurve(pen, path.PathPoints); }catch(Exception) { }
+                g.DrawCurve(pen, path);
             else
-                g.DrawPath(pen, path);
+                g.DrawLines(pen, path);
         }
     }
 }
