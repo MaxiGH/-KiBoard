@@ -50,7 +50,6 @@ namespace KiBoard
         private static void runApplication()
         {
             setupKinect();
-            drawer = new System.Drawing.Bitmap(512, 424);
             tracker = new tracker.FingerTracker(sensor, multiReader);
             calibrator = new KeyCalibrator(tracker);
             spaceTranslator = new SpaceTranslator();
@@ -138,9 +137,6 @@ namespace KiBoard
                 inputManager.processInput(translatedVec);
                 System.Console.WriteLine("vec=" + vec.ToString() + "     translatedVec=" + translatedVec.ToString());
             }
-
-            //System.Numerics.Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
-            gfx.DrawImage(drawer, 0, 0);
         }
     }
 }

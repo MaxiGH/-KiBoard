@@ -11,7 +11,6 @@ namespace KiBoard
     {
         private List<CalibrationPoint> list;
 
-
         public InitialCalibrator()
         {
             CalibrationPoint calPoint1 = new CalibrationPoint(new Vector3(0.284f, -0.341f, 1.13f), new Vector3(0, 0, 0));
