@@ -86,6 +86,7 @@ namespace KiBoard.inputManager
 
                     if (uiManager.isTouchingElement(input))
                     {
+                        graphics.MessageBox.print("element clicked", 10);
                         clickedElement = uiManager.getTouchingElement(input);
                         clickedElement.onClick();
                         controller.onClick(clickedElement.Name);
