@@ -83,14 +83,17 @@ namespace KiBoard.tracker
         private CameraSpacePoint joint = new CameraSpacePoint();
         public const int MAX_TOP_RANGE = 100;
         public const int MIN_EDGE_DIF = 15;
+        public const int MIN_EDGE_DIF_FINE = 20;
         public const int PIXEL_RANGE = 5;
+        public const int MAX_SMOOTH_VECS = 5;
         public const int DIRECTION = -1;    // negative for Kinect on the left | positive for Kinect on the right
+        public const int FINGER_RESET_RANGE = 3;
         private int counter = 0;
-
-        private HandCollection hands;
+        private List<System.Numerics.Vector3> smoothRightHandVec;
 
         public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
+            smoothRightHandVec = new List<System.Numerics.Vector3>();
             this.sensor = sensor;
             this.multiReader = multiReader;
             // zuvor in getHandCollection
@@ -98,13 +101,27 @@ namespace KiBoard.tracker
             {
                 multiReader.MultiSourceFrameArrived += OnMultiSourceFrameArrived;
             }
-            hands = new HandCollection(new Hand(), new Hand());
             Console.WriteLine("FingerTracker created!");
         }
 
         public HandCollection getHandCollection()
         {
-            return hands;
+            System.Numerics.Vector3 vec = new System.Numerics.Vector3();
+            lock (smoothRightHandVec)
+            {
+                foreach (System.Numerics.Vector3 v in smoothRightHandVec)
+                {
+                    vec += v;
+                }
+            }
+            if (smoothRightHandVec.Count == 0)
+            {
+                return new HandCollection(new Hand(), new Hand());
+            }
+            vec /= smoothRightHandVec.Count;
+            Console.WriteLine("counted " + smoothRightHandVec.Count + " vecs");
+            smoothRightHandVec.Clear();
+            return new HandCollection(new Hand(), new Hand(vec));
         }
 
         private void OnMultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
@@ -184,30 +201,42 @@ namespace KiBoard.tracker
 
                 DepthSpacePoint depthPoint = sensor.CoordinateMapper.MapCameraPointToDepthSpace(joint);
                 counter++;
-                hands = scanForHands(buffer, depthPoint);
+                scanForHands(buffer, depthPoint);
             }
             else
             {
-                hands = new HandCollection(new Hand(), new Hand());
                 System.Console.WriteLine("no body found");
             }
         }
 
-        private HandCollection scanForHands(DepthBuffer buffer, DepthSpacePoint depthPoint)
+        private void scanForHands(DepthBuffer buffer, DepthSpacePoint depthPoint)
         {
             if ((depthPoint.Y < 0.0f) || (depthPoint.Y >= 424.0f))
             {
-                return new HandCollection(new Hand(), new Hand());
+                return;
             }
 
             int jointEdgeY = getJointEdge(buffer, (int)depthPoint.X, (int)depthPoint.Y);
             if (jointEdgeY == -1)
             {
-                return new HandCollection(new Hand(), new Hand());
+                return;
             }
             DepthSpacePoint tip = searchFingerTip(buffer, (int)(depthPoint.X), jointEdgeY);
             CameraSpacePoint p = sensor.CoordinateMapper.MapDepthPointToCameraSpace(tip, buffer.getPoint(tip));
-            return new HandCollection(new Hand(), new Hand(new System.Numerics.Vector3(p.X, p.Y, p.Z)));
+            p.Z = joint.Z;
+            addPoint(p);
+        }
+
+        private void addPoint(CameraSpacePoint p)
+        {
+            lock (smoothRightHandVec)
+            {
+                if (smoothRightHandVec.Count >= MAX_SMOOTH_VECS)
+                {
+                    smoothRightHandVec.RemoveAt(0);
+                }
+                smoothRightHandVec.Add(new System.Numerics.Vector3(p.X, p.Y, p.Z));
+            }
         }
 
         private DepthSpacePoint searchFingerTip(DepthBuffer buffer, int x, int y)
@@ -226,7 +255,7 @@ namespace KiBoard.tracker
                 point = sparePoint;
                 count++;
             }
-            point.X += DIRECTION * 2.0f;
+            point.X += DIRECTION * FINGER_RESET_RANGE;
             return point;
         }
 
@@ -237,7 +266,7 @@ namespace KiBoard.tracker
             ushort depth = buffer.getPoint(x,y);
             for(int i = 1; i < Math.Min(PIXEL_RANGE * 2, 424-y); i++)
             {
-                if (Math.Abs(buffer.getPoint(x, y + i) - depth) > 20)
+                if (Math.Abs(buffer.getPoint(x, y + i) - depth) > MIN_EDGE_DIF_FINE)
                 {
                     point.X = x;
                     point.Y = y+i;

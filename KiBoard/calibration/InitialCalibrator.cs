@@ -14,9 +14,9 @@ namespace KiBoard
 
         public InitialCalibrator()
         {
-            CalibrationPoint calPoint1 = new CalibrationPoint(new Vector3(0.16f, 0, 0.74f), new Vector3(0, 0, 0));
-            CalibrationPoint calPoint2 = new CalibrationPoint(new Vector3(0.22f, 0.72f, 1.13f), new Vector3(0, 1, 0));
-            CalibrationPoint calPoint3 = new CalibrationPoint(new Vector3(0.15f, -0.35f, 1.6f), new Vector3(1, 0, 0));
+            CalibrationPoint calPoint1 = new CalibrationPoint(new Vector3(0.284f, -0.341f, 1.13f), new Vector3(0, 0, 0));
+            CalibrationPoint calPoint2 = new CalibrationPoint(new Vector3(0.305f, 0.429f, 1.142f), new Vector3(0, 1, 0));
+            CalibrationPoint calPoint3 = new CalibrationPoint(new Vector3(0.255f, -0.306f, 1.932f), new Vector3(1, 0, 0));
             list = new List<CalibrationPoint>();
             list.Add(calPoint1);
             list.Add(calPoint2);
