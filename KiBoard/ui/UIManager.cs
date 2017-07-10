@@ -21,7 +21,7 @@ namespace KiBoard.ui
         {
             foreach (UIElement element in elements)
             {
-                System.Console.WriteLine("{0} {1}", frame.Size.X, frame.Size.Y);
+                //System.Console.WriteLine("{0} {1}", frame.Size.X, frame.Size.Y);
                 element.render(frame.graphics(), new Size((int)frame.Size.X, (int)frame.Size.Y));
             }
         }

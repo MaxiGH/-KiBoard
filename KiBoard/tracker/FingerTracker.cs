@@ -109,7 +109,7 @@ namespace KiBoard.tracker
                 return new HandCollection(new Hand(), new Hand());
             }
             vec /= smoothRightHandVec.Count;
-            Console.WriteLine("counted " + smoothRightHandVec.Count + " vecs");
+            //Console.WriteLine("counted " + smoothRightHandVec.Count + " vecs");
             smoothRightHandVec.Clear();
             return new HandCollection(new Hand(), new Hand(vec));
         }
