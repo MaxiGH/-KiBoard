@@ -78,6 +78,7 @@ namespace KiBoard.tracker
         public const int MAX_SMOOTH_VECS = 5;
         public const int DIRECTION = -1;    // negative for Kinect on the left | positive for Kinect on the right
         public const int FINGER_RESET_RANGE = 3;
+        private const float SMOOTHING = 0.8f;
         private int counter = 0;
         private List<System.Numerics.Vector3> smoothRightHandVec;
 
@@ -94,22 +95,35 @@ namespace KiBoard.tracker
             Console.WriteLine("FingerTracker created!");
         }
 
-        public HandCollection getHandCollection()
+        public HandCollection getHandCollection(bool middled)
         {
-            System.Numerics.Vector3 vec = new System.Numerics.Vector3();
-            lock (smoothRightHandVec)
-            {
-                foreach (System.Numerics.Vector3 v in smoothRightHandVec)
-                {
-                    vec += v;
-                }
-            }
             if (smoothRightHandVec.Count == 0)
             {
                 graphics.MessageBox.print("no dephtFrame arrived in time");
                 return new HandCollection(new Hand(), new Hand());
             }
-            vec /= smoothRightHandVec.Count;
+
+            System.Numerics.Vector3 vec = smoothRightHandVec[0];
+            smoothRightHandVec.RemoveAt(0);
+            lock (smoothRightHandVec)
+            {
+                if (middled)
+                {
+                    foreach (System.Numerics.Vector3 v in smoothRightHandVec)
+                    {
+                        vec += v;
+                    }
+                    vec /= smoothRightHandVec.Count;
+                }
+                else
+                {
+                    foreach (System.Numerics.Vector3 v in smoothRightHandVec)
+                    {
+                        vec = vec * (1.0f-SMOOTHING) + v * SMOOTHING;
+                    }
+                }
+            }
+
             //Console.WriteLine("counted " + smoothRightHandVec.Count + " vecs");
             smoothRightHandVec.Clear();
             return new HandCollection(new Hand(), new Hand(vec));
