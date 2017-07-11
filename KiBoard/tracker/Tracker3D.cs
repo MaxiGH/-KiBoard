@@ -22,7 +22,7 @@ namespace KiBoard.tracker
         }
         
         // Returns the coordinates of the right hand in an float array in Kinect-Space
-        public HandCollection getHandCollection()
+        public HandCollection getHandCollection(bool middled = false)
         {
             Hand l = new Hand();
             Hand r = new Hand();

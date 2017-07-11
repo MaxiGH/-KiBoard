@@ -42,7 +42,7 @@ namespace KiBoard.calibration
 
         private void addPoint()
         {
-            points.Add(new CalibrationPoint(tracker.getHandCollection().right.jointCoordinate, wallPoints[points.Count]));
+            points.Add(new CalibrationPoint(tracker.getHandCollection(true).right.jointCoordinate, wallPoints[points.Count]));
             MessageBox.print("CalibrationPoint " + points.Count + " set", 30);
         }
 

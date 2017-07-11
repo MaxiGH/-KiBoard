@@ -132,10 +132,9 @@ namespace KiBoard
                     formSize = new Size(form.ClientSize.Width, System.Math.Max(form.ClientSize.Height, 2));
                     inputManager.updateFormSize(formSize);
                 }
-                Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
+                Vector3 vec = tracker.getHandCollection(false).right.jointCoordinate;
                 Vector3 translatedVec = spaceTranslator.translate(vec);
                 inputManager.processInput(translatedVec);
-                //System.Console.WriteLine("vec=" + vec.ToString() + "     translatedVec=" + translatedVec.ToString());
             }
         }
     }

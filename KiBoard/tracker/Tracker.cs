@@ -9,6 +9,6 @@ namespace KiBoard.tracker
 {
     interface Tracker
     {
-        HandCollection getHandCollection();
+        HandCollection getHandCollection(bool middled);
     }
 }
