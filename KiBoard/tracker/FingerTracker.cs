@@ -146,7 +146,6 @@ namespace KiBoard.tracker
                 BodyFrameReference bodyRef = frame.BodyFrameReference;
                 if (bodyRef == null)
                 {
-                    //Console.WriteLine("no body");
                     return;
                 }
                 // Getting the latest bodyFrame
@@ -227,8 +226,11 @@ namespace KiBoard.tracker
                 return;
             }
             DepthSpacePoint tip = searchFingerTip(buffer, (int)(depthPoint.X), jointEdgeY);
-            CameraSpacePoint p = sensor.CoordinateMapper.MapDepthPointToCameraSpace(tip, buffer.getPoint(tip));
-            p.Z = joint.Z;
+            DepthSpacePoint tip_Depth = new DepthSpacePoint();
+            tip_Depth.X = tip.X + 3;
+            tip_Depth.Y = tip.Y;
+            CameraSpacePoint p = sensor.CoordinateMapper.MapDepthPointToCameraSpace(tip, buffer.getPoint(tip_Depth));
+            //p.Z = joint.Z;
             addPoint(p);
         }
 
