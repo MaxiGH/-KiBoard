@@ -28,7 +28,6 @@ namespace KiBoard.inputManager
         private Drawable currentDrawable;
 
         private UIElement clickedElement;
-
         private UIController controller;
 
         public InputManager(Form form)
