@@ -136,30 +136,24 @@ namespace KiBoard.inputManager
                                 rubber.color = Color.Black;
                                 rubber.width = rubberWidth;
                                 currentDrawable = rubber;
-                                currentDrawable.nextPoint(input);
-                                renderer.Stack.push(currentDrawable);
-                                state = InputState.WRITE;
                                 break;
                             case PenState.PEN_LINE:
                                 Line line = new Line();
                                 line.color = penColor;
                                 line.width = penWidth;
                                 currentDrawable = line;
-                                currentDrawable.nextPoint(input);
-                                renderer.Stack.push(currentDrawable);
-                                state = InputState.WRITE;
                                 break;
                             case PenState.PEN_SEGMENT:
                                 Segment segment = new Segment();
                                 segment.color = penColor;
                                 segment.width = penWidth;
                                 currentDrawable = segment;
-                                state = InputState.WRITE;
                                 break;
                         }
 
                         currentDrawable.nextPoint(input);
                         renderer.Stack.push(currentDrawable);
+                        state = InputState.WRITE;
                     }
                     break;
                 case InputState.CLICKING:
