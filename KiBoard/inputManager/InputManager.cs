@@ -165,6 +165,8 @@ namespace KiBoard.inputManager
                 default:
                     break;
             }
+
+            renderer.renderEllipse(new Vector2(input.X, input.Y));
         }
 
         public void updateFormSize(System.Drawing.Size s)
