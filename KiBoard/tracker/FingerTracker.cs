@@ -81,6 +81,7 @@ namespace KiBoard.tracker
         private const float SMOOTHING = 0.8f;
         private int counter = 0;
         private List<System.Numerics.Vector3> smoothRightHandVec;
+        private const float SELECTION_THRESHOLD = 0.1f;
 
         public FingerTracker(KinectSensor sensor, MultiSourceFrameReader multiReader)
         {
@@ -114,6 +115,20 @@ namespace KiBoard.tracker
                         vec += v;
                     }
                     vec /= smoothRightHandVec.Count;
+                    System.Numerics.Vector3 vec2 = vec;
+                    int n = 0;
+                    foreach (System.Numerics.Vector3 v in smoothRightHandVec)
+                    {
+                        if ((v-vec).LengthSquared() < SELECTION_THRESHOLD)
+                        {
+                            vec2 += v;
+                            n++;
+                        }
+                    }
+                    if (n != 0)
+                        vec = vec2 / n;
+                    else
+                        graphics.MessageBox.print("n == 0 :(");
                 }
                 else
                 {
@@ -227,7 +242,7 @@ namespace KiBoard.tracker
             }
             DepthSpacePoint tip = searchFingerTip(buffer, (int)(depthPoint.X), jointEdgeY);
             DepthSpacePoint tip_Depth = new DepthSpacePoint();
-            tip_Depth.X = tip.X - 3*DIRECTION;
+            tip_Depth.X = tip.X + 3*DIRECTION;
             tip_Depth.Y = tip.Y;
             CameraSpacePoint p = sensor.CoordinateMapper.MapDepthPointToCameraSpace(tip, buffer.getPoint(tip_Depth));
             //p.Z = joint.Z;
