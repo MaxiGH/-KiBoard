@@ -23,6 +23,9 @@ namespace KiBoard.ui
                 case "Rubber":
                     manager.activateRubber();
                     break;
+                case "Line":
+                    manager.activateSegmentDrawing();
+                    break;
                 case "Clear":
                     manager.clear();
                     break;
