@@ -25,12 +25,12 @@ namespace KiBoard.ui
             list.Add(rubber);
             list.Add(new Button("Undo", new Vector2(0.8f, 0.1f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("undo.png"),
-                     ResourceLoader.loadBitmap("undo_chosen.png")));
+                     ResourceLoader.loadBitmap("undo.jpg"),
+                     ResourceLoader.loadBitmap("undo.jpg")));
             list.Add(new Button("Redo", new Vector2(0.9f, 0.16f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("redo.png"),
-                     ResourceLoader.loadBitmap("redo_chosen.png")));
+                     ResourceLoader.loadBitmap("redo.jpg"),
+                     ResourceLoader.loadBitmap("redo.jpg")));
             list.Add(new Button("Save", new Vector2(0.0f, 0.16f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("save.jpg"),
