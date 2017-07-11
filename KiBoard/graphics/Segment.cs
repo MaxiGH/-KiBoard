@@ -12,7 +12,7 @@ namespace KiBoard.graphics
         public Vector2 to;
         public Color color;
 
-        public Segment(Color color)
+        public Segment()
         {
             width = 1.0f;
             from = new Vector2(0, 0);
