@@ -57,7 +57,7 @@ namespace KiBoard.graphics
             frame.graphics().Clear(clearColor);
         }
 
-        public void renderEllipse(Vector2 position, System.Drawing.Color)
+        public void renderEllipse(Vector2 position, System.Drawing.Color color)
         {
             Vector2 screenPosition = transform.transform(position);
             Rectangle rect = new Rectangle(new Point((int)screenPosition.X - 2, (int)screenPosition.Y - 2), new Size(4, 4));
