@@ -15,7 +15,7 @@ namespace KiBoard.inputManager
             WRITE, // currentDrawable is set and input is forwarded to this drawable
             AWAIT_LINE, // currentDrawable is NOT set and if input touches wall again, a new line will be created
             CLICKING, // UIElement is clicked
-            CLICK_UNHOVERED // UIElement was clicked, Finger is still touching wall, but not Element
+            CLICK_UNHOVERED, // UIElement was clicked, Finger is still touching wall, but not Element
         }
 
         private InputState state;
@@ -140,14 +140,17 @@ namespace KiBoard.inputManager
 
         public void activatePen()
         {
-            graphics.MessageBox.print("Pen Logic is not yet implemented!", 100);
-            /*currentDrawable = new Line();
-            state = InputState.WRITE;*/
+            state = InputState.AWAIT_LINE;
         }
 
         public void activateRubber()
         {
-            graphics.MessageBox.print("Rubber Logic is not yet implemented!", 100);
+            graphics.MessageBox.print("Der Radiergummi ist noch nicht implementiert", 10);
+        }
+
+        public void clear()
+        {
+            renderer.Stack.clear();
         }
 
         public void undo()

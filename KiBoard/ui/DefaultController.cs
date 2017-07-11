@@ -18,11 +18,13 @@ namespace KiBoard.ui
             switch (elementName)
             {
                 case "Pen":
-                    manager.createTestMessagebox();
                     manager.activatePen();
                     break;
                 case "Rubber":
                     manager.activateRubber();
+                    break;
+                case "Clear":
+                    manager.clear();
                     break;
                 case "Undo":
                     manager.undo();
