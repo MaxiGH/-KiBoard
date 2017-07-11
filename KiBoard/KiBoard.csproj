@@ -102,7 +102,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\LightBuzz.Vitruvius.dll" />
+    <Content Include="resources\clear.png" />
+    <Content Include="resources\clear_chosen.png" />
+    <Content Include="resources\pen.png" />
+    <Content Include="resources\pen_chosen.png" />
+    <Content Include="resources\redo.png" />
     <Content Include="resources\redo_chosen.png" />
+    <Content Include="resources\rubber.png" />
+    <Content Include="resources\rubber_chosen.png" />
+    <Content Include="resources\save.png" />
+    <Content Include="resources\save_chosen.png" />
     <Content Include="resources\undo.png" />
     <Content Include="resources\undo_chosen.png" />
   </ItemGroup>
@@ -111,17 +120,6 @@
       <DependentUpon>KiForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="resources\pen.jpg" />
-    <Content Include="resources\pen.png" />
-    <Content Include="resources\pen_chosen.jpg" />
-    <Content Include="resources\pen_selected.png" />
-    <Content Include="resources\redo.png" />
-    <Content Include="resources\rubber.jpg" />
-    <Content Include="resources\rubber.png" />
-    <Content Include="resources\rubber_chosen.jpg" />
-    <Content Include="resources\rubber_selected.png" />
-    <Content Include="resources\save.jpg" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
