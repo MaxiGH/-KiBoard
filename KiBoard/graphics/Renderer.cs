@@ -57,6 +57,13 @@ namespace KiBoard.graphics
             frame.graphics().Clear(clearColor);
         }
 
+        public void renderEllipse(Vector2 position)
+        {
+            Vector2 screenPosition = transform.transform(position);
+            Rectangle rect = new Rectangle(new Point((int)screenPosition.X - 2, (int)screenPosition.Y - 2), new Size(4, 4));
+            frame.graphics().DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(System.Drawing.Color.Gray)), rect);
+        }
+
         public void render()
         {
             Matrix3x3 mat = renderTransform();
