@@ -209,6 +209,11 @@ namespace KiBoard.inputManager
             penState = PenState.PEN_RUBBER;
         }
 
+        public void activateSegmentDrawing()
+        {
+            penState = PenState.PEN_SEGMENT;
+        }
+
         public void clear()
         {
             renderer.Stack.clear();
