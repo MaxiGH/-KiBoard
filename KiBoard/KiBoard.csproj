@@ -117,6 +117,8 @@
     <Content Include="resources\rubber_chosen.png" />
     <Content Include="resources\save.png" />
     <Content Include="resources\save_chosen.png" />
+    <Content Include="resources\shapes.png" />
+    <Content Include="resources\shapes_chosen.png" />
     <Content Include="resources\undo.png" />
     <Content Include="resources\undo_chosen.png" />
   </ItemGroup>
