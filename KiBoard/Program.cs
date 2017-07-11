@@ -22,7 +22,7 @@ namespace KiBoard
         private static SpaceTranslator spaceTranslator;
         private static InputManager inputManager;
         private static Size formSize;
-        private const int FRAME_INTERVAL = 17;
+        private const int FRAME_INTERVAL = 34;
         private static System.Drawing.Graphics gfx;
 
         private static KiForm form;
@@ -62,7 +62,7 @@ namespace KiBoard
 
             gfx = form.CreateGraphics();
 
-            formSize = form.Size;
+            formSize = new Size(form.ClientSize.Width, form.ClientSize.Height);
 
             shouldStop = false;
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
@@ -129,7 +129,7 @@ namespace KiBoard
             {
                 if (!form.Size.Equals(formSize))
                 {
-                    formSize = form.Size;
+                    formSize = new Size(form.ClientSize.Width, System.Math.Max(form.ClientSize.Height, 2));
                     inputManager.updateFormSize(formSize);
                 }
                 Vector3 vec = tracker.getHandCollection().right.jointCoordinate;

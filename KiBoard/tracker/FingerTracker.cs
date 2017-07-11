@@ -106,6 +106,7 @@ namespace KiBoard.tracker
             }
             if (smoothRightHandVec.Count == 0)
             {
+                graphics.MessageBox.print("no dephtFrame arrived in time");
                 return new HandCollection(new Hand(), new Hand());
             }
             vec /= smoothRightHandVec.Count;

@@ -59,9 +59,25 @@ namespace KiBoard.graphics
 
         public void renderEllipse(Vector2 position, System.Drawing.Color color)
         {
-            Vector2 screenPosition = transform.transform(position);
+            if (position.X < 0.0f || position.X > 1.0f)
+            {
+                return;
+            }
+            if (position.Y < 0.0f || position.Y > 1.0f)
+            {
+                return;
+            }
+
+            Vector2 screenPosition = renderTransform().transform(position);
+
             Rectangle rect = new Rectangle(new Point((int)screenPosition.X - 2, (int)screenPosition.Y - 2), new Size(4, 4));
-            frame.graphics().DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(color)), rect);
+            try
+            {
+                frame.graphics().DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(color)), rect);
+            } catch (Exception)
+            {
+                throw new Exception(screenPosition.ToString());
+            }
         }
 
         public void render()

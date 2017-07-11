@@ -49,7 +49,7 @@ namespace KiBoard.inputManager
             penWidth = 1.0f;
             penColor = Color.White;
 
-            Vector2 size = new Vector2(form.Size.Width, form.Size.Height);
+            Vector2 size = new Vector2(form.ClientSize.Width, form.ClientSize.Height);
             frame = new FrameBuffer(size);
             renderer = new Renderer(frame);
             UIConfiguration configuration = new DefaultConfiguration();
@@ -65,9 +65,20 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
+            System.Console.WriteLine("windowSize = " + frame.Size.ToString());
+            if (float.IsNaN(input.X) || float.IsNaN(input.Y))
+            {
+                return;
+            }
+            if (float.IsInfinity(input.X) || float.IsInfinity(input.Y) || float.IsInfinity(input.Z))
+            {
+                return;
+            }
             graphics.MessageBox.print("state = " + state.ToString());
+            graphics.MessageBox.print("input = " + input.ToString());
             uiManager.showAllElements();
-            if (inputTouchesWall(input))
+            bool touches = inputTouchesWall(input);
+            if (touches)
             {
                 processTouchingInput(new Vector2(input.X, input.Y));
             }
@@ -76,14 +87,17 @@ namespace KiBoard.inputManager
                 processDetachedInput(input);
             }
 
-            render();
+            render(new Vector2(input.X, input.Y), touches);
         }
 
-        private void render()
+        private void render(Vector2 input, bool touches)
         {
             renderer.clear();
             renderer.render();
-            uiManager.render();
+            //uiManager.render();
+            if (!touches)
+                renderer.renderEllipse(input, Color.Yellow);
+
             graphics.MessageBox.draw(frame);
             gfx.DrawImage(frame.Bitmap, 0, 0);
         }
@@ -165,8 +179,6 @@ namespace KiBoard.inputManager
                 default:
                     break;
             }
-
-            renderer.renderEllipse(new Vector2(input.X, input.Y), System.Drawing.Color.Gray);
         }
 
         public void updateFormSize(System.Drawing.Size s)
