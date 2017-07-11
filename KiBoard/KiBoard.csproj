@@ -104,6 +104,8 @@
     <Content Include="libs\LightBuzz.Vitruvius.dll" />
     <Content Include="resources\clear.png" />
     <Content Include="resources\clear_chosen.png" />
+    <Content Include="resources\ellipse.png" />
+    <Content Include="resources\ellipse_chosen.png" />
     <Content Include="resources\line.png" />
     <Content Include="resources\line_chosen.png" />
     <Content Include="resources\pen.png" />
