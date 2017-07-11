@@ -40,6 +40,7 @@ namespace KiBoard.inputManager
 
         private Color penColor;
         private float penWidth;
+        private float rubberWidth;
         private PenState penState;
 
         public InputManager(Form form)
@@ -47,6 +48,7 @@ namespace KiBoard.inputManager
             state = InputState.AWAIT_PEN;
             penState = PenState.PEN_LINE;
             penWidth = 1.0f;
+            rubberWidth = 10.0f;
             penColor = Color.White;
 
             Vector2 size = new Vector2(form.ClientSize.Width, form.ClientSize.Height);
@@ -63,39 +65,45 @@ namespace KiBoard.inputManager
             return (input.Z < TOUCH_THRESHOLD);
         }
 
+        private bool validInput(Vector3 input)
+        {
+            return !(float.IsNaN(input.X) || float.IsNaN(input.Y) || float.IsNaN(input.Z) || float.IsInfinity(input.X) || float.IsInfinity(input.Y) || float.IsInfinity(input.Z));
+        }
+
         public void processInput(Vector3 input)
         {
-            System.Console.WriteLine("windowSize = " + frame.Size.ToString());
-            if (float.IsNaN(input.X) || float.IsNaN(input.Y))
-            {
-                return;
-            }
-            if (float.IsInfinity(input.X) || float.IsInfinity(input.Y) || float.IsInfinity(input.Z))
-            {
-                return;
-            }
             graphics.MessageBox.print("state = " + state.ToString());
             graphics.MessageBox.print("input = " + input.ToString());
             uiManager.showAllElements();
-            bool touches = inputTouchesWall(input);
-            if (touches)
+
+            bool touches;
+            bool valid = validInput(input);
+
+            if (valid)
             {
-                processTouchingInput(new Vector2(input.X, input.Y));
+                touches = inputTouchesWall(input);
+                if (touches)
+                {
+                    processTouchingInput(new Vector2(input.X, input.Y));
+                }
+                else
+                {
+                    processDetachedInput(input);
+                }
             }
             else
             {
-                processDetachedInput(input);
+                touches = false;
             }
-
-            render(new Vector2(input.X, input.Y), touches);
+            render(new Vector2(input.X, input.Y), touches, valid);
         }
 
-        private void render(Vector2 input, bool touches)
+        private void render(Vector2 input, bool touches, bool valid)
         {
             renderer.clear();
             renderer.render();
-            //uiManager.render();
-            if (!touches)
+            uiManager.render();
+            if (!touches && valid)
                 renderer.renderEllipse(input, Color.Yellow);
 
             graphics.MessageBox.draw(frame);
@@ -126,7 +134,7 @@ namespace KiBoard.inputManager
                             case PenState.PEN_RUBBER:
                                 Line rubber = new Line();
                                 rubber.color = Color.Black;
-                                rubber.width = penWidth;
+                                rubber.width = rubberWidth;
                                 currentDrawable = rubber;
                                 currentDrawable.nextPoint(input);
                                 renderer.Stack.push(currentDrawable);
@@ -199,6 +207,11 @@ namespace KiBoard.inputManager
         public void activateRubber()
         {
             penState = PenState.PEN_RUBBER;
+        }
+
+        public void clear()
+        {
+            renderer.Stack.clear();
         }
 
         public void undo()

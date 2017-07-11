@@ -22,7 +22,7 @@ namespace KiBoard
         private static SpaceTranslator spaceTranslator;
         private static InputManager inputManager;
         private static Size formSize;
-        private const int FRAME_INTERVAL = 34;
+        private const int FRAME_INTERVAL = 100;
         private static System.Drawing.Graphics gfx;
 
         private static KiForm form;
