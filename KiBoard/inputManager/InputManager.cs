@@ -150,7 +150,7 @@ namespace KiBoard.inputManager
 
         public void clear()
         {
-            renderer.Stack.clear();
+            renderer.Stack.clear() ;
         }
 
         public void undo()
