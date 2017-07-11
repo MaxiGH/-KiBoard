@@ -83,6 +83,7 @@
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
     <Compile Include="ui\DefaultController.cs" />
+    <Compile Include="ui\ExpandToggleButton.cs" />
     <Compile Include="ui\KiForm.cs">
       <SubType>Form</SubType>
     </Compile>
