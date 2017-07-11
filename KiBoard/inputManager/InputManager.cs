@@ -13,7 +13,7 @@ namespace KiBoard.inputManager
         private enum InputState
         {
             WRITE, // currentDrawable is set and input is forwarded to this drawable
-            AWAIT_LINE, // currentDrawable is NOT set and if input touches wall again, a new line will be created
+            AWAIT_PEN, // currentDrawable is NOT set and if input touches wall again, a new line will be created
             CLICKING, // UIElement is clicked
             CLICK_UNHOVERED // UIElement was clicked, Finger is still touching wall, but not Element
         }
@@ -31,9 +31,23 @@ namespace KiBoard.inputManager
         private UIElement clickedElement;
         private UIController controller;
 
+        private enum PenState
+        {
+            PEN_RUBBER,
+            PEN_LINE,
+            PEN_SEGMENT
+        }
+
+        private Color penColor;
+        private float penWidth;
+        private PenState penState;
+
         public InputManager(Form form)
         {
-            state = InputState.AWAIT_LINE;
+            state = InputState.AWAIT_PEN;
+            penState = PenState.PEN_LINE;
+            penWidth = 1.0f;
+            penColor = Color.White;
 
             Vector2 size = new Vector2(form.Size.Width, form.Size.Height);
             frame = new FrameBuffer(size);
@@ -82,7 +96,7 @@ namespace KiBoard.inputManager
                     currentDrawable.nextPoint(input);
                     uiManager.hideHoveredElements(input);
                     break;
-                case InputState.AWAIT_LINE:
+                case InputState.AWAIT_PEN:
                     if (uiManager.isTouchingElement(input))
                     {
                         clickedElement = uiManager.getTouchingElement(input);
@@ -90,12 +104,40 @@ namespace KiBoard.inputManager
                         clickedElement.onClick();
                         controller.onClick(clickedElement.Name);
                         state = InputState.CLICKING;
-                    } else
+                    }
+                    else
                     {
-                        currentDrawable = new Line();
+                        switch (penState)
+                        {
+                            case PenState.PEN_RUBBER:
+                                Line rubber = new Line();
+                                rubber.color = Color.Black;
+                                rubber.width = penWidth;
+                                currentDrawable = rubber;
+                                currentDrawable.nextPoint(input);
+                                renderer.Stack.push(currentDrawable);
+                                state = InputState.WRITE;
+                                break;
+                            case PenState.PEN_LINE:
+                                Line line = new Line();
+                                line.color = penColor;
+                                line.width = penWidth;
+                                currentDrawable = line;
+                                currentDrawable.nextPoint(input);
+                                renderer.Stack.push(currentDrawable);
+                                state = InputState.WRITE;
+                                break;
+                            case PenState.PEN_SEGMENT:
+                                Segment segment = new Segment();
+                                segment.color = penColor;
+                                segment.width = penWidth;
+                                currentDrawable = segment;
+                                state = InputState.WRITE;
+                                break;
+                        }
+
                         currentDrawable.nextPoint(input);
                         renderer.Stack.push(currentDrawable);
-                        state = InputState.WRITE;
                     }
                     break;
                 case InputState.CLICKING:
@@ -114,11 +156,11 @@ namespace KiBoard.inputManager
             {
                 case InputState.CLICK_UNHOVERED:
                 case InputState.WRITE:
-                    state = InputState.AWAIT_LINE;
+                    state = InputState.AWAIT_PEN;
                     break;
                 case InputState.CLICKING:
                     clickedElement.onClickReleased();
-                    state = InputState.AWAIT_LINE;
+                    state = InputState.AWAIT_PEN;
                     break;
                 default:
                     break;
@@ -137,17 +179,12 @@ namespace KiBoard.inputManager
 
         public void activatePen()
         {
-            state = InputState.AWAIT_LINE;
+            penState = PenState.PEN_LINE;
         }
 
         public void activateRubber()
         {
-            graphics.MessageBox.print("Der Radiergummi ist noch nicht implementiert", 10);
-        }
-
-        public void clear()
-        {
-            renderer.Stack.clear();
+            penState = PenState.PEN_RUBBER;
         }
 
         public void undo()
