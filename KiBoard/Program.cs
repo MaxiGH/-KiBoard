@@ -131,7 +131,7 @@ namespace KiBoard
                 {
                     formSize = new Size(form.ClientSize.Width, System.Math.Max(form.ClientSize.Height, 2));
                     inputManager.updateFormSize(formSize);
-                    System.Console.WriteLine("formsize=" + form.Size);
+                    //System.Console.WriteLine("formsize=" + form.Size);
                 }
                 Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
                 Vector3 translatedVec = spaceTranslator.translate(vec);

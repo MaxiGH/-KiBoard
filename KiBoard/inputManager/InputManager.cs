@@ -35,7 +35,8 @@ namespace KiBoard.inputManager
         {
             PEN_RUBBER,
             PEN_LINE,
-            PEN_SEGMENT
+            PEN_SEGMENT,
+            PEN_ELLIPSE
         }
 
         private Color penColor;
@@ -47,8 +48,8 @@ namespace KiBoard.inputManager
         {
             state = InputState.AWAIT_PEN;
             penState = PenState.PEN_LINE;
-            penWidth = 1.0f;
-            rubberWidth = 10.0f;
+            penWidth = 2.0f;
+            rubberWidth = 40.0f;
             penColor = Color.White;
 
             Vector2 size = new Vector2(form.ClientSize.Width, form.ClientSize.Height);
@@ -103,8 +104,17 @@ namespace KiBoard.inputManager
             renderer.clear();
             renderer.render();
             uiManager.render();
-            if (!touches && valid)
-                renderer.renderEllipse(input, Color.Yellow);
+            if (valid)
+            {
+                if (!touches)
+                {
+                    renderer.renderEllipse(input, Color.Yellow);
+                }
+                else if (penState == PenState.PEN_RUBBER)
+                {
+                    renderer.renderEllipse(input, Color.White, (int)rubberWidth / 2);
+                }
+            }
 
             graphics.MessageBox.draw(frame);
             gfx.DrawImage(frame.Bitmap, 0, 0);
@@ -148,6 +158,12 @@ namespace KiBoard.inputManager
                                 segment.color = penColor;
                                 segment.width = penWidth;
                                 currentDrawable = segment;
+                                break;
+                            case PenState.PEN_ELLIPSE:
+                                Ellipse ellipse = new Ellipse();
+                                ellipse.color = penColor;
+                                ellipse.width = penWidth;
+                                currentDrawable = ellipse;
                                 break;
                         }
 
@@ -206,6 +222,11 @@ namespace KiBoard.inputManager
         public void activateSegmentDrawing()
         {
             penState = PenState.PEN_SEGMENT;
+        }
+
+        public void activateEllipseDrawing()
+        {
+            penState = PenState.PEN_ELLIPSE;
         }
 
         public void clear()

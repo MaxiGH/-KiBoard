@@ -57,7 +57,7 @@ namespace KiBoard.graphics
             frame.graphics().Clear(clearColor);
         }
 
-        public void renderEllipse(Vector2 position, System.Drawing.Color color)
+        public void renderEllipse(Vector2 position, Color color, int radius = 4)
         {
             if (position.X < 0.0f || position.X > 1.0f)
             {
@@ -70,7 +70,7 @@ namespace KiBoard.graphics
 
             Vector2 screenPosition = renderTransform().transform(position);
 
-            Rectangle rect = new Rectangle(new Point((int)screenPosition.X - 2, (int)screenPosition.Y - 2), new Size(4, 4));
+            Rectangle rect = new Rectangle(new Point((int)screenPosition.X - radius, (int)screenPosition.Y - radius), new Size(radius*2, radius*2));
             try
             {
                 frame.graphics().DrawEllipse(new System.Drawing.Pen(new System.Drawing.SolidBrush(color)), rect);
