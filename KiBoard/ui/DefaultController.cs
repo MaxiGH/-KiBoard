@@ -26,6 +26,9 @@ namespace KiBoard.ui
                 case "Line":
                     manager.activateSegmentDrawing();
                     break;
+                case "Ellipse":
+                    manager.activateEllipseDrawing();
+                    break;
                 case "Clear":
                     manager.clear();
                     break;
