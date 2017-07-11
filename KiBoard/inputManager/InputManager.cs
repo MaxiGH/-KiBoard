@@ -214,6 +214,11 @@ namespace KiBoard.inputManager
             penState = PenState.PEN_SEGMENT;
         }
 
+        public void activateEllipseDrawing()
+        {
+
+        }
+
         public void clear()
         {
             renderer.Stack.clear();
