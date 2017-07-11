@@ -22,7 +22,7 @@ namespace KiBoard
         private static SpaceTranslator spaceTranslator;
         private static InputManager inputManager;
         private static Size formSize;
-        private const int FRAME_INTERVAL = 35;
+        private const int FRAME_INTERVAL = 17;
         private static System.Drawing.Graphics gfx;
 
         private static KiForm form;
@@ -36,8 +36,8 @@ namespace KiBoard
             currentState = ProgramState.CALIBRATION_STATE;
 
             form = new KiForm();
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.WindowState = FormWindowState.Maximized;
+            //form.FormBorderStyle = FormBorderStyle.None;
+            //form.WindowState = FormWindowState.Maximized;
 
             Thread applicationThread = new Thread(runApplication);
             applicationThread.Start();
@@ -135,7 +135,7 @@ namespace KiBoard
                 Vector3 vec = tracker.getHandCollection().right.jointCoordinate;
                 Vector3 translatedVec = spaceTranslator.translate(vec);
                 inputManager.processInput(translatedVec);
-                System.Console.WriteLine("vec=" + vec.ToString() + "     translatedVec=" + translatedVec.ToString());
+                //System.Console.WriteLine("vec=" + vec.ToString() + "     translatedVec=" + translatedVec.ToString());
             }
         }
     }

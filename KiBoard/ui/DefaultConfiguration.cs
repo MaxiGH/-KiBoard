@@ -27,11 +27,11 @@ namespace KiBoard.ui
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("undo.jpg"),
                      ResourceLoader.loadBitmap("undo.jpg")));
-            list.Add(new Button("Redo", new Vector2(0.9f, 0.1f),
+            list.Add(new Button("Redo", new Vector2(0.9f, 0.16f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("redo.jpg"),
                      ResourceLoader.loadBitmap("redo.jpg")));
-            list.Add(new Button("Save", new Vector2(0.0f, 0.1f),
+            list.Add(new Button("Save", new Vector2(0.0f, 0.16f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("save.jpg"),
                      ResourceLoader.loadBitmap("save.jpg")));
