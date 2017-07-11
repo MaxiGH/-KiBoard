@@ -89,6 +89,7 @@
     <Compile Include="ui\KiForm.Designer.cs">
       <DependentUpon>KiForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\LinkedToggleButton.cs" />
     <Compile Include="ui\ResourceLoader.cs" />
     <Compile Include="ui\ToggleButton.cs" />
     <Compile Include="ui\UIConfiguration.cs" />

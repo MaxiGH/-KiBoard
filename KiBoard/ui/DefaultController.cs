@@ -19,14 +19,19 @@ namespace KiBoard.ui
             {
                 case "Pen":
                     manager.createTestMessagebox();
+                    manager.activatePen();
                     break;
                 case "Rubber":
+                    manager.activateRubber();
                     break;
                 case "Undo":
+                    manager.undo();
                     break;
                 case "Redo":
+                    manager.redo();
                     break;
                 case "Save":
+                    manager.save();
                     break;
             }
         }

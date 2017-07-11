@@ -12,13 +12,14 @@ namespace KiBoard.ui
 
         public bool IsClicked {
             get { return isClicked; }
+            set { IsClicked = value; }
         }
 
-        public Button(string name, Vector2 pos, Vector2 size, Image btmUc, Image btmC) : base(name, pos, size)
+        public Button(string name, Vector2 pos, Vector2 size, Image btmUc, Image btmC, bool isClicked = false) : base(name, pos, size)
         {
             bitmapUnclicked = btmUc;
             bitmapClicked = btmC;
-            isClicked = false;
+            this.isClicked = isClicked;
         }
 
         public override void render(Graphics gfx, Size windowSize)

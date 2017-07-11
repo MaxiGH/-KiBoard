@@ -11,14 +11,18 @@ namespace KiBoard.ui
         {
             List<UIElement> list = new List<UIElement>();
 
-            list.Add(new ToggleButton("Pen", new Vector2(0.6f, 0.1f),
+            LinkedToggleButton pen = new LinkedToggleButton("Pen", new Vector2(0.6f, 0.1f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("pen.jpg"),
-                     ResourceLoader.loadBitmap("pen_chosen.jpg")));
-            list.Add(new ToggleButton("Rubber", new Vector2(0.7f, 0.1f),
+                     ResourceLoader.loadBitmap("pen_chosen.jpg"), true);
+            LinkedToggleButton rubber = new LinkedToggleButton("Rubber", new Vector2(0.7f, 0.1f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("rubber.jpg"),
-                     ResourceLoader.loadBitmap("rubber_chosen.jpg")));
+                     ResourceLoader.loadBitmap("rubber_chosen.jpg"));
+            LinkedToggleButton.link(pen, rubber);
+
+            list.Add(pen);
+            list.Add(rubber);
             list.Add(new Button("Undo", new Vector2(0.8f, 0.1f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("undo.jpg"),

@@ -3,6 +3,7 @@ using KiBoard.graphics;
 using System.Windows.Forms;
 using KiBoard.ui;
 using System.Drawing;
+using System;
 
 namespace KiBoard.inputManager
 {
@@ -136,6 +137,36 @@ namespace KiBoard.inputManager
         public void createTestMessagebox()
         {
             graphics.MessageBox.print("Der Button wurde geklickt", 10);
+        }
+
+        public void activatePen()
+        {
+            graphics.MessageBox.print("Pen Logic is not yet implemented!", 100);
+            /*currentDrawable = new Line();
+            state = InputState.WRITE;*/
+        }
+
+        public void activateRubber()
+        {
+            graphics.MessageBox.print("Rubber Logic is not yet implemented!", 100);
+        }
+
+        public void undo()
+        {
+            renderer.Stack.pop();
+        }
+
+        public void redo()
+        {
+            renderer.Stack.repush();
+        }
+
+        public void save()
+        {
+            var dateTime = DateTime.Now;
+            var format = "yyyy-mm-dd_HH-mm-ss";
+            var filePath = String.Format("./KiBoard_{0}.bmp", dateTime.ToString(format));
+            renderer.renderToFile(filePath);
         }
     }
 }
