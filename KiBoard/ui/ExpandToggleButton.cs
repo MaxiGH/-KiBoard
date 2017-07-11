@@ -12,13 +12,17 @@ namespace KiBoard.ui
     {
         public List<LinkedToggleButton> Kiddies { get; private set; }
 
-        public ExpandToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false) : base(name, pos, s, btmUc, btmC, isClicked)
+        public ExpandToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false, bool vsbl = true) : base(name, pos, s, btmUc, btmC, isClicked, vsbl)
         { 
         }
 
         public void setKiddies(List<LinkedToggleButton> kiddies)
         {
             Kiddies = kiddies;
+            foreach(LinkedToggleButton btn in Kiddies)
+            {
+                btn.Visible = false;
+            }
         }
 
         public override void onClick()

@@ -23,12 +23,12 @@ namespace KiBoard.ui
             set { name = value; }
         }
 
-        public UIElement(string n, Vector2 pos, Vector2 si)
+        public UIElement(string n, Vector2 pos, Vector2 si, bool vsbl = true)
         {
             name = n;
             position = pos;
             size = si;
-            visible = false;
+            visible = vsbl;
         }
 
         public abstract void render(Graphics gfx, Size windowSize);

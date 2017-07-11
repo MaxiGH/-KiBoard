@@ -22,8 +22,8 @@ namespace KiBoard.ui
 
             ExpandToggleButton shapes = new ExpandToggleButton("Shapes", new Vector2(0.5f, 0.1f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("rubber.png"),
-                     ResourceLoader.loadBitmap("rubber_chosen.png"));
+                     ResourceLoader.loadBitmap("shapes.png"),
+                     ResourceLoader.loadBitmap("shapes_chosen.png"));
 
             LinkedToggleButton line = new LinkedToggleButton("Line", new Vector2(0.5f, 0.2f),
                      new Vector2(0.1f, 0.1f),
@@ -34,7 +34,6 @@ namespace KiBoard.ui
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("ellipse.png"),
                      ResourceLoader.loadBitmap("ellipse_chosen.png"));
-            ellipse.Visible = false;
             List<LinkedToggleButton> links = new List<LinkedToggleButton>();
             links.Add(pen);
             links.Add(rubber);

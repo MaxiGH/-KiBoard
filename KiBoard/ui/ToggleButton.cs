@@ -10,8 +10,8 @@ namespace KiBoard.ui
 {
     class ToggleButton : Button
     {
-        public ToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false)
-            : base(name, pos, s, btmUc, btmC, isClicked)
+        public ToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false, bool vsbl = true)
+            : base(name, pos, s, btmUc, btmC, isClicked, vsbl)
         { }
 
         public override void onClick()
