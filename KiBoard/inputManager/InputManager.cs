@@ -166,7 +166,7 @@ namespace KiBoard.inputManager
                     break;
             }
 
-            renderer.renderEllipse(new Vector2(input.X, input.Y));
+            renderer.renderEllipse(new Vector2(input.X, input.Y), System.Drawing.Color.Gray);
         }
 
         public void updateFormSize(System.Drawing.Size s)
