@@ -51,7 +51,7 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
-            //System.Console.WriteLine("state=" + state.ToString());
+            graphics.MessageBox.print("state = " + state.ToString());
             uiManager.showAllElements();
             if (inputTouchesWall(input))
             {
@@ -83,11 +83,10 @@ namespace KiBoard.inputManager
                     uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_LINE:
-
                     if (uiManager.isTouchingElement(input))
                     {
-                        graphics.MessageBox.print("element clicked", 10);
                         clickedElement = uiManager.getTouchingElement(input);
+                        graphics.MessageBox.print("element " + clickedElement.Name + " clicked", 10);
                         clickedElement.onClick();
                         controller.onClick(clickedElement.Name);
                         state = InputState.CLICKING;
@@ -100,17 +99,11 @@ namespace KiBoard.inputManager
                     }
                     break;
                 case InputState.CLICKING:
-                    if (!clickedElement.touches(input))
+                    if (!clickedElement.touches(input)) // Wenn wir es nicht mehr berühren
                     {
                         clickedElement.onClickReleased();
                         state = InputState.CLICK_UNHOVERED;
                     }
-
-                    currentDrawable = new Line();
-                    currentDrawable.nextPoint(input);
-                    renderer.Stack.push(currentDrawable);
-                    state = InputState.WRITE;
-
                     break;
             }
         }
@@ -121,6 +114,10 @@ namespace KiBoard.inputManager
             {
                 case InputState.CLICK_UNHOVERED:
                 case InputState.WRITE:
+                    state = InputState.AWAIT_LINE;
+                    break;
+                case InputState.CLICKING:
+                    clickedElement.onClickReleased();
                     state = InputState.AWAIT_LINE;
                     break;
                 default:
