@@ -12,7 +12,7 @@ namespace KiBoard.ui
 
         public bool IsClicked {
             get { return isClicked; }
-            set { IsClicked = value; }
+            set { isClicked = value; }
         }
 
         public Button(string name, Vector2 pos, Vector2 size, Image btmUc, Image btmC, bool isClicked = false) : base(name, pos, size)

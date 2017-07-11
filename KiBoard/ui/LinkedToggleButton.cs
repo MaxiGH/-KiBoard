@@ -10,7 +10,7 @@ namespace KiBoard.ui
 {
     class LinkedToggleButton : ToggleButton
     {
-        public List<LinkedToggleButton> Links { get; private set; }
+        private List<LinkedToggleButton> Links { get; set; }
 
         public LinkedToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false) : base(name, pos, s, btmUc, btmC, isClicked)
         {
@@ -18,7 +18,7 @@ namespace KiBoard.ui
 
         public static void link(List<LinkedToggleButton> btns)
         {
-            foreach(LinkedToggleButton btn in btns)
+            foreach (LinkedToggleButton btn in btns)
             {
                 btn.Links = btns;
             }
@@ -26,9 +26,9 @@ namespace KiBoard.ui
 
         public override void onClick()
         {
-            if (!isClicked) { 
-                if (Links != null) { 
-                    foreach(LinkedToggleButton btn in Links)
+            if (!isClicked) {
+                if (Links != null) {
+                    foreach (LinkedToggleButton btn in Links)
                     {
                         btn.IsClicked = false;
                     }

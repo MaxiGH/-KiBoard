@@ -57,7 +57,9 @@
     <Compile Include="calibration\InitialCalibrator.cs" />
     <Compile Include="calibration\KeyCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
+    <Compile Include="graphics\Coord.cs" />
     <Compile Include="graphics\Drawable.cs" />
+    <Compile Include="graphics\Ellipse.cs" />
     <Compile Include="graphics\Line.cs" />
     <Compile Include="graphics\MessageBox.cs" />
     <Compile Include="graphics\RenderStack.cs" />
@@ -117,6 +119,8 @@
     <Content Include="resources\rubber_chosen.png" />
     <Content Include="resources\save.png" />
     <Content Include="resources\save_chosen.png" />
+    <Content Include="resources\shapes.png" />
+    <Content Include="resources\shapes_chosen.png" />
     <Content Include="resources\undo.png" />
     <Content Include="resources\undo_chosen.png" />
   </ItemGroup>

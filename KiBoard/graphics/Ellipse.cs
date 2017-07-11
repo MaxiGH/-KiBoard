@@ -5,7 +5,7 @@ using KiBoard.math;
 
 namespace KiBoard.graphics
 {
-    public class Segment : Drawable
+    public class Ellipse : Drawable
     {
         public float width;
         public Vector2 from;
@@ -13,7 +13,7 @@ namespace KiBoard.graphics
         public Color color;
         int numPointsSet;
 
-        public Segment()
+        public Ellipse()
         {
             width = 1.0f;
             from = new Vector2(0, 0);
@@ -22,7 +22,7 @@ namespace KiBoard.graphics
             numPointsSet = 0;
         }
 
-        public Segment(Vector2 from, Vector2 to, float width = 1.0f)
+        public Ellipse(Vector2 from, Vector2 to, float width = 1.0f)
         {
             this.width = width;
             this.from = from;
@@ -48,11 +48,15 @@ namespace KiBoard.graphics
                 Vector2 v0 = mat.transform(new Vector2(from.X, from.Y));
                 Vector2 v1 = mat.transform(new Vector2(to.X, to.Y));
 
-               // System.Console.WriteLine("{0}|{1} {2}|{3}", v0.X, v0.Y, v1.X, v1.Y);
-                g.DrawLine(
+                // System.Console.WriteLine("{0}|{1} {2}|{3}", v0.X, v0.Y, v1.X, v1.Y);
+                g.DrawEllipse(
                     new Pen(new SolidBrush(color), width),
-                    new PointF(v0.X, v0.Y),
-                    new PointF(v1.X, v1.Y));
+                    new Rectangle(
+                        new Point((int)v0.X, (int)v0.Y),
+                        new Size(
+                            (int)(v1.X - v0.X),
+                            (int)(v1.Y - v0.Y)))
+                    );
             }
         }
     }
