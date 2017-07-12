@@ -75,7 +75,7 @@ namespace KiBoard.inputManager
         {
             graphics.MessageBox.print("state = " + state.ToString());
             graphics.MessageBox.print("input = " + input.ToString());
-            uiManager.showAllElements();
+            //uiManager.showAllElements();
 
             bool touches;
             bool valid = validInput(input);

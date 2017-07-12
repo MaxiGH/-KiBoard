@@ -57,6 +57,7 @@
     <Compile Include="calibration\InitialCalibrator.cs" />
     <Compile Include="calibration\KeyCalibrator.cs" />
     <Compile Include="data\CalibrationPoint.cs" />
+    <Compile Include="graphics\Coord.cs" />
     <Compile Include="graphics\Drawable.cs" />
     <Compile Include="graphics\Ellipse.cs" />
     <Compile Include="graphics\Line.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ui\Button.cs" />
     <Compile Include="ui\DefaultConfiguration.cs" />
     <Compile Include="ui\DefaultController.cs" />
+    <Compile Include="ui\ExpandToggleButton.cs" />
     <Compile Include="ui\KiForm.cs">
       <SubType>Form</SubType>
     </Compile>

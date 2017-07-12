@@ -9,6 +9,12 @@ namespace KiBoard.ui
         private Vector2 size;
         private bool visible;
 
+        public bool Visible
+        {
+            get { return visible; }
+            set { visible = value;  }
+        }
+
         private string name;
 
         public string Name
@@ -17,12 +23,12 @@ namespace KiBoard.ui
             set { name = value; }
         }
 
-        public UIElement(string n, Vector2 pos, Vector2 si)
+        public UIElement(string n, Vector2 pos, Vector2 si, bool vsbl = true)
         {
             name = n;
             position = pos;
             size = si;
-            visible = false;
+            visible = vsbl;
         }
 
         public abstract void render(Graphics gfx, Size windowSize);
@@ -39,11 +45,6 @@ namespace KiBoard.ui
             }
         }
 
-        public void setVisible(bool v)
-        {
-            visible = v;
-        }
-
         public bool touches(Vector2 vec)
         {
             if ((vec.X > position.X) && (vec.Y < position.Y))
@@ -54,11 +55,6 @@ namespace KiBoard.ui
                 }
             }
             return false;
-        }
-
-        public void SetVisible(bool v)
-        {
-            visible = v;
         }
 
         public abstract void onClick();

@@ -12,7 +12,7 @@ namespace KiBoard.ui
     {
         private List<LinkedToggleButton> Links { get; set; }
 
-        public LinkedToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false) : base(name, pos, s, btmUc, btmC, isClicked)
+        public LinkedToggleButton(string name, Vector2 pos, Vector2 s, Image btmUc, Image btmC, bool isClicked = false, bool vsbl = true) : base(name, pos, s, btmUc, btmC, isClicked, vsbl)
         {
         }
 

@@ -20,7 +20,7 @@ namespace KiBoard.ui
         public void render()
         {
             foreach (UIElement element in elements)
-            {
+            { 
                 //System.Console.WriteLine("{0} {1}", frame.Size.X, frame.Size.Y);
                 element.render(frame.graphics(), new Size((int)frame.Size.X, (int)frame.Size.Y));
             }
@@ -47,7 +47,7 @@ namespace KiBoard.ui
         {
             foreach (UIElement element in elements)
             {
-                element.setVisible(!element.touches(vec));
+                element.Visible = (!element.touches(vec));
             }
         }
 
@@ -55,7 +55,7 @@ namespace KiBoard.ui
         {
             foreach (UIElement element in elements)
             {
-                element.setVisible(true);
+                element.Visible = true;
             }
         }
     }
