@@ -239,6 +239,11 @@ namespace KiBoard.inputManager
             penState = PenState.PEN_COORDS;
         }
 
+        public void changePenColor(Color newColor)
+        {
+            penColor = newColor;
+        }
+
         public void clear()
         {
             renderer.Stack.clear();

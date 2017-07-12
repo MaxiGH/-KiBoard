@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KiBoard.inputManager;
+using System.Drawing;
 
 namespace KiBoard.ui
 {
@@ -33,6 +34,23 @@ namespace KiBoard.ui
                     break;
                 case "Coords":
                     manager.activateCoordsDrawing();
+                    break;
+                case "Colors":
+                    break;
+                case "White":
+                    manager.changePenColor(Color.White);
+                    break;
+                case "Yellow":
+                    manager.changePenColor(Color.Yellow);
+                    break;
+                case "Red":
+                    manager.changePenColor(Color.Red);
+                    break;
+                case "Green":
+                    manager.changePenColor(Color.Green);
+                    break;
+                case "Blue":
+                    manager.changePenColor(Color.Blue);
                     break;
                 case "Clear":
                     manager.clear();

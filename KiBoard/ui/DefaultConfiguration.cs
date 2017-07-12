@@ -29,7 +29,6 @@ namespace KiBoard.ui
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("line.png"),
                      ResourceLoader.loadBitmap("line_chosen.png"));
-            line.Visible = false;
             LinkedToggleButton ellipse = new LinkedToggleButton("Ellipse", new Vector2(0.5f, 0.3f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("ellipse.png"),
@@ -38,13 +37,13 @@ namespace KiBoard.ui
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("coords.png"),
                      ResourceLoader.loadBitmap("coords_chosen.png"));
-            List<LinkedToggleButton> links = new List<LinkedToggleButton>();
-            links.Add(pen);
-            links.Add(rubber);
-            links.Add(line);
-            links.Add(ellipse);
-            links.Add(coords);
-            LinkedToggleButton.link(links);
+            List<LinkedToggleButton> toolLinks = new List<LinkedToggleButton>();
+            toolLinks.Add(pen);
+            toolLinks.Add(rubber);
+            toolLinks.Add(line);
+            toolLinks.Add(ellipse);
+            toolLinks.Add(coords);
+            LinkedToggleButton.link(toolLinks);
 
             List<LinkedToggleButton> shapesKiddies = new List<LinkedToggleButton>();
             shapesKiddies.Add(line);
@@ -52,12 +51,59 @@ namespace KiBoard.ui
             shapesKiddies.Add(coords);
             shapes.setKiddies(shapesKiddies);
 
+            ExpandToggleButton colors = new ExpandToggleButton("Colors", new Vector2(0.1f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("shapes.png"),
+                     ResourceLoader.loadBitmap("shapes_chosen.png"));
+            LinkedToggleButton white = new LinkedToggleButton("White", new Vector2(0.2f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton yellow = new LinkedToggleButton("Yellow", new Vector2(0.3f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton red = new LinkedToggleButton("Red", new Vector2(0.4f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton green = new LinkedToggleButton("Green", new Vector2(0.5f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton blue = new LinkedToggleButton("Blue", new Vector2(0.6f, 0.8f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+
+            List<LinkedToggleButton> colorLinks = new List<LinkedToggleButton>();
+            colorLinks.Add(white);
+            colorLinks.Add(yellow);
+            colorLinks.Add(red);
+            colorLinks.Add(green);
+            colorLinks.Add(blue);
+            LinkedToggleButton.link(colorLinks);
+
+            List<LinkedToggleButton> colorsKiddies = new List<LinkedToggleButton>();
+            colorsKiddies = colorLinks;
+            colors.setKiddies(colorsKiddies);
+
+
             list.Add(pen);
             list.Add(rubber);
+
             list.Add(shapes);
             list.Add(line);
             list.Add(ellipse);
             list.Add(coords);
+
+            list.Add(colors);
+            list.Add(white);
+            list.Add(yellow);
+            list.Add(red);
+            list.Add(green);
+            list.Add(blue);
+
             list.Add(new Button("Clear", new Vector2(0.7f, 0.1f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("clear.png"),
