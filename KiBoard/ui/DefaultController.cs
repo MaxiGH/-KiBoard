@@ -31,6 +31,9 @@ namespace KiBoard.ui
                 case "Ellipse":
                     manager.activateEllipseDrawing();
                     break;
+                case "Coords":
+                    manager.activateCoordsDrawing();
+                    break;
                 case "Clear":
                     manager.clear();
                     break;

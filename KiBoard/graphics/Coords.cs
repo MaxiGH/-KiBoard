@@ -5,7 +5,7 @@ using KiBoard.math;
 
 namespace KiBoard.graphics
 {
-    public class Coord : Drawable
+    public class Coords : Drawable
     {
         public float width;
         public Vector2 from;
@@ -13,7 +13,7 @@ namespace KiBoard.graphics
         public Color color;
         int numPointsSet;
 
-        public Coord()
+        public Coords()
         {
             width = 1.0f;
             from = new Vector2(0, 0);
@@ -22,7 +22,7 @@ namespace KiBoard.graphics
             numPointsSet = 0;
         }
 
-        public Coord(Vector2 from, Vector2 to, float width = 1.0f)
+        public Coords(Vector2 from, Vector2 to, float width = 1.0f)
         {
             this.width = width;
             this.from = from;

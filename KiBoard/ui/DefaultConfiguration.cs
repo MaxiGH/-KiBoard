@@ -34,16 +34,22 @@ namespace KiBoard.ui
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("ellipse.png"),
                      ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton coords = new LinkedToggleButton("Coords", new Vector2(0.5f, 0.4f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("coords.png"),
+                     ResourceLoader.loadBitmap("coords_chosen.png"));
             List<LinkedToggleButton> links = new List<LinkedToggleButton>();
             links.Add(pen);
             links.Add(rubber);
             links.Add(line);
             links.Add(ellipse);
+            links.Add(coords);
             LinkedToggleButton.link(links);
 
             List<LinkedToggleButton> shapesKiddies = new List<LinkedToggleButton>();
             shapesKiddies.Add(line);
             shapesKiddies.Add(ellipse);
+            shapesKiddies.Add(coords);
             shapes.setKiddies(shapesKiddies);
 
             list.Add(pen);
@@ -51,6 +57,7 @@ namespace KiBoard.ui
             list.Add(shapes);
             list.Add(line);
             list.Add(ellipse);
+            list.Add(coords);
             list.Add(new Button("Clear", new Vector2(0.7f, 0.1f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("clear.png"),

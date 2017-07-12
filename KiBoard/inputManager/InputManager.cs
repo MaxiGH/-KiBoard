@@ -36,7 +36,8 @@ namespace KiBoard.inputManager
             PEN_RUBBER,
             PEN_LINE,
             PEN_SEGMENT,
-            PEN_ELLIPSE
+            PEN_ELLIPSE,
+            PEN_COORDS
         }
 
         private Color penColor;
@@ -165,6 +166,12 @@ namespace KiBoard.inputManager
                                 ellipse.width = penWidth;
                                 currentDrawable = ellipse;
                                 break;
+                            case PenState.PEN_COORDS:
+                                Coords coord = new Coords();
+                                coord.color = penColor;
+                                coord.width = penWidth;
+                                currentDrawable = coord;
+                                break;
                         }
 
                         currentDrawable.nextPoint(input);
@@ -227,6 +234,11 @@ namespace KiBoard.inputManager
         public void activateEllipseDrawing()
         {
             penState = PenState.PEN_ELLIPSE;
+        }
+
+        public void activateCoordsDrawing()
+        {
+            penState = PenState.PEN_COORDS;
         }
 
         public void clear()
