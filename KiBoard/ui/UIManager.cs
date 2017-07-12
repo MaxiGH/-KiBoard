@@ -43,19 +43,11 @@ namespace KiBoard.ui
             return null;
         }
 
-        public void hideHoveredElements(Vector2 vec)
+        public void onStartWrite()
         {
-            foreach (UIElement element in elements)
+            foreach (UIElement e in elements)
             {
-                element.Visible = (!element.touches(vec));
-            }
-        }
-
-        public void showAllElements()
-        {
-            foreach (UIElement element in elements)
-            {
-                element.Visible = true;
+                e.onStartWrite();
             }
         }
     }

@@ -74,9 +74,8 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
-            graphics.MessageBox.print("state = " + state.ToString());
-            graphics.MessageBox.print("input = " + input.ToString());
-            //uiManager.showAllElements();
+            //graphics.MessageBox.print("state = " + state.ToString());
+            //graphics.MessageBox.print("input = " + input.ToString());
 
             bool touches;
             bool valid = validInput(input);
@@ -127,13 +126,11 @@ namespace KiBoard.inputManager
             {
                 case InputState.WRITE:
                     currentDrawable.nextPoint(input);
-                    uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_PEN:
                     if (uiManager.isTouchingElement(input))
                     {
                         clickedElement = uiManager.getTouchingElement(input);
-                        graphics.MessageBox.print("element " + clickedElement.Name + " clicked", 10);
                         clickedElement.onClick();
                         controller.onClick(clickedElement.Name);
                         state = InputState.CLICKING;
@@ -177,6 +174,7 @@ namespace KiBoard.inputManager
                         currentDrawable.nextPoint(input);
                         renderer.Stack.push(currentDrawable);
                         state = InputState.WRITE;
+                        uiManager.onStartWrite();
                     }
                     break;
                 case InputState.CLICKING:
@@ -261,6 +259,7 @@ namespace KiBoard.inputManager
             var dateTime = DateTime.Now;
             var format = "yyyy-mm-dd_HH-mm-ss";
             var filePath = String.Format("./KiBoard_{0}.bmp", dateTime.ToString(format));
+            graphics.MessageBox.print("File saved to " + filePath, 30);
             renderer.renderToFile(filePath);
         }
     }
