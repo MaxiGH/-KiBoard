@@ -52,6 +52,17 @@ namespace KiBoard.ui
                 case "Blue":
                     manager.changePenColor(Color.Blue);
                     break;
+                case "Widths":
+                    break;
+                case "Slim":
+                    manager.changePenWidth(1.0f);
+                    break;
+                case "Normal":
+                    manager.changePenWidth(2.0f);
+                    break;
+                case "Big":
+                    manager.changePenWidth(4.0f);
+                    break;
                 case "Clear":
                     manager.clear();
                     break;

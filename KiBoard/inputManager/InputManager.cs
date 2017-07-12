@@ -244,6 +244,11 @@ namespace KiBoard.inputManager
             penColor = newColor;
         }
 
+        public void changePenWidth(float newWidth)
+        {
+            penWidth = newWidth;
+        }
+
         public void clear()
         {
             renderer.Stack.clear();

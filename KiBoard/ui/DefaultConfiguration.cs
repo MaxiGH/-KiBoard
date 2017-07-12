@@ -58,7 +58,7 @@ namespace KiBoard.ui
             LinkedToggleButton white = new LinkedToggleButton("White", new Vector2(0.2f, 0.8f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("ellipse.png"),
-                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"), true);
             LinkedToggleButton yellow = new LinkedToggleButton("Yellow", new Vector2(0.3f, 0.8f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("ellipse.png"),
@@ -88,6 +88,32 @@ namespace KiBoard.ui
             colorsKiddies = colorLinks;
             colors.setKiddies(colorsKiddies);
 
+            ExpandToggleButton widths = new ExpandToggleButton("Widths", new Vector2(0.1f, 0.7f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("shapes.png"),
+                     ResourceLoader.loadBitmap("shapes_chosen.png"));
+            LinkedToggleButton slim = new LinkedToggleButton("Slim", new Vector2(0.2f, 0.7f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+            LinkedToggleButton normal = new LinkedToggleButton("Normal", new Vector2(0.3f, 0.7f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"), true);
+            LinkedToggleButton big = new LinkedToggleButton("Big", new Vector2(0.4f, 0.7f),
+                     new Vector2(0.1f, 0.1f),
+                     ResourceLoader.loadBitmap("ellipse.png"),
+                     ResourceLoader.loadBitmap("ellipse_chosen.png"));
+
+            List<LinkedToggleButton> widthLinks = new List<LinkedToggleButton>();
+            widthLinks.Add(slim);
+            widthLinks.Add(normal);
+            widthLinks.Add(big);
+            LinkedToggleButton.link(widthLinks);
+
+            List<LinkedToggleButton> widthsKiddies = new List<LinkedToggleButton>();
+            widthsKiddies = widthLinks;
+            widths.setKiddies(widthsKiddies);
 
             list.Add(pen);
             list.Add(rubber);
@@ -103,6 +129,11 @@ namespace KiBoard.ui
             list.Add(red);
             list.Add(green);
             list.Add(blue);
+
+            list.Add(widths);
+            list.Add(slim);
+            list.Add(normal);
+            list.Add(big);
 
             list.Add(new Button("Clear", new Vector2(0.7f, 0.1f),
                      new Vector2(0.1f, 0.1f),
