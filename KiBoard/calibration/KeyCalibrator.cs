@@ -42,8 +42,16 @@ namespace KiBoard.calibration
 
         private void addPoint()
         {
-            points.Add(new CalibrationPoint(tracker.getHandCollection().right.jointCoordinate, wallPoints[points.Count]));
-            MessageBox.print("CalibrationPoint " + points.Count + " set", 30);
+            tracker.HandCollection hands = tracker.getHandCollection();
+            if (hands.right.isDefined)
+            {
+                points.Add(new CalibrationPoint(hands.right.jointCoordinate, wallPoints[points.Count]));
+                System.Console.WriteLine("CalibrationPoint " + points.Count + " set");
+            }
+            else
+            {
+                System.Console.WriteLine("ERROR: CalibrationPoint not found. Try again!");
+            }
         }
 
         public void tick() {}

@@ -28,9 +28,18 @@ namespace KiBoard.ui
         public override void onClick()
         {
             base.onClick();
-            foreach(LinkedToggleButton btn in Kiddies){
+            foreach (LinkedToggleButton btn in Kiddies){
                 btn.Visible = isClicked;
             }
+        }
+
+        public override void onStartWrite()
+        {
+            foreach (LinkedToggleButton btn in Kiddies)
+            {
+                btn.Visible = false;
+            }
+            IsClicked = false;
         }
     }
 }

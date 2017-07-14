@@ -57,6 +57,7 @@ namespace KiBoard.ui
             return false;
         }
 
+        public virtual void onStartWrite() { }
         public abstract void onClick();
         public abstract void onClickReleased();
     }

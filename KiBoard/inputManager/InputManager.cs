@@ -36,7 +36,8 @@ namespace KiBoard.inputManager
             PEN_RUBBER,
             PEN_LINE,
             PEN_SEGMENT,
-            PEN_ELLIPSE
+            PEN_ELLIPSE,
+            PEN_COORDS
         }
 
         private Color penColor;
@@ -73,9 +74,8 @@ namespace KiBoard.inputManager
 
         public void processInput(Vector3 input)
         {
-            graphics.MessageBox.print("state = " + state.ToString());
-            graphics.MessageBox.print("input = " + input.ToString());
-            //uiManager.showAllElements();
+            //graphics.MessageBox.print("state = " + state.ToString());
+            //graphics.MessageBox.print("input = " + input.ToString());
 
             bool touches;
             bool valid = validInput(input);
@@ -126,13 +126,11 @@ namespace KiBoard.inputManager
             {
                 case InputState.WRITE:
                     currentDrawable.nextPoint(input);
-                    uiManager.hideHoveredElements(input);
                     break;
                 case InputState.AWAIT_PEN:
                     if (uiManager.isTouchingElement(input))
                     {
                         clickedElement = uiManager.getTouchingElement(input);
-                        graphics.MessageBox.print("element " + clickedElement.Name + " clicked", 10);
                         clickedElement.onClick();
                         controller.onClick(clickedElement.Name);
                         state = InputState.CLICKING;
@@ -165,11 +163,18 @@ namespace KiBoard.inputManager
                                 ellipse.width = penWidth;
                                 currentDrawable = ellipse;
                                 break;
+                            case PenState.PEN_COORDS:
+                                Coords coord = new Coords();
+                                coord.color = penColor;
+                                coord.width = penWidth;
+                                currentDrawable = coord;
+                                break;
                         }
 
                         currentDrawable.nextPoint(input);
                         renderer.Stack.push(currentDrawable);
                         state = InputState.WRITE;
+                        uiManager.onStartWrite();
                     }
                     break;
                 case InputState.CLICKING:
@@ -229,6 +234,16 @@ namespace KiBoard.inputManager
             penState = PenState.PEN_ELLIPSE;
         }
 
+        public void activateCoordsDrawing()
+        {
+            penState = PenState.PEN_COORDS;
+        }
+
+        public void changePenColor(Color newColor)
+        {
+            penColor = newColor;
+        }
+
         public void clear()
         {
             renderer.Stack.clear();
@@ -249,6 +264,7 @@ namespace KiBoard.inputManager
             var dateTime = DateTime.Now;
             var format = "yyyy-mm-dd_HH-mm-ss";
             var filePath = String.Format("./KiBoard_{0}.bmp", dateTime.ToString(format));
+            graphics.MessageBox.print("File saved to " + filePath, 30);
             renderer.renderToFile(filePath);
         }
     }
