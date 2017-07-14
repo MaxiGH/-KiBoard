@@ -57,8 +57,8 @@ namespace KiBoard.ui
                      ResourceLoader.loadBitmap("colors_chosen.png"));
             LinkedToggleButton white = new LinkedToggleButton("White", new Vector2(0.1f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("ellipse.png"),
-                     ResourceLoader.loadBitmap("ellipse_chosen.png"), true);
+                     ResourceLoader.loadBitmap("colors.png"),
+                     ResourceLoader.loadBitmap("colors_chosen.png"), true);
             LinkedToggleButton yellow = new LinkedToggleButton("Yellow", new Vector2(0.2f, 0.8f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("yellow.png"),
