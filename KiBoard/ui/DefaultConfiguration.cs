@@ -90,8 +90,8 @@ namespace KiBoard.ui
 
             ExpandToggleButton widths = new ExpandToggleButton("Widths", new Vector2(0.0f, 0.7f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("shapes.png"),
-                     ResourceLoader.loadBitmap("shapes_chosen.png"));
+                     ResourceLoader.loadBitmap("widths.png"),
+                     ResourceLoader.loadBitmap("widths_chosen.png"));
             LinkedToggleButton slim = new LinkedToggleButton("Slim", new Vector2(0.1f, 0.7f),
                      new Vector2(0.1f, 0.1f),
                      ResourceLoader.loadBitmap("small.png"),
