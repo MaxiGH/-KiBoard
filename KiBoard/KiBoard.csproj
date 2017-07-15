@@ -121,6 +121,8 @@
     <Content Include="resources\colors_and_sizes\red_chosen.png" />
     <Content Include="resources\colors_and_sizes\small.png" />
     <Content Include="resources\colors_and_sizes\small_chosen.png" />
+    <Content Include="resources\colors_and_sizes\widths.png" />
+    <Content Include="resources\colors_and_sizes\widths_chosen.png" />
     <Content Include="resources\colors_and_sizes\yellow.png" />
     <Content Include="resources\colors_and_sizes\yellow_chosen.png" />
     <Content Include="resources\coords.png" />
