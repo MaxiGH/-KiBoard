@@ -24,7 +24,7 @@ namespace KiBoard.inputManager
         private FrameBuffer frame;
         private Graphics gfx;
 
-        public const float TOUCH_THRESHOLD = 0.01f;
+        public const float TOUCH_THRESHOLD = 0.011f;
 
         private Drawable currentDrawable;
 

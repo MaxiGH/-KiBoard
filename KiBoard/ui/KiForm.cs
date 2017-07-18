@@ -20,7 +20,8 @@ namespace KiBoard.ui
             InitializeComponent();
             this.BackColor = Color.Black;
             this.Text = "KiBoard";
-            this.Size = new Size(600, 375);
+            //this.Size = new Size(600, 375);
+            this.Size = new Size(1200, 700);
             closing = false;
             keyPressed = false;
         }

@@ -53,28 +53,28 @@ namespace KiBoard.ui
 
             ExpandToggleButton colors = new ExpandToggleButton("Colors", new Vector2(0.0f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("colors.png"),
-                     ResourceLoader.loadBitmap("colors_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/colors.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/colors_chosen.png"));
             LinkedToggleButton white = new LinkedToggleButton("White", new Vector2(0.1f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("colors.png"),
-                     ResourceLoader.loadBitmap("colors_chosen.png"), true);
+                     ResourceLoader.loadBitmap("colors_and_sizes/colors.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/colors_chosen.png"), true);
             LinkedToggleButton yellow = new LinkedToggleButton("Yellow", new Vector2(0.2f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("yellow.png"),
-                     ResourceLoader.loadBitmap("yellow_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/yellow.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/yellow_chosen.png"));
             LinkedToggleButton red = new LinkedToggleButton("Red", new Vector2(0.3f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("red.png"),
-                     ResourceLoader.loadBitmap("red_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/red.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/red_chosen.png"));
             LinkedToggleButton green = new LinkedToggleButton("Green", new Vector2(0.4f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("green.png"),
-                     ResourceLoader.loadBitmap("green_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/green.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/green_chosen.png"));
             LinkedToggleButton blue = new LinkedToggleButton("Blue", new Vector2(0.5f, 0.8f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("blue.png"),
-                     ResourceLoader.loadBitmap("blue_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/blue.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/blue_chosen.png"));
 
             List<LinkedToggleButton> colorLinks = new List<LinkedToggleButton>();
             colorLinks.Add(white);
@@ -90,20 +90,20 @@ namespace KiBoard.ui
 
             ExpandToggleButton widths = new ExpandToggleButton("Widths", new Vector2(0.0f, 0.7f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("widths.png"),
-                     ResourceLoader.loadBitmap("widths_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/widths.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/widths_chosen.png"));
             LinkedToggleButton slim = new LinkedToggleButton("Slim", new Vector2(0.1f, 0.7f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("small.png"),
-                     ResourceLoader.loadBitmap("small_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/small.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/small_chosen.png"));
             LinkedToggleButton normal = new LinkedToggleButton("Normal", new Vector2(0.2f, 0.7f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("medium.png"),
-                     ResourceLoader.loadBitmap("medium_chosen.png"), true);
+                     ResourceLoader.loadBitmap("colors_and_sizes/medium.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/medium_chosen.png"), true);
             LinkedToggleButton big = new LinkedToggleButton("Big", new Vector2(0.3f, 0.7f),
                      new Vector2(0.1f, 0.1f),
-                     ResourceLoader.loadBitmap("large.png"),
-                     ResourceLoader.loadBitmap("large_chosen.png"));
+                     ResourceLoader.loadBitmap("colors_and_sizes/large.png"),
+                     ResourceLoader.loadBitmap("colors_and_sizes/large_chosen.png"));
 
             List<LinkedToggleButton> widthLinks = new List<LinkedToggleButton>();
             widthLinks.Add(slim);
