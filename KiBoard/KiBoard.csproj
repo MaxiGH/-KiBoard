@@ -104,7 +104,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="executable\KiBoard.exe" />
     <Content Include="libs\LightBuzz.Vitruvius.dll" />
     <Content Include="resources\clear.png" />
     <Content Include="resources\clear_chosen.png" />
