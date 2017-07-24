@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace KiBoard.ui
 {
     class ResourceLoader
     {
-        static string resPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName) + @"\..\..\resources\";
+        static string resPath = @"./resources/";
 
         public static Image loadBitmap(string name)
         {

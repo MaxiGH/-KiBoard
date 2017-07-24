@@ -151,4 +151,8 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>mkdir "$(TargetDir)resources"
+xcopy "$(SolutionDir)KiBoard\resources" "$(TargetDir)resources" /S /Y</PreBuildEvent>
+  </PropertyGroup>
 </Project>
