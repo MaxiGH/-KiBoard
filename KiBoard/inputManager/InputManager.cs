@@ -131,9 +131,12 @@ namespace KiBoard.inputManager
                     if (uiManager.isTouchingElement(input))
                     {
                         clickedElement = uiManager.getTouchingElement(input);
-                        clickedElement.onClick();
-                        controller.onClick(clickedElement.Name);
-                        state = InputState.CLICKING;
+                        if (clickedElement.Visible)
+                        {
+                            clickedElement.onClick();
+                            controller.onClick(clickedElement.Name);
+                            state = InputState.CLICKING;
+                        }
                     }
                     else
                     {
